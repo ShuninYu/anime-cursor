@@ -4,7 +4,7 @@
   <img src="https://cdn.jsdelivr.net/gh/shuninyu/anime-cursor@main/title.gif" width="60%" alt="AnimeCursor"/>
 </div>
 
-[[简体中文]](#animecursor(sc))
+[[简体中文]](#animecursorsc)
 
 AnimeCursor is a lightweight animated cursor JS library that enables dynamic mouse pointers for websites.
 
