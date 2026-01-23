@@ -1,0 +1,301 @@
+# AnimeCursor
+
+![图片描述](title.gif){style="display: block; margin: 0 auto; width: 60%; image-rendering: pixelated;"}
+[[简体中文]](#SChinese)
+
+AnimeCursor is a lightweight animated cursor JS library that enables dynamic mouse pointers for websites.
+
+AnimeCursor has no dependencies on any frameworks, making it suitable for personal websites, creative portfolios, and experimental UI projects.
+
+---
+
+## ✨ Features
+
+* Supports PNG sprite sheet frame-by-frame animation
+* Supports GIF (animated GIFs, not static GIFs used by native cursors)
+* Customizable cursor types, automatically switched by AnimeCursor
+* CSS-based animation implementation, high performance
+* Prepare PNG sprite sheets in the correct format, and AnimeCursor will automatically generate cursor animations based on your settings
+* Built with native JavaScript, no third-party dependencies
+
+---
+
+## 📦 Installation
+
+```html
+<script src="AnimeCursor.js"></script>
+```
+
+AnimeCursor will be attached to the global `window.AnimeCursor` object.
+
+---
+
+## 🚀 Basic Usage
+
+Here is an example of how to use AnimeCursor:
+
+```html
+<script>
+new AnimeCursor({
+    cursors: {
+        default: {
+            tags: ['body'],
+            size: [64,64],
+            image: './cursor_default.png',
+            frames: 1
+        },
+        pointer: {
+            tags: ['a', 'button'],
+            size: [64,64],
+            image: './cursor_pointer.png',
+            frames: 3,
+            duration: 0.3,
+            pingpong: true,
+            offset: [10, 4]
+        }
+    }
+});
+</script>
+```
+
+---
+
+## ⚙️ Configuration Options
+
+### `cursors` (Required)
+
+An object used to define all cursor types.
+
+Each key represents a cursor type (the name can be freely defined).
+
+#### Cursor Configuration Parameters
+
+For each key, the following parameters can be set. Missing required parameters will cause an error.
+
+| Parameter | Type | Required | Description |
+|-|-|-|-|
+| `tags` | `string[]` | ✅ | HTML tags that should use this cursor |
+| `size` | `number` | ✅ | Cursor dimensions [width, height] in pixels |
+| `offset` | `[number, number]` | | Cursor alignment offset [ x , y ] |
+| `image` | `string` | ✅ | Image path (PNG / GIF) |
+| `frames` | `number` | ✅ | Number of frames for PNG sprites (set to `1` for static images) |
+| `duration` | `number` | | Animation loop duration (seconds) ⚠️ PNG sprite animations *only* work when this parameter is set |
+| `pingpong` | `boolean` | | Enable ping-pong (back-and-forth) looping (for PNG sprite animations only) |
+| `scale` | `[number, number]` | | Cursor scale factor based on `size` [ x , y ] ⚠️ Only supported for GIF cursors. Do not set for PNG sprite cursors, as it will break the animation. |
+| `pixel` | `boolean` | | Enable pixelated rendering |
+| `zIndex` | `number` | | Cursor z-index layer (not recommended to modify) |
+
+### `debug` (Optional)
+
+Enables debugging overlay.
+
+The debugging overlay shows the real mouse position and the current cursor type, helping to correct alignment offsets.
+
+### `enableTouch` (Optional)
+
+Enables animated cursors on mobile touch devices.
+
+AnimeCursor automatically detects mobile touch devices (e.g., phones, tablets) and disables animated cursors on them by default.
+If you want animated cursors to be displayed on these devices, add `enableTouch: true`.
+
+---
+
+## 📝 Notes
+
+### 📁 Files
+
+* For any PNG sprite animation cursor, its PNG sprite sheet should be arranged in a single horizontal row. AnimeCursor will automatically generate the PNG sprite animation.
+  For example, if you set the `size` (width, height) for a `pointer` cursor to `[64px , 64px]` and `frames` to `3`, the prepared sprite sheet dimensions (width, height) should be: `[192px , 64px]`.
+
+* For pixel art with a large number of frames, you can use the original image (whether GIF or PNG-sprite-sheet) to save storage space or bandwidth. Then, use the `scale` parameter in the configuration to resize the cursor and set `pixel` to `true` to avoid blurry scaling.
+
+### 🧩 Tagging Mechanism
+
+AnimeCursor automatically adds `data-cursor` attributes to page elements based on the configuration:
+
+```html
+<!-- Using the example configuration from the Basic Usage section -->
+<button data-cursor="pointer"></button>
+```
+
+`data-cursor` will NOT be added in the following cases:
+
+* The element's `tagName` is not included in the `tags` configuration of any custom cursor type.
+* The element already had a `data-cursor` attribute *before* AnimeCursor was initialized.
+
+Therefore, to assign a specific animated cursor to a particular element, simply add the corresponding `data-cursor` attribute to that element. AnimeCursor will not overwrite pre-existing `data-cursor` tags.
+
+### 🎞️ Animation Rules
+
+#### PNG Cursors
+
+Animation is generated **only when all of the following conditions are met**:
+
+* The image is a PNG
+* `frames > 1`
+* `duration` is set
+
+If `duration` is not set, the cursor will be treated as a **static cursor**, even if `frames > 1`.
+
+#### GIF Cursors
+
+* GIFs do not use `frames`, `duration`, or `pingpong`
+* Animation is controlled by the GIF file itself
+
+---
+
+## ❌ Error Handling
+
+* Missing required configuration parameters will directly terminate initialization.
+* Invalid optional configuration will also throw errors.
+* All errors are prefixed with `[AnimeCursor]` when logged to the console.
+
+---
+# AnimeCursor {#SChinese}
+![图片描述](title.gif){style="display: block; margin: 0 auto; width: 60%; image-rendering: pixelated;"}
+
+AnimeCursor 是一个轻量级动画光标JS，能够让网站拥有动态的鼠标指针。
+
+AnimeCursor 无需依赖任何框架，适合个人网站、创意作品集以及实验性 UI 项目。
+
+---
+
+## ✨ 特性
+
+* 支持 PNG 精灵图逐帧动画
+* 支持 GIF（动态gif，而不是原生光标的静止gif）
+* 自定义光标类型，由 AnimeCursor 自动切换
+* 基于 CSS 的动画实现，高性能
+* 按照格式准备好 PNG 精灵图表，AnimeCursor 将基于你的设置自动生成光标动画
+* 基于原生JavaScript，无任何第三方依赖
+
+---
+
+## 📦 引入方式
+
+```html
+<script src="AnimeCursor.js"></script>
+```
+
+AnimeCursor 会挂载到全局 `window.AnimeCursor`。
+
+---
+
+## 🚀 基础用法
+
+下面是一个 AnimeCursor 使用示例：
+```html
+<script>
+new AnimeCursor({
+    cursors: {
+        default: {
+            tags: ['body'],
+            size: [64,64],
+            image: './cursor_default.png',
+            frames: 1
+        },
+        pointer: {
+            tags: ['a', 'button'],
+            size: [64,64],
+            image: './cursor_pointer.png',
+            frames: 3,
+            duration: 0.3,
+            pingpong: true,
+            offset: [10, 4]
+        }
+    }
+});
+</script>
+```
+
+---
+
+## ⚙️ 配置项说明
+
+### `cursors`（必填）
+
+用于定义所有光标类型的对象。
+
+每一个 key 代表一种光标类型（名称可以自由定义）。
+
+#### 光标配置参数
+
+对于每个key，有以下参数可以设置，其中必填项如果缺失则会报错。
+
+|参数|类型|必填|说明|
+|-|-|-|-|
+|`tags`|`string[]`|✅|使用该光标的 HTML 标签|
+|`size`|`number`|✅|光标尺寸（宽高，像素）|
+|`offset`|`[number, number]`||光标对齐偏移量 [ x , y ]|
+|`image`|`string`|✅|图片路径（PNG / GIF）|
+|`frames`|`number`|✅|PNG 帧数（静态图片请设置为 `1` ）|
+|`duration`|`number`||动画循环时长（秒）⚠️PNG精灵图动画只有设置该参数才会生效|
+|`pingpong`|`boolean`||是否启用乒乓循环（仅PNG精灵图动画）|
+|`scale`|`[number, number]`||基于size的光标缩放 [ x , y ]⚠️仅支持GIF光标，PNG精灵图动画光标请勿设置，否则会使动画失效|
+|`pixel`|`boolean`||是否启用像素化渲染|
+|`zIndex`|`number`||光标层级（不建议添加此项设置）|
+
+### `debug`（选填）
+
+用于启用debug覆盖。
+
+debug覆盖会显示鼠标的真实位置以及当前光标类型，以帮助纠正对齐偏移量。
+
+### `enableTouch`（选填）
+
+用于启用移动触屏设备上的动画光标。
+
+AnimeCursor 会自动识别移动触屏设备（比如手机、平板电脑）并默认屏蔽这些设备上的动画光标。
+如果你想在这些设备上显示动画光标，可以添加 `enableTouch: true` 。
+
+---
+
+## 📝 注意事项
+
+### 📁 文件
+
+* 对于任何 PNG 精灵图动画光标，它的 PNG 精灵图表都应该为单行横向布局，AnimeCursor 会自动生成 PNG 精灵图动画。
+例如，你为 `pointer` 光标设置的`size`（长，宽）为 `[64px , 64px]` ，帧数为 `3` ，那么你准备的精灵图表尺寸（长，宽）应该为： `[192px , 64px]` 。
+
+* 对于帧数特别多的像素图，你可以使用原尺寸图片（无论是gif还是png精灵图表）以节省存储空间或带宽，并在参数中设置 `scale` 来缩放光标，并将 `pixel` 设置为 `true` 来避免缩放模糊。
+
+### 🧩 标记机制
+
+AnimeCursor 会根据配置自动为页面元素添加 `data-cursor`：
+
+```html
+<!-- 以上面的示例用法配置为例 -->
+<button data-cursor="pointer"></button>
+```
+
+只有在以下情况不会添加 `data-cursor`：
+
+* 元素的 `tagName` 不在任何自定义光标类型的配置中。
+* 元素在 AnimeCursor 配置之前就已经存在 `data-cursor` 。
+
+因此，如果想要给某个特定元素指定一种动画指针，只需要给该元素添加指定的 `data-cursor` 即可，AnimeCursor 不会覆盖事先设定好的标记。
+
+### 🎞️ 动画判定
+
+#### PNG 光标
+
+只有在 **同时满足以下条件** 时，才会生成动画：
+
+* 图片为 PNG
+* `frames > 1`
+* 设置了 `duration`
+
+如果未设置 `duration`，即使帧数大于 1，也会被视为**静态光标**。
+
+#### GIF 光标
+
+* GIF 不使用 `frames`、`duration` 或 `pingpong`
+* 动画由 GIF 自身控制
+
+---
+
+## ❌ 错误处理
+
+* 缺少必填配置会直接终止初始化
+* 非法的可选配置也会报错
+* 所有错误均以 `[AnimeCursor]` 前缀输出到console

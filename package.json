@@ -1,0 +1,19 @@
+{
+    "name": "anime-cursor",
+    "version": "0.1.0",
+    "description": "A lightweight website animated cursors library",
+    "main": "dist/anime-cursor.umd.js",
+    "module": "dist/anime-cursor.esm.js",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "rollup -c"
+    },
+    "author": "ShuninYu",
+    "license": "MIT",
+    "devDependencies": {
+        "@rollup/plugin-terser": "^0.4.4",
+        "rollup": "^4.56.0"
+    }
+}
