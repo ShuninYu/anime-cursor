@@ -25,11 +25,11 @@ AnimeCursor has no dependencies on any frameworks, making it suitable for person
 
 ## 📦 Installation
 
-```html
-<script src="AnimeCursor.js"></script>
-```
+### Local storage
 
-AnimeCursor will be attached to the global `window.AnimeCursor` object.
+```html
+<script src="anime-cursor.umd.min.js"></script>
+```
 
 ---
 
@@ -179,11 +179,11 @@ AnimeCursor 无需依赖任何框架，适合个人网站、创意作品集以�
 
 ## 📦 引入方式
 
-```html
-<script src="AnimeCursor.js"></script>
-```
+### 本地部署
 
-AnimeCursor 会挂载到全局 `window.AnimeCursor`。
+```html
+<script src="anime-cursor.umd.min.js"></script>
+```
 
 ---
 
