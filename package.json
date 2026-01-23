@@ -16,6 +16,10 @@
     "scripts": {
         "build": "rollup -c"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/shuninyu/anime-cursor.git"
+    },
     "author": "ShuninYu",
     "license": "MIT",
     "devDependencies": {
