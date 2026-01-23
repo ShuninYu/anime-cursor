@@ -1,5 +1,5 @@
-
-
+// AnimeCursor by github@ShuninYu
+// v0.1.2
 
 export default class AnimeCursor {
 
@@ -49,7 +49,7 @@ export default class AnimeCursor {
         }
 
         for (const [name, cfg] of Object.entries(this.options.cursors)) {
-            const required = ['tags', 'size', 'image', 'frames'];
+            const required = ['tags', 'size', 'image'];
             required.forEach(key => {
                 if (cfg[key] === undefined) {
                     console.error(`[AnimeCursor] 光标 "${name}" 缺少必填项：${key}`);
@@ -90,13 +90,13 @@ export default class AnimeCursor {
     }
 
     // ----------------------------
-    // 插入基础 CSS
+    // 插入样式 CSS
     // ----------------------------
     _injectCSS() {
         const style = document.createElement('style');
         let css = '';
 
-        /* 通用样式和debug样式 */
+        /* 通用样式 */
         css += `
 * {
 cursor: none !important;
