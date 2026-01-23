@@ -1,7 +1,7 @@
 # AnimeCursor
 
 <div align="center">
-  <img src="title.gif" width="60%" alt="AnimeCursor" style="image-rendering: pixelated;"/>
+  <img src="title.gif" width="60%" alt="AnimeCursor"/>
 </div>
 
 [[简体中文]](#SChinese)
@@ -157,7 +157,7 @@ If `duration` is not set, the cursor will be treated as a **static cursor**, eve
 # AnimeCursor {#SChinese}
 
 <div align="center">
-  <img src="title.gif" width="60%" alt="AnimeCursor" style="image-rendering: pixelated;"/>
+  <img src="title.gif" width="60%" alt="AnimeCursor"/>
 </div>
 
 AnimeCursor 是一个轻量级动画光标JS，能够让网站拥有动态的鼠标指针。
