@@ -21,8 +21,6 @@ AnimeCursor has no dependencies on any frameworks, making it suitable for person
 * Prepare PNG sprite sheets in the correct format, and AnimeCursor will automatically generate cursor animations based on your settings
 * Built with native JavaScript, no third-party dependencies
 
----
-
 ## 📦 Installation
 
 ### jsDeliver
@@ -46,8 +44,6 @@ new AnimeCursor({...});
 ```html
 <script src="anime-cursor.umd.min.js"></script>
 ```
-
----
 
 ## 🚀 Basic Usage
 
@@ -76,8 +72,6 @@ new AnimeCursor({
 });
 </script>
 ```
-
----
 
 ## ⚙️ Configuration Options
 
@@ -116,8 +110,6 @@ Enables animated cursors on mobile touch devices.
 
 AnimeCursor automatically detects mobile touch devices (e.g., phones, tablets) and disables animated cursors on them by default.
 If you want animated cursors to be displayed on these devices, add `enableTouch: true`.
-
----
 
 ## 📝 Notes
 
@@ -161,8 +153,6 @@ If `duration` is not set, the cursor will be treated as a **static cursor**, eve
 * GIFs do not use `frames`, `duration`, or `pingpong`
 * Animation is controlled by the GIF file itself
 
----
-
 ## ❌ Error Handling
 
 * Missing required configuration parameters will directly terminate initialization.
@@ -191,8 +181,6 @@ AnimeCursor 无需依赖任何框架，适合个人网站、创意作品集以�
 * 按照格式准备好 PNG 精灵图表，AnimeCursor 将基于你的设置自动生成光标动画
 * 基于原生JavaScript，无任何第三方依赖
 
----
-
 ## 📦 部署方法
 
 ### jsDeliver
@@ -216,8 +204,6 @@ new AnimeCursor({...});
 ```html
 <script src="anime-cursor.umd.min.js"></script>
 ```
-
----
 
 ## 🚀 基础用法
 
@@ -245,8 +231,6 @@ new AnimeCursor({
 });
 </script>
 ```
-
----
 
 ## ⚙️ 配置项说明
 
@@ -285,8 +269,6 @@ debug覆盖会显示鼠标的真实位置以及当前光标类型，以帮助纠
 
 AnimeCursor 会自动识别移动触屏设备（比如手机、平板电脑）并默认屏蔽这些设备上的动画光标。
 如果你想在这些设备上显示动画光标，可以添加 `enableTouch: true` 。
-
----
 
 ## 📝 注意事项
 
@@ -329,8 +311,6 @@ AnimeCursor 会根据配置自动为页面元素添加 `data-cursor`：
 
 * GIF 不使用 `frames`、`duration` 或 `pingpong`
 * 动画由 GIF 自身控制
-
----
 
 ## ❌ 错误处理
 
