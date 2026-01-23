@@ -25,6 +25,22 @@ AnimeCursor has no dependencies on any frameworks, making it suitable for person
 
 ## 📦 Installation
 
+### jsDeliver
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/anime-cursor/dist/anime-cursor.umd.min.js"></script>
+```
+
+### npm
+
+```bash
+npm i anime-cursor
+```
+```js
+import AnimeCursor from 'anime-cursor';
+new AnimeCursor({...});
+```
+
 ### Local storage
 
 ```html
@@ -177,7 +193,23 @@ AnimeCursor 无需依赖任何框架，适合个人网站、创意作品集以�
 
 ---
 
-## 📦 引入方式
+## 📦 部署方法
+
+### jsDeliver
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/anime-cursor/dist/anime-cursor.umd.min.js"></script>
+```
+
+### npm
+
+```bash
+npm i anime-cursor
+```
+```js
+import AnimeCursor from 'anime-cursor';
+new AnimeCursor({...});
+```
 
 ### 本地部署
 
