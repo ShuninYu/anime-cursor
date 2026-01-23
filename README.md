@@ -154,7 +154,7 @@ If `duration` is not set, the cursor will be treated as a **static cursor**, eve
 * All errors are prefixed with `[AnimeCursor]` when logged to the console.
 
 ---
-# AnimeCursor {#SChinese}
+<h1 id="SChinese">AnimeCursor</h1>
 
 <div align="center">
   <img src="title.gif" width="60%" alt="AnimeCursor"/>
