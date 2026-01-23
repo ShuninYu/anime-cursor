@@ -1,6 +1,9 @@
 # AnimeCursor
 
-![图片描述](title.gif){style="display: block; margin: 0 auto; width: 60%; image-rendering: pixelated;"}
+<div align="center">
+  <img src="title.gif" width="60%" alt="AnimeCursor" style="image-rendering: pixelated;"/>
+</div>
+
 [[简体中文]](#SChinese)
 
 AnimeCursor is a lightweight animated cursor JS library that enables dynamic mouse pointers for websites.
@@ -152,7 +155,10 @@ If `duration` is not set, the cursor will be treated as a **static cursor**, eve
 
 ---
 # AnimeCursor {#SChinese}
-![图片描述](title.gif){style="display: block; margin: 0 auto; width: 60%; image-rendering: pixelated;"}
+
+<div align="center">
+  <img src="title.gif" width="60%" alt="AnimeCursor" style="image-rendering: pixelated;"/>
+</div>
 
 AnimeCursor 是一个轻量级动画光标JS，能够让网站拥有动态的鼠标指针。
 
