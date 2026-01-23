@@ -1,13 +1,18 @@
 {
     "name": "anime-cursor",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "A lightweight JS for website animated cursors",
     "main": "dist/anime-cursor.umd.js",
     "module": "dist/anime-cursor.esm.js",
     "files": [
         "dist"
     ],
-    "keywords": ["cursor", "animation", "ui", "javascript"],
+    "keywords": [
+        "cursor",
+        "animation",
+        "ui",
+        "javascript"
+    ],
     "scripts": {
         "build": "rollup -c"
     },
