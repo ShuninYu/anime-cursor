@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Content' , 'HarmonyOS Sans SC' , sans-serif;
+}
+@font-face {
+    font-family: 'Title';
+    src: url(fonts/slack-light.otf) format('opentype');
+}
+@font-face {
+    font-family: 'Content';
+    src: url(fonts/SinkinSans-300Light.otf);
+}
+body {
+    background-color: black;
+    background-image: url(i/holo.avif);
+    background-size: cover;
+    padding: 50px;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+}
+.titlebox {
+    border: 1px solid rgb(140 140 140);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    .titleimg {
+        background-image: url(title.gif);
+        background-size: contain;
+        image-rendering: pixelated;
+        width: 480px;
+        height: 160px;
+    }
+    .title-description {
+        font-size: 20px;
+        color: black;
+        letter-spacing: 2px;
+        word-spacing: 2px;
+    }
+}
