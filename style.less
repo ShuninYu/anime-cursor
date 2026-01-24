@@ -21,6 +21,9 @@ body {
     height: 100vh;
     height: 100dvh;
 }
+a > * {
+    pointer-events: none;
+}
 .titlebox {
     border: 1px solid rgb(140 140 140);
     width: 100%;
@@ -30,17 +33,91 @@ body {
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
+    text-align: center;
     .titleimg {
-        background-image: url(title.gif);
-        background-size: contain;
+        border: 1px solid black;
+        background-color: rgb(255 255 255 / 0);
+        background-image: url(i/button-title.gif);
+        background-size: 192px 64px;
+        background-position: top;
+        background-repeat: no-repeat;
         image-rendering: pixelated;
-        width: 480px;
-        height: 160px;
+        width: 200px;
+        max-width: 90%;
+        aspect-ratio: 5/2;
+        margin-top: 80px;
+        transition: background-color 0.6s;
+        &:hover {
+            background-color: rgb(255 255 255 / 0.7);
+        }
+    }
+    .title-header {
+        font-family: 'Title';
+        font-size: 120px;
+        user-select: none;
     }
     .title-description {
         font-size: 20px;
         color: black;
-        letter-spacing: 2px;
+        letter-spacing: 1px;
         word-spacing: 2px;
+        user-select: none;
+        margin-top: 20px;
+    }
+    .title-navbar {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: flex-end;
+        width: 100%;
+        height: 60px;
+        border: 1px solid rgb(255 0 0 / 0.0);
+        .home-navbtn {
+            display: block;
+            font-size: 16px;
+            text-decoration: none;
+            color: black;
+            text-transform: uppercase;
+            margin: 0 10px;
+            div {
+                width: 100%;
+                height: 1px;
+                background-color: black;
+                transition: height 0.4s ease-out;
+            }
+            &:hover {
+                div {
+                    height: 8px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width:768px){
+    body {
+        padding: 20px;
+    }
+    .titlebox {
+        .titleimg {
+            margin-top: 40px;
+        }
+        .title-header {
+            font-size: 40px;
+        }
+        .title-description {
+            font-size: 16px;
+            letter-spacing: 0;
+            word-spacing: 0;
+        }
+        .title-navbar {
+            height: auto;
+            flex-direction: column;
+            align-items: center;
+            .home-navbtn {
+                margin-top: 10px;
+            }
+        }
     }
 }
