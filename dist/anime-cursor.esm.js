@@ -32,17 +32,91 @@ class AnimeCursor {
     }
     
     isMouseLikeDevice() {
+        if (this.disabled) return;
+
         return window.matchMedia('(pointer: fine)').matches;
     }
     
-    destroy() {
+    // ----------------------------
+    // 刷新 清理 关闭 开启
+    // ----------------------------
+    refresh() {
         if (this.disabled) return;
+    
+        if (this.options.debug) {
+            console.info('[AnimeCursor] starting refresh...');
+        }
+    
+        this._bindElements(true);
     }
 
+    destroy() {
+        if (this.disabled) return;
+
+        // 1 移除事件监听
+        if (this._onMouseMove) {
+            document.removeEventListener('mousemove', this._onMouseMove);
+            this._onMouseMove = null;
+        }
+    
+        // 2 移除 cursor DOM
+        if (this.cursorEl) {
+            this.cursorEl.remove();
+            this.cursorEl = null;
+        }
+    
+        if (this.debugEl) {
+            this.debugEl.remove();
+            this.debugEl = null;
+        }
+    
+        // 3 移除注入的 CSS
+        if (this.styleEl) {
+            this.styleEl.remove();
+            this.styleEl = null;
+        }
+    
+        // 4 清理 data-cursor（只清理自己加的）
+        for (const cfg of Object.values(this.options.cursors)) {
+            cfg.tags.forEach(tag => {
+                document.querySelectorAll(tag).forEach(el => {
+                    if (el.dataset.cursor) {
+                        delete el.dataset.cursor;
+                    }
+                });
+            });
+        }
+    
+        // 5 重置状态
+        this.lastCursorType = null;
+    }
+    
+    disable() {
+        if (this.disabled) return;
+        this.disabled = true;
+    
+        if (this.cursorEl) {
+            this.cursorEl.style.display = 'none';
+            console.log('[AnimeCursor] AnimeCursor disabled!');
+        }
+    }
+    
+    enable() {
+        if (!this.disabled) return;
+        this.disabled = false;
+    
+        if (this.cursorEl) {
+            this.cursorEl.style.display = '';
+            console.log('[AnimeCursor] AnimeCursor enabled!');
+        }
+    }
+    
     // ----------------------------
     // 配置校验（必填项）
     // ----------------------------
     _validateOptions() {
+        if (this.disabled) return;
+
         if (!this.options || !this.options.cursors) {
             console.error('[AnimeCursor] 缺少 cursors 配置');
             throw new Error('AnimeCursor init failed');
@@ -73,6 +147,8 @@ class AnimeCursor {
     // 插入光标元素 HTML
     // ----------------------------
     _injectHTML() {
+        if (this.disabled) return;
+
         const cursor = document.createElement('div');
         cursor.id = 'anime-cursor';
         
@@ -93,6 +169,8 @@ class AnimeCursor {
     // 插入样式 CSS
     // ----------------------------
     _injectCSS() {
+        if (this.disabled) return;
+
         const style = document.createElement('style');
         let css = '';
 
@@ -198,21 +276,28 @@ to { background-position: -${size[0] * frames}px 0; }
 
         style.textContent = css;
         document.head.appendChild(style);
+        this.styleEl = style;
     }
 
     // ----------------------------
     // 给元素自动添加 data-cursor
     // ----------------------------
-    _bindElements() {
+    _bindElements(refresh) {
+        if (this.disabled) return;
+
         for (const [type, cfg] of Object.entries(this.options.cursors)) {
             cfg.tags.forEach(tag => {
                 const tagName = tag.toUpperCase();
                 document.querySelectorAll(tagName).forEach(el => {
                     if (!el.dataset.cursor) {
                         el.dataset.cursor = type;
+                        el.dataset.cursorBound = 'true';
                     }
                 });
             });
+        }
+        if (refresh) {
+            console.info('[AnimeCursor] refresh done!');
         }
     }
 
@@ -220,7 +305,9 @@ to { background-position: -${size[0] * frames}px 0; }
     // 鼠标跟随 & 光标切换
     // ----------------------------
     _bindMouse() {
-        document.addEventListener('mousemove', e => {
+        if (this.disabled) return;
+
+        this._onMouseMove = (e) => {
             const x = e.clientX;
             const y = e.clientY;
 
@@ -243,13 +330,18 @@ to { background-position: -${size[0] * frames}px 0; }
                 else {this.cursorEl.className = `cursor-${cursorType}`;}
                 this.lastCursorType = cursorType;
             }
-        });
+        };
+
+        document.addEventListener('mousemove', this._onMouseMove);
+        console.log('[AnimeCursor] AnimeCursor setted up.');
     }
 
     // ----------------------------
     // 获取可用最大 z-index
     // ----------------------------
     _getMaxZIndex() {
+        if (this.disabled) return;
+
         return 2147483646; // 浏览器安全最大值 2147483647 减一为留给debug覆盖
     }
 }
