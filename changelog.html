@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <title>Changelog - AnimeCursor - Lightweight JS for animated website cursors</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/anime-cursor/dist/anime-cursor.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.0/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/languages/html.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/default.min.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('changelog.md')
+                .then(response => response.text())
+                .then(markdownText => {
+                    // 1️⃣ 插入 HTML
+                    document.getElementById('changelog-content').innerHTML =
+                        marked.parse(markdownText);
+        
+                    // 2️⃣ 高亮代码（⚠️ 必须在插入之后）
+                    hljs.highlightAll();
+        
+                    // 3️⃣ 初始化 AnimeCursor（✅ 一定能扫到新 DOM）
+                    initAnimeCursor();
+                })
+                .catch(err => {
+                    console.error('加载更新日志失败:', err);
+                    document.getElementById('changelog-content').innerHTML =
+                        '<p>抱歉，日志加载失败。</p>';
+                });
+        });
+        
+        function initAnimeCursor() {
+            new AnimeCursor({
+                cursors: {
+                    default: {
+                        tags: ['body'],
+                        size: [32,32],
+                        image: 'i/cursor/cursor_default.gif',
+                        pixel: true
+                    },
+                    pointer: {
+                        tags: ['a', 'button'],
+                        size: [32,36],
+                        image: 'i/cursor/cursor_pointer.png',
+                        frames: 3,
+                        duration: 0.3,
+                        pingpong: true,
+                        offset: [10, 4],
+                        pixel: true
+                    },
+                    text: {
+                        tags: ['p','h1','h2','span','ul','li','pre','code'],
+                        size: [32,32],
+                        image: 'i/cursor/cursor_text.png',
+                        offset: [9, 16],
+                        pixel: true
+                    }
+                }
+            });
+        }
+        </script>
+</head>
+<body class="changelog-page">
+    <div id="changelog-content" class="markdown-body">正在加载……</div>
+    <script>
+    </script>
+</body>
+</html>
