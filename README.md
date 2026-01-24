@@ -6,7 +6,7 @@
 
 [[简体中文]](#animecursorsc)
 
-AnimeCursor is a lightweight animated cursor JS library that enables dynamic mouse pointers for websites.
+AnimeCursor is a lightweight JavaScript library for animated custom cursors.
 
 AnimeCursor has no dependencies on any frameworks, making it suitable for personal websites, creative portfolios, and experimental UI projects.
 
@@ -173,7 +173,7 @@ If `duration` is not set, the cursor will be treated as a **static cursor**, eve
   <img src="https://cdn.jsdelivr.net/gh/shuninyu/anime-cursor@main/title.gif" width="60%" alt="AnimeCursor"/>
 </div>
 
-AnimeCursor 是一个轻量级动画光标JS，能够让网站拥有动态的鼠标指针。
+AnimeCursor 是一个轻量级自定义动画光标JavaScript库。
 
 AnimeCursor 无需依赖任何框架，适合个人网站、创意作品集以及实验性 UI 项目。
 
