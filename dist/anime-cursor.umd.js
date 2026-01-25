@@ -120,6 +120,11 @@
         _validateOptions() {
             if (this.disabled) return;
 
+            if (!this.options || !this.options.cursors) {
+                console.error('[AnimeCursor] missing cursors set up');
+                throw new Error('AnimeCursor init failed');
+            }
+
             this.defaultCursorType = null;
 
             for (const [name, cfg] of Object.entries(this.options.cursors)) {
@@ -131,13 +136,8 @@
                 }
             }
 
-            if (!this.options || !this.options.cursors) {
-                console.error('[AnimeCursor] missing cursors set up');
-                throw new Error('AnimeCursor init failed');
-            }
-
             for (const [name, cfg] of Object.entries(this.options.cursors)) {
-                const required = ['tags', 'size', 'image'];
+                const required = ['size', 'image'];
                 required.forEach(key => {
                     if (cfg[key] === undefined) {
                         console.error(`[AnimeCursor] cursor "${name}" missing required setting: ${key}`);
@@ -147,9 +147,13 @@
 
                 if (!cfg.default) {
                     if (!Array.isArray(cfg.tags) || cfg.tags.length === 0) {
-                        console.error(`[AnimeCursor] cursor "${name}" 's tags must be an array and should not be left empty`);
+                        console.error(`[AnimeCursor] non-default cursor "${name}" must define at least one tag`);
                         throw new Error('AnimeCursor init failed');
                     }
+                }
+                if (cfg.default && cfg.tags !== undefined && !Array.isArray(cfg.tags)) {
+                    console.error(`[AnimeCursor] default cursor "${name}" 's tags must be an array if provided`);
+                    throw new Error('AnimeCursor init failed');
                 }
 
                 if (cfg.duration !== undefined && typeof cfg.duration !== 'number') {
@@ -302,6 +306,8 @@
             if (this.disabled) return;
 
             for (const [type, cfg] of Object.entries(this.options.cursors)) {
+                if (!cfg.tags || cfg.tags.length === 0) continue;
+                
                 cfg.tags.forEach(tag => {
                     const tagName = tag.toUpperCase();
                     document.querySelectorAll(tagName).forEach(el => {
