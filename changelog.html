@@ -6,6 +6,7 @@
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <title>Changelog - AnimeCursor - Lightweight JS for animated website cursors</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fonts/chinese/result.css">
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/anime-cursor/dist/anime-cursor.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -15,17 +16,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/default.min.css">
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            fetch('changelog.md')
+            fetch('logs.md')
                 .then(response => response.text())
                 .then(markdownText => {
-                    // 1️⃣ 插入 HTML
+                    // 插入 HTML
                     document.getElementById('changelog-content').innerHTML =
                         marked.parse(markdownText);
         
-                    // 2️⃣ 高亮代码（⚠️ 必须在插入之后）
+                    // 高亮代码（必须在插入之后）
                     hljs.highlightAll();
         
-                    // 3️⃣ 初始化 AnimeCursor（✅ 一定能扫到新 DOM）
+                    // 初始化 AnimeCursor
                     initAnimeCursor();
                 })
                 .catch(err => {

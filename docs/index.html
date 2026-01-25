@@ -1,11 +1,63 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    test done!
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../favicon.png" type="image/x-icon">
+        <title>Introduction | Docs - AnimeCursor - Lightweight JS for animated website cursors</title>
+        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../fonts/chinese/result.css">
+        <script src="../script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/anime-cursor/dist/anime-cursor.umd.min.js"></script>
+        <script src="../animecursor2.js"></script>
+    </head>
+<body class="docs-page">
+    <div class="docs-wrapper">
+        <div class="docs-panel">
+            <div class="docs-panel-topbar">
+                <a class="docs-panel-topbar-logo"></a>
+                <div class="docs-panel-topbar-navbar">
+                    <a href="../" class="docs-panel-topbar-navbtn">home<div></div></a>
+                    <a href="../examples" class="docs-panel-topbar-navbtn">examples<div></div></a>
+                    <a href="../changelog" class="docs-panel-topbar-navbtn">changelog<div></div></a>
+                </div>
+            </div>
+            <div class="docs-panel-list">
+                <div class="docs-panel-list-folder"><p onclick="jumpTo('../docs')" data-cursor="pointer">Introduction</p>
+                    <a class="docs-panel-list-item">What is AnimeCursor</a>
+                    <a class="docs-panel-list-item">Features</a>
+                    <a class="docs-panel-list-item">Browser Support</a>
+                </div>
+                <div class="docs-panel-list-folder"><p onclick="jumpTo('getting-Started')" data-cursor="pointer">Getting Started</p>
+                    <a class="docs-panel-list-item">Installation</a>
+                    <a class="docs-panel-list-item">Basic Usage</a>
+                    <a class="docs-panel-list-item">Example</a>
+                </div>
+                <div class="docs-panel-list-folder"><p onclick="jumpTo('configuration')" data-cursor="pointer">Configuration</p>
+                    <a class="docs-panel-list-item">Cursor Types</a>
+                    <a class="docs-panel-list-item">Options</a>
+                    <a class="docs-panel-list-item">Advanced Settings</a>
+                </div>
+                <div class="docs-panel-list-folder"><p onclick="jumpTo('api')" data-cursor="pointer">API</p>
+                    <a class="docs-panel-list-item">constructor</a>
+                    <a class="docs-panel-list-item">refresh</a>
+                    <a class="docs-panel-list-item">enable / disable</a>
+                    <a class="docs-panel-list-item">destroy</a>
+                </div>
+                <div class="docs-panel-list-folder"><p onclick="jumpTo('lcbp')" data-cursor="pointer">LC & BP</p>
+                    <a class="docs-panel-list-item">DOM 注入时机</a>
+                    <a class="docs-panel-list-item">配合 Markdown 使用</a>
+                </div>
+                <div class="docs-panel-list-folder"><p onclick="jumpTo('debug')" data-cursor="pointer">Debug & Troubleshooting</p>
+                    <a class="docs-panel-list-item">Debug Mode</a>
+                    <a class="docs-panel-list-item">Common Issues</a>
+                    <a class="docs-panel-list-item">FAQ</a>
+                </div>
+            </div>
+        </div>
+        <div class="docs-content">
+        <footer></footer>
+        </div>
+    </div>
 </body>
 </html>

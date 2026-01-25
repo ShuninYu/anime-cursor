@@ -6,57 +6,29 @@
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <title>AnimeCursor - Lightweight JS for animated website cursors</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fonts/chinese/result.css">
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/anime-cursor/dist/anime-cursor.umd.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            new AnimeCursor({
-                //debug: true,
-                cursors: {
-                    default: {
-                        tags: ['body'],
-                        size: [32,32],
-                        image: 'i/cursor/cursor_default.gif',
-                        pixel: true
-                    },
-                    pointer: {
-                        tags: ['a', 'button'],
-                        size: [32,36],
-                        image: 'i/cursor/cursor_pointer.png',
-                        frames: 3,
-                        duration: 0.3,
-                        pingpong: true,
-                        offset: [10, 4],
-                        pixel: true
-                    },
-                    text: {
-                        tags: ['p', 'h1', 'h2', 'span'],
-                        size: [32, 32],
-                        image: 'i/cursor/cursor_text.png',
-                        pixel: true
-                    }
-                }
-            });
-        })
-    </script>
+    <script src="animecursor1.js"></script>
 </head>
 <body class="home-page">
     <div class="titlebox">
+        <footer></footer>
         <a class="home-lang" title="Switch to Chinese | 切换中文" href="zh">
             <svg class="line-svg">
                 <line class="line" x1="100%" y1="0" x2="0" y2="100%"/>
             </svg>
         </a>
-        <div class="title-header">AnimeCursor</div>
-        <div class="title-description">A lightweight JavaScript library for animated custom cursors</div>
-        <a class="titleimg" href=""><p>Get Started</p><div></div></a>
-        <div class="title-navbar title-navbar-main">
+        <div class="title-header fade-in-bottom">AnimeCursor</div>
+        <div class="title-description fade-in-bottom2">A lightweight JavaScript library for animated custom cursors</div>
+        <a class="titleimg fade-in-bottom3" href=""><p>Get Started</p><div></div></a>
+        <div class="title-navbar title-navbar-main fade-in-bottom3">
             <a class="home-navbtn" href="examples">examples<div></div></a>
             <a class="home-navbtn" href="docs">documentation<div></div></a>
             <a class="home-navbtn" href="https://github.com/ShuninYu/anime-cursor/releases/latest" target="_blank">download<div></div></a>
-            <a class="home-navbtn" href="changelog">changelog<div></div></a>
+            <a class="home-navbtn" href="changelog" target="_blank">changelog<div></div></a>
         </div>
-        <div class="title-navbar">
+        <div class="title-navbar fade-in-bottom3">
             <a href="https://github.com/ShuninYu/anime-cursor" target="_blank" class="home-link github"></a>
             <a href="https://www.npmjs.com/package/anime-cursor" target="_blank" class="home-link npm"></a>
         </div>
