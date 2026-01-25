@@ -1,7 +1,7 @@
 {
     "name": "anime-cursor",
-    "version": "0.1.3",
-    "description": "A lightweight JS for website animated cursors",
+    "version": "0.2.0",
+    "description": "A lightweight JavaScript library for animated custom cursors",
     "main": "dist/anime-cursor.umd.js",
     "module": "dist/anime-cursor.esm.js",
     "files": [

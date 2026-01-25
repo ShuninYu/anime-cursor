@@ -1,5 +1,5 @@
 // AnimeCursor by github@ShuninYu
-// v0.1.2
+// v0.2.0
 
 class AnimeCursor {
 
@@ -49,7 +49,6 @@ class AnimeCursor {
     
         this._bindElements(true);
     }
-
     destroy() {
         if (this.disabled) return;
 
@@ -90,7 +89,6 @@ class AnimeCursor {
         // 5 重置状态
         this.lastCursorType = null;
     }
-    
     disable() {
         if (this.disabled) return;
         this.disabled = true;
@@ -100,7 +98,6 @@ class AnimeCursor {
             console.log('[AnimeCursor] AnimeCursor disabled!');
         }
     }
-    
     enable() {
         if (!this.disabled) return;
         this.disabled = false;
@@ -117,8 +114,19 @@ class AnimeCursor {
     _validateOptions() {
         if (this.disabled) return;
 
+        this.defaultCursorType = null;
+
+        for (const [name, cfg] of Object.entries(this.options.cursors)) {
+            if (cfg.default === true) {
+                if (this.defaultCursorType) {
+                    throw new Error('[AnimeCursor] 只能有一个 default 光标');
+                }
+                this.defaultCursorType = name;
+            }
+        }
+
         if (!this.options || !this.options.cursors) {
-            console.error('[AnimeCursor] 缺少 cursors 配置');
+            console.error('[AnimeCursor] missing cursors set up');
             throw new Error('AnimeCursor init failed');
         }
 
@@ -126,18 +134,20 @@ class AnimeCursor {
             const required = ['tags', 'size', 'image'];
             required.forEach(key => {
                 if (cfg[key] === undefined) {
-                    console.error(`[AnimeCursor] 光标 "${name}" 缺少必填项：${key}`);
+                    console.error(`[AnimeCursor] cursor "${name}" missing required setting: ${key}`);
                     throw new Error('AnimeCursor init failed');
                 }
             });
 
-            if (!Array.isArray(cfg.tags)) {
-                console.error(`[AnimeCursor] 光标 "${name}" 的 tags 必须是数组`);
-                throw new Error('AnimeCursor init failed');
+            if (!cfg.default) {
+                if (!Array.isArray(cfg.tags) || cfg.tags.length === 0) {
+                    console.error(`[AnimeCursor] cursor "${name}" 's tags must be an array and should not be left empty`);
+                    throw new Error('AnimeCursor init failed');
+                }
             }
 
             if (cfg.duration !== undefined && typeof cfg.duration !== 'number') {
-                console.error(`[AnimeCursor] 光标 "${name}" 的 duration 必须是数字（秒）`);
+                console.error(`[AnimeCursor] cursor "${name}" 's duration must be a number(seconds)`);
                 throw new Error('AnimeCursor init failed');
             }
         }
@@ -176,55 +186,55 @@ class AnimeCursor {
 
         /* 通用样式 */
         css += `
-* {
-cursor: none !important;
-}
-#anime-cursor {
-position: fixed;
-top: 0;
-left: 0;
-pointer-events: none;
-background-repeat: no-repeat;
-transform-origin: 0 0;
-transform-style: preserve-3d;
-z-index: ${this._getMaxZIndex()};
-}
-.cursor-debugmode {
-    border: 1px solid green;
-}
-.anime-cursor-debug {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: fit-content;
-    height: fit-content;
-    padding: 5px;
-    font-size: 16px;
-    text-wrap: nowrap;
-    color: red;
-    pointer-events: none;
-    overflow: visible;
-    z-index: 2147483647;
-}
-.anime-cursor-debug::before {
-    position: absolute;
-    content: "";
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 1px;
-    background-color: red;
-}
-.anime-cursor-debug::after {
-    position: absolute;
-    content: "";
-    top: 0;
-    left: 0;
-    width: 1px;
-    height: 100vh;
-    background-color: red;
-}
-`;
+        * {
+        cursor: none !important;
+        }
+        #anime-cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        background-repeat: no-repeat;
+        transform-origin: 0 0;
+        transform-style: preserve-3d;
+        z-index: ${this._getMaxZIndex()};
+        }
+        .cursor-debugmode {
+            border: 1px solid green;
+        }
+        .anime-cursor-debug {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: fit-content;
+            height: fit-content;
+            padding: 5px;
+            font-size: 16px;
+            text-wrap: nowrap;
+            color: red;
+            pointer-events: none;
+            overflow: visible;
+            z-index: 2147483647;
+        }
+        .anime-cursor-debug::before {
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 1px;
+            background-color: red;
+        }
+        .anime-cursor-debug::after {
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 100vh;
+            background-color: red;
+        }
+        `;
 
         /* 每种光标以及debug生成 CSS */
         for (const [type, cfg] of Object.entries(this.options.cursors)) {
@@ -241,15 +251,15 @@ z-index: ${this._getMaxZIndex()};
             else {pixel = 'auto';}
 
             css += `
-${className} {
-width: ${size[0]}px;
-height: ${size[1]}px;
-background-image: url("${image}");
-image-rendering: ${pixel};
-${(scale || offset) ? `transform: ${[scale && `scale(${scale[0]}, ${scale[1]})`, offset && `translate(-${offset[0]}px, -${offset[1]}px)`].filter(Boolean).join(' ')};` : ''}
-  
-${zIndex !== undefined ? `z-index:${zIndex};` : ''}
-}`;
+            ${className} {
+            width: ${size[0]}px;
+            height: ${size[1]}px;
+            background-image: url("${image}");
+            image-rendering: ${pixel};
+            ${(scale || offset) ? `transform: ${[scale && `scale(${scale[0]}, ${scale[1]})`, offset && `translate(-${offset[0]}px, -${offset[1]}px)`].filter(Boolean).join(' ')};` : ''}
+            
+            ${zIndex !== undefined ? `z-index:${zIndex};` : ''}
+            }`;
 
             /* PNG 精灵图动画 */
             const duration = cfg.duration;
@@ -262,15 +272,15 @@ ${zIndex !== undefined ? `z-index:${zIndex};` : ''}
                 const animName = `animecursor_${type}`;
 
                 css += `
-${className} {
-animation: ${animName} steps(${frames}) ${duration}s infinite ${cfg.pingpong ? 'alternate' : ''};
-}
+                ${className} {
+                animation: ${animName} steps(${frames}) ${duration}s infinite ${cfg.pingpong ? 'alternate' : ''};
+                }
 
-@keyframes ${animName} {
-from { background-position: 0 0; }
-to { background-position: -${size[0] * frames}px 0; }
-}
-`;
+                @keyframes ${animName} {
+                from { background-position: 0 0; }
+                to { background-position: -${size[0] * frames}px 0; }
+                }
+                `;
             }
         }
 
@@ -319,16 +329,29 @@ to { background-position: -${size[0] * frames}px 0; }
                 this.debugEl.style.top = y + 'px';
             }
 
+            let nextCursorType = null;
+
+            // 获取命中的元素
             const target = document.elementFromPoint(x, y);
-            if (!target) return;
 
-            const cursorType = target.dataset.cursor || 'default';
-            if (this.debugEl) {this.debugEl.textContent = `(${x}px , ${y}px) ${cursorType}`;}
-
-            if (cursorType !== this.lastCursorType) {
-                if (this.debugEl) {this.cursorEl.className = `cursor-${cursorType}` + ' cursor-debugmode';}
-                else {this.cursorEl.className = `cursor-${cursorType}`;}
-                this.lastCursorType = cursorType;
+            // 优先使用元素自身的 data-cursor
+            if (target && target.dataset && target.dataset.cursor) {
+                nextCursorType = target.dataset.cursor;
+            }
+            // 否则 尝试使用 default 光标
+            else if (this.defaultCursorType) {
+                nextCursorType = this.defaultCursorType;
+            }
+            
+            // 如果两者都没有 - 保持当前状态
+            if (!nextCursorType) return;
+            if (this.debugEl) {this.debugEl.textContent = `(${x}px , ${y}px) ${nextCursorType}`;}
+            
+            // 状态变化才切换 class
+            if (nextCursorType !== this.lastCursorType) {
+                if (this.debugEl) {this.cursorEl.className = `cursor-${nextCursorType}` + ' cursor-debugmode';}
+                else {this.cursorEl.className = `cursor-${nextCursorType}`;}
+                this.lastCursorType = nextCursorType;
             }
         };
 
