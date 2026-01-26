@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../../favicon.png" type="image/x-icon">
+        <title>API | 文档 - AnimeCursor - 轻量的自定义动画光标JavaScript库</title>
+        <link rel="stylesheet" href="../../style.css">
+        <link rel="stylesheet" href="../../fonts/chinese/result.css">
+        <script src="../../script.js"></script>
+        <link rel="stylesheet" href="../../monokai.min.css">
+        <script src="../../highlight.min.js"></script>
+        <script src="../../hljs-copycode.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/ShuninYu/anime-cursor@v0.2.0-alpha/dist/anime-cursor.umd.min.js"></script>
+        <script src="../../animecursor3.js"></script>
+    </head>
+<body class="docs-page" id="api">
+    <div class="docs-wrapper">
+        <div class="docs-panel zh-CN"></div>
+        <div class="docs-content">
+            <div class="docs-content-header"><p>API</p></div>
+            <h1 id="constructor">创建实例</h1>
+            <pre><code class="javascript">new AnimeCursor(options)</code></pre>
+            <p>创建一个新的 AnimeCursor 实例，并立即初始化光标行为。</p>
+            <h1 id="refresh">refresh</h1>
+            <pre><code class="javascript">cursor.refresh(): void</code></pre>
+            <p><span>refresh()</span> 用于在 页面 DOM 发生变化后，重新扫描并应用光标规则到新增元素。</p>
+            <p>AnimeCursor 在初始化时只会扫描一次 DOM。如果你的页面内容是动态插入的（例如 Markdown 渲染、Ajax 加载、SPA 路由切换），你必须在内容插入完成后手动调用 refresh()。</p>
+            <h2>示例</h2>
+            <pre><code class="javascript">// 假设页面使用 marked 加载外部 markdown 文件并注入渲染完成的 DOM
+fetch('content.md')
+    .then(res => res.text())
+    .then(html => {
+        container.innerHTML = html;
+        cursor.refresh();
+});</code></pre>
+            <h1 id="enable-disable">enable / disable</h1>
+            <pre><code class="javascript">cursor.disable(): void
+cursor.enable(): void</code></pre>
+            <ul>
+                <li>
+                    <p><span>disable()</span>：暂时隐藏并停用光标效果（不销毁实例）</p>
+                </li>
+                <li>
+                    <p><span>enable()</span>：重新启用光标效果</p>
+                </li>
+            </ul>
+            <p>适用于临时场景切换（例如进入表单区域、弹窗等）。</p>
+            <h1 id="destroy">destroy</h1>
+            <pre><code class="javascript">cursor.destroy(): void</code></pre>
+            <p>彻底销毁 AnimeCursor 实例，包括：</p>
+            <ul>
+                <li><p>移除注入的 DOM 元素</p></li>
+                <li><p>移除注入的 CSS</p></li>
+                <li><p>移除事件监听</p></li>
+                <li><p>清理 <span>data-cursor</span> 标记</p></li>
+            </ul>
+            <p>调用 <span>destroy()</span> 后，该实例不可再复用。</p>
+            <footer></footer>
+        </div>
+    </div>
+</body>
+</html>

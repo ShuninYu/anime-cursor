@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../../favicon.png" type="image/x-icon">
+        <title>调试与故障排除 | 文档 - AnimeCursor - 轻量的自定义动画光标JavaScript库</title>
+        <link rel="stylesheet" href="../../style.css">
+        <link rel="stylesheet" href="../../fonts/chinese/result.css">
+        <script src="../../script.js"></script>
+        <link rel="stylesheet" href="../../monokai.min.css">
+        <script src="../../highlight.min.js"></script>
+        <script src="../../hljs-copycode.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/ShuninYu/anime-cursor@v0.2.0-alpha/dist/anime-cursor.umd.min.js"></script>
+        <script src="../../animecursor3.js"></script>
+    </head>
+<body class="docs-page" id="debug">
+    <div class="docs-wrapper">
+        <div class="docs-panel zh-CN"></div>
+        <div class="docs-content">
+            <div class="docs-content-header"><p>调试与故障排除</p></div>
+            <h1 id="debug-mode">debug 模式</h1>
+            <p>启用 debug 模式</p>
+            <pre><code class="javascript">new AnimeCursor({
+    debug: true,
+    cursors: {...}
+});</code></pre>
+            <p>debug 模式会显示：</p>
+            <ul>
+                <li><p>当前鼠标坐标</p></li>
+                <li><p>当前光标类型</p></li>
+                <li><p>光标边界</p></li>
+            </ul>
+            <p>debug 模式主要可以用来校准光标、测试切换、检查光标尺寸。</p>
+            <h1 id="common-issues">常见问题</h1>
+            <h2>光标不显示 / 没有变化</h2>
+            <ul>
+                <li><p>检查图片路径</p></li>
+                <li><p>检查光标设置是否合法，检查控制台是否有报错</p></li>
+                <li><p>检查 <span>tags</span> 是否匹配元素</p></li>
+                <li><p>是否在 DOM 插入后调用 <span>refresh</span></p></li>
+                <li><p>是否调用过 <span>destroy</span></p></li>
+            </ul>
+            <div class="warningbox"><p>[已知问题] 在使用 liveserver 和 Firefox 测试页面的时候，即使配置正确且没有报错，也会偶尔出现默认光标不显示的问题，但是使用 Firefox 浏览实际部署的页面时不会出现该问题。暂时没有找到问题原因。</p></div>
+            <h1 id="faq">FAQ</h1>
+            <p class="ps">Nothing right now.<br>Waiting for update...</p>
+            <footer></footer>
+        </div>
+    </div>
+</body>
+</html>

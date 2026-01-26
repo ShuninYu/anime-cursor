@@ -1,12 +1,23 @@
+if(typeof hljs !== 'undefined') {
+    hljs.highlightAll();
+    hljs.addPlugin(new CopyButtonPlugin({
+        autohide: false,
+    }));
+    console.log('highlightJS codes highlighted');
+} else {
+    console.log('highlightJS not found, will not render codes');
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+
     new AnimeCursor({
         debug: true,
         cursors: {
             default: {
-                tags: ['body'],
                 size: [32,32],
                 image: '../../i/cursor/cursor_default.gif',
-                pixel: true
+                pixel: true,
+                default: true
             },
             pointer: {
                 tags: ['a', 'button'],
@@ -19,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 pixel: true
             },
             text: {
-                tags: ['p','h1','h2','span','ul','li','pre','code','footer'],
+                tags: ['p','h1','h2','h3','h4','span','td','th','pre','code','footer'],
                 size: [32,32],
                 image: '../../i/cursor/cursor_text.png',
                 offset: [10, 16],

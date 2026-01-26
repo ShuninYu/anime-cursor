@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../favicon.png" type="image/x-icon">
+        <title>Debug | Docs - AnimeCursor - Lightweight JS for animated website cursors</title>
+        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../fonts/chinese/result.css">
+        <script src="../script.js"></script>
+        <link rel="stylesheet" href="../monokai.min.css">
+        <script src="../highlight.min.js"></script>
+        <script src="../hljs-copycode.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/ShuninYu/anime-cursor@v0.2.0-alpha/dist/anime-cursor.umd.min.js"></script>
+        <script src="../animecursor3.js"></script>
+    </head>
+<body class="docs-page" id="getting-started">
+    <div class="docs-wrapper">
+        <div class="docs-panel"></div>
+        <div class="docs-content">
+            <div class="docs-content-header"><p>Debugging & Troubleshooting</p></div>
+            <h1 id="debug-mode">Debug Mode</h1>
+            <p>Enable debug mode</p>
+            <pre><code class="javascript">new AnimeCursor({
+    debug: true,
+    cursors: {...}
+});</code></pre>
+            <p>Debug mode will display:</p>
+            <ul>
+                <li><p>Current mouse coordinates</p></li>
+                <li><p>Current cursor type</p></li>
+                <li><p>Cursor boundaries</p></li>
+            </ul>
+            <p>Debug mode is primarily useful for calibrating the cursor, testing switching behavior, and checking cursor dimensions.</p>
+            <h1 id="common-issues">Common Issues</h1>
+            <h2>Cursor not showing / No change</h2>
+            <ul>
+                <li><p>Check the image path.</p></li>
+                <li><p>Check if cursor settings are valid and see if there are any errors in the console.</p></li>
+                <li><p>Check if <span>tags</span> match the intended elements.</p></li>
+                <li><p>Check if <span>refresh</span> was called after DOM insertion.</p></li>
+                <li><p>Check if <span>destroy</span> was called.</p></li>
+            </ul>
+            <div class="warningbox"><p>[Known Issue] When testing a page with live server and Firefox, the default cursor may occasionally fail to display even with correct configuration and no console errors. However, this issue does not occur when viewing the actually deployed page with Firefox. The root cause is currently unknown.</p></div>
+            <h1 id="faq">FAQ</h1>
+            <p class="ps">Nothing right now.<br>Waiting for update...</p>
+            <footer></footer>
+        </div>
+    </div>
+</body>
+</html>

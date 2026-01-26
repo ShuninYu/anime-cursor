@@ -8,12 +8,11 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="fonts/chinese/result.css">
     <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/anime-cursor/dist/anime-cursor.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ShuninYu/anime-cursor@v0.2.0-alpha/dist/anime-cursor.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.0/github-markdown-dark.min.css">
-    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/languages/html.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/default.min.css">
+    <!-- <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/default.min.css"> -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             fetch('logs.md')
@@ -24,7 +23,7 @@
                         marked.parse(markdownText);
         
                     // 高亮代码（必须在插入之后）
-                    hljs.highlightAll();
+                    // hljs.highlightAll();
         
                     // 初始化 AnimeCursor
                     initAnimeCursor();
@@ -38,12 +37,13 @@
         
         function initAnimeCursor() {
             new AnimeCursor({
+                debug: true,
                 cursors: {
                     default: {
-                        tags: ['body'],
                         size: [32,32],
                         image: 'i/cursor/cursor_default.gif',
-                        pixel: true
+                        pixel: true,
+                        default: true
                     },
                     pointer: {
                         tags: ['a', 'button'],
@@ -56,7 +56,7 @@
                         pixel: true
                     },
                     text: {
-                        tags: ['p','h1','h2','span','ul','li','pre','code'],
+                        tags: ['p','h1','h2','h3','h4','span','ul','li','pre','code','footer'],
                         size: [32,32],
                         image: 'i/cursor/cursor_text.png',
                         offset: [9, 16],
@@ -69,7 +69,6 @@
 </head>
 <body class="changelog-page">
     <div id="changelog-content" class="markdown-body">正在加载……</div>
-    <script>
-    </script>
+    <footer></footer>
 </body>
 </html>

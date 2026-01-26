@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../favicon.png" type="image/x-icon">
+        <title>Lifecycle & Best Practices | Docs - AnimeCursor - Lightweight JS for animated website cursors</title>
+        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../fonts/chinese/result.css">
+        <script src="../script.js"></script>
+        <link rel="stylesheet" href="../monokai.min.css">
+        <script src="../highlight.min.js"></script>
+        <script src="../hljs-copycode.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/ShuninYu/anime-cursor@v0.2.0-alpha/dist/anime-cursor.umd.min.js"></script>
+        <script src="../animecursor3.js"></script>
+    </head>
+<body class="docs-page" id="getting-started">
+    <div class="docs-wrapper">
+        <div class="docs-panel"></div>
+        <div class="docs-content">
+            <div class="docs-content-header"><p>Lifecycle & Best Practices</p></div>
+            <h1 id="dom">DOM Injection Timing</h1>
+            <p>Since AnimeCursor needs to inject <span>data-cursor</span> into the DOM, please create the AnimeCursor instance <strong>after</strong> the DOM has fully loaded. Creating the AnimeCursor instance before the DOM is ready may cause some DOM elements to lack the <span>data-cursor</span> attribute, which can affect cursor switching.</p>
+            <p>Similarly, even if the AnimeCursor instance is created after the DOM loads, any dynamically inserted DOM elements will also lack the <span>data-cursor</span> attribute. AnimeCursor provides corresponding APIs to address such issues.</p>
+            <p>❌ Incorrect example:</p>
+            <pre><code class="javascript no-copy">new AnimeCursor();
+fetchMarkdown();</code></pre>
+            <p>✅ Correct examples:</p>
+            <pre><code class="javascript">fetchMarkdown().then(() => {
+    new AnimeCursor();
+});</code></pre>
+            <p>Or</p>
+            <pre><code class="javascript">const cursor = new AnimeCursor();
+fetchMarkdown().then(() => cursor.refresh());</code></pre>
+            <h1 id="markdown">Usage with Markdown / SPA</h1>
+            <ul>
+                <li><p>Call <span>refresh()</span> after Markdown rendering is complete.</p></li>
+                <li><p>Call <span>refresh()</span> after SPA route changes.</p></li>
+                <li><p>Avoid creating a <span>new AnimeCursor()</span> instance on every update.</p></li>
+            </ul>
+            <footer></footer>
+        </div>
+    </div>
+</body>
+</html>

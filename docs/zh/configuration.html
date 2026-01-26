@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../../favicon.png" type="image/x-icon">
+        <title>配置 | 文档 - AnimeCursor - 轻量的自定义动画光标JavaScript库</title>
+        <link rel="stylesheet" href="../../style.css">
+        <link rel="stylesheet" href="../../fonts/chinese/result.css">
+        <script src="../../script.js"></script>
+        <link rel="stylesheet" href="../../monokai.min.css">
+        <script src="../../highlight.min.js"></script>
+        <script src="../../hljs-copycode.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/ShuninYu/anime-cursor@v0.2.0-alpha/dist/anime-cursor.umd.min.js"></script>
+        <script src="../../animecursor3.js"></script>
+    </head>
+<body class="docs-page" id="configuration">
+    <div class="docs-wrapper">
+        <div class="docs-panel zh-CN"></div>
+        <div class="docs-content">
+            <div class="docs-content-header"><p>配置</p></div>
+            <h1 id="cursor-types">光标类型</h1>
+            <p><span>cursors</span> 是 AnimeCursor 的核心配置项。每一个 key 表示一种光标类型，对应一个 CSS class <br>（<span>cursor-${type}</span>，由 AnimeCursor 自动生成）。光标类型的名称完全由你来决定，只要符合 JavaScript 的标准，任何名称都不会影响效果。</p>
+            <pre><code class="javascript">cursors: {
+    default: { ... },
+    pointer: { ... },
+    text: { ... },
+    cursorForFun: { ... }
+}</code></pre>
+            <p>要让这些光标真正起效，你还需要对它们进行基础的参数配置，以告诉 AnimeCursor 你希望这些光标以什么样的效果呈现。</p>
+
+            <h1 id="options">参数选项</h1>
+            <h2>所有光标参数</h2>
+            <p>下面的表格列出了 AnimeCursor 为光标预留的所有参数选项，可以用来快速参考，对于每个参数更详细的介绍请见下文。</p>
+            <table class="config-table" cellspacing="0">
+                <colgroup><col style="width: 12%;"><col style="width: 20%;"><col style="width: 10%;"><col style="width: 34%;"><col style="width: 24%;"></colgroup>
+                <tr><th>选项</th> <th>类型</th> <th>必填项</th> <th>选项介绍</th> <th>留空时的行为</th></tr>
+                <tr><td>tags</td> <td>string[ ]</td> <td>✅⚠️</td> <td>生效的 HTML 标签<br>⚠️默认光标建议不设置此项</td> <td><span class="error">报错</span></td></tr>
+                <tr><td>size</td> <td>[number, number]</td> <td>✅</td> <td>光标尺寸[宽,高]（像素）</td> <td><span class="error">报错</span></td></tr>
+                <tr><td>image</td> <td>string</td> <td>✅</td> <td>光标图片路径</td> <td><span class="error">报错</span></td></tr>
+                <tr><td>default</td> <td>boolean</td> <td>⚠️</td> <td>光标是否是默认光标<br>⚠️最多只能设置一个默认光标</td> <td><span>与设置该项为 false 相同</span></td></tr>
+                <tr><td>frames</td> <td>number</td> <td></td> <td>精灵图动画帧数</td> <td><span class="warning">光标不会生成精灵图动画</span></td></tr>
+                <tr><td>duration</td> <td>number</td> <td></td> <td>精灵图动画循环时长</td> <td><span class="warning">光标不会生成精灵图动画</span></td></tr>
+                <tr><td>pingpong</td> <td>boolean</td> <td></td> <td>精灵图动画是否乒乓循环</td> <td><span>精灵图动画将以默认方式循环</span></td></tr>
+                <tr><td>offset</td> <td>[number, number]</td> <td></td> <td>光标偏移[向右,向下]（像素）</td> <td><span>光标指针位置默认左上角</span></td></tr>
+                <tr><td>scale</td> <td>[number, number]</td> <td></td> <td>光标缩放倍数[横向,纵向]</td> <td><span>光标保持 size 设定尺寸</span></td></tr>
+                <tr><td>pixel</td> <td>boolean</td> <td></td> <td>是否启用像素渲染（pixelated）</td> <td><span class="warning">原尺寸像素图平滑边缘</span></td></tr>
+                <tr><td>zindex</td> <td>number</td> <td></td> <td>为光标单独设置层级（&lt;body>层面）</td> <td><span>默认设置为最大层级-1</span></td></tr>
+            </table>
+            <h2>参数介绍</h2>
+            <ul>
+                <li>
+                    <h3>tags</h3>
+                    <p><span>tags</span> 是光标参数中的一个<span>必填项</span>，它表示鼠标指针指在哪些 DOM 元素上时，AnimeCursor 会把光标切换为此参数所属光标。</p>
+                    <p>格式：</p>
+                    <pre><code class="javascript">tags['tag-1' , 'tag-2' , 'tag-3']</code></pre>
+                    <p>示例：</p>
+                    <pre><code class="javascript">// AnimeCursor 将在鼠标指针指向 a元素 button元素 和 span元素 时将光标切换到该参数所属光标
+tags['a' , 'button' , 'span']</code></pre>
+                    <p>上面的示例表示：AnimeCursor 将在鼠标指针指向 <span>a元素</span> <span>button元素</span> 和 <span>span元素</span> 时将光切换到该参数所属光标。</p>
+                    <p>假设该 <span>tags</span> 参数属于 <span>pointer</span> 光标，那么当鼠标指针指向下面任何一个元素之一时：</p>
+                    <pre><code class="html">&lt;a href="/">A element&lt;/a>
+
+&lt;button type="button">BUTTON element&lt;/button>
+
+&lt;span>SPAN element&lt;/span></code></pre>
+                    <p>AnimeCursor 会自动切换到 <span>pointer</span> 光标。</p>
+                    <div class="notebox">
+                        <p><span>default</span> 参数设置为 <span>true</span> 的光标会自动被 AnimeCursor 应用到所有没有被声明过的情况中，所以默认光标可以不设置此项。</p>
+                    </div>
+                    <div class="warningbox">
+                        <p><span>tags</span> 中设置的元素标签是 <span>全局不可重复</span> 的。<br>如果某种元素标签已经在某个光标中被声明过，那么在其他光标中就不可以被再次声明，即不同的光标不能有相同的目标元素标签。</p>
+                    </div>
+                </li>
+                <li>
+                    <h3>size</h3>
+                    <p><span>size</span> 是光标参数中的一个<span>必填项</span>，它表示此参数所属光标的尺寸(单位 <span>像素</span>)。</p>
+                    <p>格式：</p>
+                    <pre><code class="javascript">size: [sizeX , sizeY]</code></pre>
+                    <p>示例：</p>
+                    <pre><code class="javascript">size: [32 , 32]</code></pre>
+                    <p>上面的示例表示：该参数所属的光标的尺寸为 <span>32px × 32px</span>，且如果该光标为精灵图动画光标，则精灵图的帧尺寸为 <span>32px × 32px</span>。</p>
+                </li>
+                <li>
+                    <h3>image</h3>
+                    <p><span>image</span> 是光标参数中的一个<span>必填项</span>，它表示此参数所属光标的图片路径。</p>
+                    <p>格式：</p>
+                    <pre><code class="javascript">image: 'path-to-your-image';</code></pre>
+                    <p>示例：</p>
+                    <pre><code class="javascript">// 可以是相对路径
+image: '/image/cursor/cursor-image.png';</code></pre>
+                    <pre><code class="javascript">// 或者是绝对路径
+image: 'https://example.com/image/cursor/cursor-image.png';</code></pre>
+                    <p>上面的两个示例表示：该参数所属的光标的图片路径为 <span>/image/cursor/cursor-image.png</span>（第一个示例）、<span>https://example.com/image/cursor/cursor-image.png</span>（第二个示例）。</p>
+                    <div class="warningbox">
+                        <p>AnimeCursor 推荐使用绝对路径来设置光标图片。如果网站有多层的页面结构，使用相对路径可能导致 AnimeCursor 的图片路径不匹配，这个问题是可以通过使用绝对路径来避免的。</p>
+                    </div>
+                </li>
+                <li>
+                    <h3>default</h3>
+                    <p><span>default</span> 是光标参数中的一个非必填项，当该参数设置为 <span>true</span> 时，它表示此参数所属光标是默认光标。</p>
+                    <p>未设置该参数时，表现与设置该项为 <span>false</span> 相同，AnimeCursor 不会把此参数所属光标当做默认光标。</p>
+                    <div class="warningbox">
+                        <p>AnimeCursor 最多只能将一个光标设置为默认光标，如果有一个以上的光标被设置为默认光标，AnimeCursor 将会报错。</p>
+                    </div>
+                    <p>格式：</p>
+                    <pre><code class="javascript">default: true-or-false;</code></pre>
+                    <p>示例：</p>
+                    <pre><code class="javascript">default: true;</code></pre>
+                    <p>上面的示例表示：该参数所属的光标为默认光标。</p>
+                    <div class="notebox">
+                        <p>默认光标不需要设置 <span>tags</span> 参数。AnimeCursor 推荐默认光标不要设置 <span>tags</span> 参数，因为 <span>tags</span> 参数不会影响默认光标的切换逻辑，但是给默认光标设置此参数可能导致与其他光标产生目标冲突。</p>
+                    </div>
+                </li>
+                <li>
+                    <h3>frames</h3>
+                    <p><span>frames</span> 是光标参数中的一个非必填项，但是精灵图动画光标必须配置该项，它表示此参数所属光标的精灵图动画所包含的帧数量（一个循环内）。</p>
+                    <p>格式：</p>
+                    <pre><code class="javascript">frames: frames-count;</code></pre>
+                    <p>示例：</p>
+                    <pre><code class="javascript">frames: 6;</code></pre>
+                    <p>上面的示例表示：该参数所属的光标的精灵图动画一个循环有6帧。</p>
+                </li>
+                <li>
+                    <h3>duration</h3>
+                    <p><span>duration</span> 是光标参数中的一个非必填项，但是精灵图动画光标必须配置该项，它表示此参数所属光标的精灵图动画的时长（一个循环内，单位 <span>秒</span>）。</p>
+                    <p>格式：</p>
+                    <pre><code class="javascript">duration: loop-length;</code></pre>
+                    <p>示例：</p>
+                    <pre><code class="javascript">duration: 2;</code></pre>
+                    <p>上面的示例表示：该参数所属的光标的精灵图动画一个循环的时长为2秒钟。</p>
+                </li>
+                <div class="warningbox">
+                    <p>只有 <span>frames</span> 和 <span>duration</span> 两个参数都被合法的配置的时候，AnimeCursor 才会将光标视为精灵图动画光标处理。缺少任何一个参数，或者有参数被不合法的设置的时候，AnimeCursor都会报错。</p>
+                </div>
+                <li>
+                    <h3>pingpong</h3>
+                    <p><span>pingpong</span> 是光标参数中的一个非必填项，它表示此参数所属光标是否启用了乒乓循环。</p>
+                    <p>未设置该参数时，表现与设置该项为 <span>false</span> 相同，该参数所属光标如果是精灵图动画光标，动画结束后会从头开始循环。</p>
+                    <div class="notebox">
+                        <p>GIF 动图的播放由图片本身控制，AnimeCursor 不会改变 GIF 动图，所以给 GIF 动图设置该项是无效的。</p>
+                    </div>
+                    <p>格式：</p>
+                    <pre><code class="javascript">pingpong: true-or-false;</code></pre>
+                    <p>示例：</p>
+                    <pre><code class="javascript">pingpong: true;</code></pre>
+                    <p>上面的示例表示：该参数所属的光标如果是精灵图动画光标，则启用乒乓循环。</p>
+                </li>
+                <li>
+                    <h3>offset</h3>
+                    <p><span>offset</span> 是光标参数中的一个非必填项，它表示此参数所属光标的指针偏移（单位 <span>像素</span>）。</p>
+                    <p>格式：</p>
+                    <pre><code class="javascript">offset: [offsetX , offsetY]</code></pre>
+                    <p>示例：</p>
+                    <pre><code class="javascript">offset: [5 , 10]</code></pre>
+                    <p>上面的示例表示：该参数所属的光标的指针偏移为横向 <span>5px</span>，纵向 <span>10px</span>。且如果该光标为精灵图动画光标，则精灵图的帧尺寸为 <span>32px × 32px</span>。</p>
+                </li>
+                <li>
+                    <h3>scale</h3>
+                    <p><span>scale</span> 是光标参数中的一个非必填项，它表示此参数所属光标的缩放倍数。</p>
+                    <p>格式：</p>
+                    <pre><code class="javascript">scale: [scaleX , scaleY]</code></pre>
+                    <p>示例：</p>
+                    <pre><code class="javascript">scale: [2 , 0.5]</code></pre>
+                    <p>上面的示例表示：该参数所属的光标的缩放为横向 <span>2倍</span>，纵向 <span>0.5倍</span>。</p>
+                </li>
+                <li>
+                    <h3>pixel</h3>
+                    <p><span>pixel</span> 是光标参数中的一个非必填项，它表示此参数所属光标是否启用了像素化渲染。</p>
+                    <p>未设置该参数时，表现与设置该项为 <span>false</span> 相同，该参数所属光标会使用浏览器默认的渲染方式。</p>
+                    <div class="notebox">
+                        <p>对于像素风光标，使用原尺寸像素图，将 <span>pixel</span> 启用并设置缩放，可以节省文件体积以缩短加载时间。</p>
+                    </div>
+                    <p>格式：</p>
+                    <pre><code class="javascript">pixel: true-or-false;</code></pre>
+                    <p>示例：</p>
+                    <pre><code class="javascript">pixel: true;</code></pre>
+                    <p>上面的示例表示：该参数所属的光标的图像将启用像素化渲染。</p>
+                </li>
+                <li>
+                    <h3>zindex</h3>
+                    <p><span>zindex</span> 是光标参数中的一个非必填项，它表示为此参数所属光标单独设置层级。</p>
+                    <p>格式：</p>
+                    <pre><code class="javascript">zindex: number;</code></pre>
+                    <p>示例：</p>
+                    <pre><code class="javascript">zindex: 10;</code></pre>
+                    <p>上面的示例表示：该参数所属的光标的 <span>z-index</span> 被单独设置为10。</p>
+                    <div class="notebox">
+                        <p>对于需要光标被部分元素遮挡的情况，设置该项的时候需要注意：<span>z-index</span> 的值只有在同一个堆叠上下文（stacking context）中才有意义，而 AnimeCursor 的光标元素是 <span>&lt;body></span> 的直接子元素。</p>
+                        <p>为 AnimeCursor 增加一个可以决定光标元素注入位置的配置项和API也许可行，但是这可能并不是我开发 AnimeCursor 的方向，所以注入定位功能极有可能不会被添加。</p>
+                    </div>
+                </li>
+            </ul>
+            
+            <h1 id="global-options">全局选项</h1>
+            <p>除了光标本身之外，AnimeCursor 还提供了少量与 <span>cursors</span> 同级的全局选项：</p>
+            <h2>什么是全局选项</h2>
+            <table>
+                <colgroup><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"></colgroup>
+                <tr><th>选项</th><th>类型</th><th>默认值</th><th>选项介绍</th></tr>
+                <tr><td>debug</td><td>boolean</td><td>false</td><td>启用debug覆盖</td></tr>
+                <tr><td>enableTouch</td><td>boolean</td><td>false</td><td>是否在触屏设备启用</td></tr>
+            </table>
+            <h2>全局选项介绍</h2>
+            <ul>
+                <li>
+                    <h3>debug</h3>
+                    <p>非常重要的一个选项，设置为 <span>true</span> 启用debug模式。</p>
+                    <p>debug模式会显示鼠标指针的真实位置以及当前光标类型，以帮助纠正对齐偏移量或排除其他错误。</p>
+                </li>
+                <li>
+                    <h3>enableTouch</h3>
+                    <p>用于启用移动触屏设备上的动画光标。</p>
+                    <p>AnimeCursor 会自动识别移动触屏设备（比如手机、平板电脑）并默认屏蔽这些设备上的动画光标。如果你想在这些设备上显示动画光标，可以添加 <span>enableTouch: true</span>。</p>
+                </li>
+            </ul>
+            <h2>如何设置全局选项</h2>
+            <p>由于全局选项与光标类型同级，所以设置全局参数时需要注意代码格式：</p>
+            <h3>✅合法的格式：</h3>
+            <pre><code class="javascript">new AnimeCursor({
+    debug: true, // 与cursors同级，格式正确
+    enableTouch: false, // 与cursors同级，格式正确
+    cursors: {
+        default: {
+            size: [32,32],
+            image: 'i/cursor/cursor_default.gif',
+            pixel: true,
+            default: true
+        },
+    }
+});</code></pre>
+            <p>一个设置了全局选项的 AnimeCursor 初始化应该看起来像上面的例子。</p>
+            <h3>❌非法的格式：</h3>
+            <pre><code class="javascript no-copy">new AnimeCursor({
+    cursors: {
+        debug: true, // 包裹进了cursors内，位置错误
+        default: {
+            size: [32,32],
+            image: 'i/cursor/cursor_default.gif',
+            pixel: true,
+            default: true,
+            enableTouch: false // 包裹进了光标设置内，位置错误
+        },
+    }
+});</code></pre>
+            <p>而这上面是一个错误示范，注意 <span>debug</span> 和 <span>enableTouch</span> 在代码中的位置和注释文本。</p>
+            <footer></footer>
+        </div>
+    </div>
+</body>
+</html>

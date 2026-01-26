@@ -12,6 +12,23 @@
   font-family: 'Content';
   src: url(fonts/SinkinSans-300Light.otf);
 }
+::selection {
+  background-color: antiquewhite;
+  color: black;
+}
+::-moz-selection {
+  background-color: antiquewhite;
+  color: black;
+}
+/*火狐浏览器*/
+::-webkit-selection {
+  background-color: antiquewhite;
+  color: black;
+}
+/*谷歌*/
+html {
+  scroll-behavior: smooth;
+}
 body {
   background-color: black;
   min-width: 100%;
@@ -57,6 +74,46 @@ a > * {
     opacity: 1;
   }
 }
+.home-lang {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-left: 1px solid #8c8c8c;
+  border-bottom: 1px solid #8c8c8c;
+  width: 50px;
+  aspect-ratio: 1/1;
+  color: black;
+  background-color: #ffffff;
+  transition: background-color 0.4s;
+}
+.home-lang::before {
+  content: '中';
+  position: absolute;
+  font-size: 20px;
+  top: 0;
+  left: 4px;
+}
+.home-lang::after {
+  content: 'EN';
+  position: absolute;
+  bottom: 0;
+  right: 4px;
+}
+.home-lang .line-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.home-lang .line {
+  stroke: #8c8c8c;
+  stroke-width: 1;
+}
+.home-lang:hover {
+  background-color: #ffc8c8;
+}
 .home-page {
   background-image: url(i/holo.avif);
   background-size: cover;
@@ -89,46 +146,6 @@ a > * {
   color: black;
   text-decoration: none;
 }
-.home-page .titlebox .home-lang {
-  position: absolute;
-  top: 0;
-  right: 0;
-  border-left: 1px solid #8c8c8c;
-  border-bottom: 1px solid #8c8c8c;
-  width: 50px;
-  aspect-ratio: 1/1;
-  color: black;
-  background-color: #ffffff;
-  transition: background-color 0.4s;
-}
-.home-page .titlebox .home-lang::before {
-  content: '中';
-  position: absolute;
-  font-size: 20px;
-  top: 0;
-  left: 4px;
-}
-.home-page .titlebox .home-lang::after {
-  content: 'EN';
-  position: absolute;
-  bottom: 0;
-  right: 4px;
-}
-.home-page .titlebox .home-lang .line-svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-.home-page .titlebox .home-lang .line {
-  stroke: #8c8c8c;
-  stroke-width: 1;
-}
-.home-page .titlebox .home-lang:hover {
-  background-color: #ffc8c8;
-}
 .home-page .titlebox .titleimg {
   position: relative;
   border: 1px solid black;
@@ -152,6 +169,7 @@ a > * {
   color: black;
   font-size: 24px;
   text-align: center;
+  margin: 2px 14px;
 }
 .home-page .titlebox .titleimg div {
   position: absolute;
@@ -232,15 +250,19 @@ a > * {
   background-image: url(i/npm.svg);
   background-size: 60px auto;
 }
+.docs-page {
+  background-color: #090b0b;
+}
 .docs-page .docs-wrapper {
   display: grid;
-  grid-template-columns: 320px auto;
+  grid-template-columns: 350px auto;
 }
 .docs-page .docs-wrapper .docs-panel {
-  position: relative;
+  position: sticky;
+  top: 0;
   height: 100vh;
   height: 100dvh;
-  border-right: 1px solid white;
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
   overflow-y: auto;
   scrollbar-width: none;
 }
@@ -259,14 +281,23 @@ a > * {
 }
 .docs-page .docs-wrapper .docs-panel .docs-panel-topbar .docs-panel-topbar-logo {
   display: block;
+  position: relative;
+  left: 60px;
   width: 192px;
   height: 64px;
-  margin: 0 auto;
   background-image: url(i/button-title.gif);
   background-size: 192px 64px;
   background-position: center;
   background-repeat: no-repeat;
   image-rendering: pixelated;
+}
+.docs-page .docs-wrapper .docs-panel .docs-panel-topbar .docs-panel-topbar-logo p {
+  display: block;
+  position: absolute;
+  bottom: 6px;
+  left: 2px;
+  font-size: 16px;
+  font-weight: bold;
 }
 .docs-page .docs-wrapper .docs-panel .docs-panel-topbar .docs-panel-topbar-navbar {
   display: flex;
@@ -304,9 +335,8 @@ a > * {
 }
 .docs-page .docs-wrapper .docs-panel .docs-panel-list .docs-panel-list-folder {
   width: 100%;
-  height: 60px;
-  min-height: 60px;
-  border-bottom: 1px solid white;
+  height: 50px;
+  min-height: 50px;
   display: block;
   overflow: hidden;
   position: relative;
@@ -321,53 +351,51 @@ a > * {
   background-repeat: no-repeat;
   position: absolute;
   right: 10px;
-  top: 10px;
+  top: 5px;
   border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0);
+  opacity: 0.5;
   transition: 0.4s;
 }
 .docs-page .docs-wrapper .docs-panel .docs-panel-list .docs-panel-list-folder .docs-panel-list-folder-icon:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  opacity: 1;
 }
 .docs-page .docs-wrapper .docs-panel .docs-panel-list .docs-panel-list-folder p {
   width: 100%;
-  height: 60px;
+  height: 50px;
   font-size: 18px;
-  line-height: 60px;
+  line-height: 50px;
   padding: 0 0 0 14px;
-  background-color: rgba(255, 255, 255, 0);
+  color: rgba(255, 255, 255, 0.5);
   user-select: none;
-  transition: background-color 0.4s;
+  transition: color 0.4s;
 }
 .docs-page .docs-wrapper .docs-panel .docs-panel-list .docs-panel-list-folder p:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
 }
 .docs-page .docs-wrapper .docs-panel .docs-panel-list .docs-panel-list-folder .docs-panel-list-item {
   display: block;
   position: relative;
   width: 100%;
   height: 40px;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 40px;
   padding: 0 0 0 40px;
-  color: white;
   text-decoration: none;
-  background-color: rgba(255, 255, 255, 0);
-  transition: background-color 0.4s;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.4s;
   overflow: hidden;
 }
 .docs-page .docs-wrapper .docs-panel .docs-panel-list .docs-panel-list-folder .docs-panel-list-item:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
 }
 .docs-page .docs-wrapper .docs-panel .docs-panel-list .docs-panel-list-folder .docs-panel-list-item::before {
   display: block;
   position: absolute;
   left: 19px;
   top: 0;
-  content: '';
   width: 2px;
   height: 100%;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 .docs-page .docs-wrapper .docs-panel .docs-panel-list .docs-panel-list-folder .docs-panel-list-item::after {
   display: block;
@@ -377,18 +405,255 @@ a > * {
   content: '';
   width: 9px;
   height: 2px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 .docs-page .docs-wrapper .docs-panel .docs-panel-list .unfold {
   height: auto;
+}
+.docs-page .docs-wrapper .docs-panel .docs-panel-list .unfold p {
+  color: #ffffff;
 }
 .docs-page .docs-wrapper .docs-panel .docs-panel-list .unfold .docs-panel-list-folder-icon {
   transform: rotate(90deg);
 }
 .docs-page .docs-wrapper .docs-content {
-  width: 100%;
+  width: 900px;
   min-height: 100vh;
   min-height: 100dvh;
+  padding: 50px;
+  margin: 0 auto;
+  color: white;
+  letter-spacing: 1px;
+}
+.docs-page .docs-wrapper .docs-content .docs-content-header {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  padding: 20px;
+  background-image: url(i/holo.avif);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.docs-page .docs-wrapper .docs-content .docs-content-header p {
+  padding: 40px 0 0 10px;
+  color: black;
+  font-size: 36px;
+  font-weight: normal;
+  line-height: 100px;
+  text-wrap: nowrap;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+.docs-page .docs-wrapper .docs-content h1 {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  font-size: 32px;
+  margin: 60px 0 20px 0;
+  font-weight: normal;
+}
+.docs-page .docs-wrapper .docs-content h2 {
+  font-size: 27px;
+  margin: 50px 0 15px 0;
+  width: fit-content;
+  font-weight: normal;
+}
+.docs-page .docs-wrapper .docs-content h3 {
+  font-size: 24px;
+  margin: 40px 0 10px 0;
+  width: fit-content;
+  font-weight: normal;
+}
+.docs-page .docs-wrapper .docs-content h4 {
+  font-size: 21px;
+  margin: 30px 0 5px 0;
+  width: fit-content;
+  font-weight: normal;
+}
+.docs-page .docs-wrapper .docs-content p {
+  width: fit-content;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  font-weight: normal;
+  margin: 20px 0;
+  line-height: 2em;
+}
+.docs-page .docs-wrapper .docs-content p span {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: normal;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0 6px;
+  border-radius: 6px;
+  font-family: 'consolas';
+}
+.docs-page .docs-wrapper .docs-content a {
+  color: white;
+}
+.docs-page .docs-wrapper .docs-content ul li,
+.docs-page .docs-wrapper .docs-content ol li {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  font-weight: normal;
+  margin: 10px 0 10px 20px;
+}
+.docs-page .docs-wrapper .docs-content ul li::marker,
+.docs-page .docs-wrapper .docs-content ol li::marker {
+  font-size: 20px;
+}
+.docs-page .docs-wrapper .docs-content table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+.docs-page .docs-wrapper .docs-content table tr th {
+  font-size: 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 8px 0 8px 0;
+}
+.docs-page .docs-wrapper .docs-content table tr td {
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 0 12px 12px;
+}
+.docs-page .docs-wrapper .docs-content table tr td span {
+  display: inline-block;
+  width: fit-content;
+  padding: 0 8px;
+  border-radius: 4px;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.docs-page .docs-wrapper .docs-content table tr td .error {
+  color: #ff0000 !important;
+  background-color: rgba(255, 0, 0, 0.2) !important;
+}
+.docs-page .docs-wrapper .docs-content table tr td .warning {
+  color: #ffff00 !important;
+  background-color: rgba(255, 255, 0, 0.2) !important;
+}
+.docs-page .docs-wrapper .docs-content .config-table td:nth-child(5) {
+  text-align: center;
+}
+.docs-page .docs-wrapper .docs-content pre {
+  position: relative;
+  margin: 20px 0;
+}
+.docs-page .docs-wrapper .docs-content pre code {
+  font-family: consolas;
+  font-size: 14px;
+  line-height: 1.5em;
+}
+.docs-page .docs-wrapper .docs-content pre code span {
+  font-family: consolas;
+  font-size: 14px;
+  line-height: 1.5em;
+  pointer-events: none;
+}
+.docs-page .docs-wrapper .docs-content pre .docs-copycode,
+.docs-page .docs-wrapper .docs-content pre .hljs-copy-container {
+  position: absolute;
+  z-index: 99;
+  display: block;
+  left: -49px;
+  top: 0;
+  width: 49px;
+  aspect-ratio: 1/1;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: 0.4s;
+  text-transform: uppercase;
+  text-align: center;
+  user-select: none;
+}
+.docs-page .docs-wrapper .docs-content pre .docs-copycode .hljs-copy-button,
+.docs-page .docs-wrapper .docs-content pre .hljs-copy-container .hljs-copy-button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 49px;
+  margin: 0;
+  transition: 0.4s;
+}
+.docs-page .docs-wrapper .docs-content pre .docs-copycode:hover,
+.docs-page .docs-wrapper .docs-content pre .hljs-copy-container:hover {
+  border: 1px solid #ffffff;
+  background-color: #ffffff;
+}
+.docs-page .docs-wrapper .docs-content pre .docs-copycode:hover .hljs-copy-button,
+.docs-page .docs-wrapper .docs-content pre .hljs-copy-container:hover .hljs-copy-button {
+  color: #000000;
+}
+.docs-page .docs-wrapper .docs-content .warningbox {
+  position: relative;
+  color: #ffff00;
+  background-color: rgba(255, 255, 0, 0.2);
+  padding: 20px 40px;
+  margin-bottom: 20px;
+}
+.docs-page .docs-wrapper .docs-content .warningbox::before {
+  position: absolute;
+  top: 14px;
+  left: 20px;
+  font-size: 14px;
+  content: 'WARNING';
+  pointer-events: none;
+}
+.docs-page .docs-wrapper .docs-content .warningbox::after {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  content: '';
+  border: 1px solid rgba(255, 255, 0, 0.5);
+  pointer-events: none;
+}
+.docs-page .docs-wrapper .docs-content .warningbox p {
+  color: #ffff00;
+}
+.docs-page .docs-wrapper .docs-content .warningbox p span {
+  color: #ffff00;
+}
+.docs-page .docs-wrapper .docs-content .notebox {
+  position: relative;
+  color: #00ffff;
+  background-color: rgba(0, 255, 255, 0.2);
+  padding: 20px 40px;
+  margin-bottom: 20px;
+}
+.docs-page .docs-wrapper .docs-content .notebox::before {
+  position: absolute;
+  top: 14px;
+  left: 20px;
+  font-size: 14px;
+  content: 'NOTE';
+  pointer-events: none;
+}
+.docs-page .docs-wrapper .docs-content .notebox::after {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  content: '';
+  border: 1px solid rgba(0, 255, 255, 0.5);
+  pointer-events: none;
+}
+.docs-page .docs-wrapper .docs-content .notebox p {
+  color: #00ffff;
+}
+.docs-page .docs-wrapper .docs-content .notebox p span {
+  color: #00ffff;
+}
+.docs-page .docs-wrapper .docs-content .ps {
+  font-size: 14px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.5);
 }
 .docs-page .docs-wrapper .docs-content footer {
   width: fit-content;
@@ -410,6 +675,17 @@ a > * {
   max-width: 980px;
   margin: 0 auto;
   padding: 45px;
+}
+.changelog-page footer {
+  width: fit-content;
+  margin: 50px auto 20px auto;
+  color: white;
+  font-size: 12px;
+  text-align: center;
+}
+.changelog-page footer a {
+  color: white;
+  text-decoration: none;
 }
 @media (max-width: 768px) {
   .home-page {

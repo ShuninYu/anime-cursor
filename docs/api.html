@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../favicon.png" type="image/x-icon">
+        <title>API | Docs - AnimeCursor - Lightweight JS for animated website cursors</title>
+        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../fonts/chinese/result.css">
+        <script src="../script.js"></script>
+        <link rel="stylesheet" href="../monokai.min.css">
+        <script src="../highlight.min.js"></script>
+        <script src="../hljs-copycode.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/ShuninYu/anime-cursor@v0.2.0-alpha/dist/anime-cursor.umd.min.js"></script>
+        <script src="../animecursor3.js"></script>
+    </head>
+<body class="docs-page" id="getting-started">
+    <div class="docs-wrapper">
+        <div class="docs-panel"></div>
+        <div class="docs-content">
+            <div class="docs-content-header"><p>API</p></div>
+            <h1 id="constructor">Creating an Instance</h1>
+            <pre><code class="javascript">new AnimeCursor(options)</code></pre>
+            <p>Creates a new AnimeCursor instance and immediately initializes cursor behavior.</p>
+            <h1 id="refresh">refresh</h1>
+            <pre><code class="javascript">cursor.refresh(): void</code></pre>
+            <p><span>refresh()</span> is used to re-scan the page and apply cursor rules to newly added elements after the DOM has changed.</p>
+            <p>AnimeCursor only scans the DOM once during initialization. If your page content is dynamically inserted (e.g., Markdown rendering, Ajax loading, SPA route changes), you must manually call refresh() after the content insertion is complete.</p>
+            <h2>Example</h2>
+            <pre><code class="javascript">// Assuming the page uses 'marked' to load an external markdown file and injects the rendered DOM
+fetch('content.md')
+    .then(res => res.text())
+    .then(html => {
+        container.innerHTML = html;
+        cursor.refresh();
+});</code></pre>
+            <h1 id="enable-disable">enable / disable</h1>
+            <pre><code class="javascript">cursor.disable(): void
+cursor.enable(): void</code></pre>
+            <ul>
+                <li>
+                    <p><span>disable()</span>: Temporarily hides and deactivates the cursor effect (without destroying the instance).</p>
+                </li>
+                <li>
+                    <p><span>enable()</span>: Re-enables the cursor effect.</p>
+                </li>
+            </ul>
+            <p>Suitable for temporary context switching (e.g., entering a form area, opening a modal, etc.).</p>
+            <h1 id="destroy">destroy</h1>
+            <pre><code class="javascript">cursor.destroy(): void</code></pre>
+            <p>Completely destroys the AnimeCursor instance, including:</p>
+            <ul>
+                <li><p>Removing injected DOM elements.</p></li>
+                <li><p>Removing injected CSS.</p></li>
+                <li><p>Removing event listeners.</p></li>
+                <li><p>Cleaning up <span>data-cursor</span> markers.</p></li>
+            </ul>
+            <p>The instance cannot be reused after calling <span>destroy()</span>.</p>
+            <footer></footer>
+        </div>
+    </div>
+</body>
+</html>
