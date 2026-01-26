@@ -11,7 +11,7 @@ if(typeof hljs !== 'undefined') {
 document.addEventListener('DOMContentLoaded', function() {
 
     new AnimeCursor({
-        debug: true,
+        //debug: true,
         cursors: {
             default: {
                 size: [32,32],
