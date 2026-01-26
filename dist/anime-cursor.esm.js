@@ -265,7 +265,7 @@ class AnimeCursor {
             ${zIndex !== undefined ? `z-index:${zIndex};` : ''}
             }`;
 
-            /* PNG 精灵图动画 */
+            /* 精灵图动画 */
             const duration = cfg.duration;
             const hasAnimation =
                 !isGif &&

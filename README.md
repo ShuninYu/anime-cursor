@@ -1,10 +1,12 @@
 # AnimeCursor
 
 <div align="center">
-  <img src="https://cdn.jsdelivr.net/gh/shuninyu/anime-cursor@main/title.gif" width="60%" alt="AnimeCursor"/>
+  <img src="https://cdn.jsdelivr.net/gh/shuninyu/anime-cursor@main/title.gif" width="384px" alt="AnimeCursor"/>
 </div>
 
 [[简体中文]](#animecursorsc)
+## [Visit the official website](https://shuninyu.github.io/anime-cursor/) for more informations
+## [Read documents](https://shuninyu.github.io/anime-cursor/docs) to get started with AnimeCursor
 
 AnimeCursor is a lightweight JavaScript library for animated custom cursors.
 
@@ -14,11 +16,11 @@ AnimeCursor has no dependencies on any frameworks, making it suitable for person
 
 ## ✨ Features
 
-* Supports PNG sprite sheet frame-by-frame animation
+* Supports sprite sheet frame-by-frame animation
 * Supports GIF (animated GIFs, not static GIFs used by native cursors)
 * Customizable cursor types, automatically switched by AnimeCursor
 * CSS-based animation implementation, high performance
-* Prepare PNG sprite sheets in the correct format, and AnimeCursor will automatically generate cursor animations based on your settings
+* Prepare sprite sheets in the correct format, and AnimeCursor will automatically generate cursor animations based on your settings
 * Built with native JavaScript, no third-party dependencies
 
 ## 📦 Installation
@@ -54,12 +56,13 @@ Here is an example of how to use AnimeCursor:
 new AnimeCursor({
     cursors: {
         // each type of cursor needs tags, size and image
-        default: {
-            tags: ['body'], // default cursor recommended setting
+        idle: {
             size: [64,64],
-            image: './cursor_default.png' // static cursor only needs image
+            image: './cursor_default.png', // static cursor only needs image
+            default: true // set this cursor as default cursor
+            // only default cursor doesn't needs tags
         },
-        // png sprite animated cursor needs frames and duration
+        // sprite animated cursor needs frames and duration
         pointer: {
             tags: ['a', 'button'],
             size: [64,64],
@@ -92,18 +95,7 @@ Each key represents a cursor type (the name can be freely defined).
 
 For each key, the following parameters can be set. Missing required parameters will cause an error.
 
-| Parameter | Type | Required | Description |
-|-|-|-|-|
-| `tags` | `string[]` | ✅ | HTML tags that should use this cursor |
-| `size` | `number` | ✅ | Cursor dimensions [width, height] in pixels |
-| `image` | `string` | ✅ | Image path (PNG / GIF) |
-| `frames` | `number` || Number of frames for PNG sprites (set to `1` for static images) |
-| `duration` | `number` | | Animation loop duration (seconds) ⚠️ PNG sprite animations *only* work when this parameter is set |
-| `pingpong` | `boolean` | | Enable ping-pong (back-and-forth) looping (for PNG sprite animations only) |
-| `offset` | `[number, number]` | | Cursor alignment offset [ x , y ] ⚠️ This parameter is not affected by `scale`|
-| `scale` | `[number, number]` | | Cursor scale factor based on `size` [ x , y ] ⚠️ Only supported for GIF cursors. Do not set for PNG sprite cursors, as it will break the animation. |
-| `pixel` | `boolean` | | Enable pixelated rendering |
-| `zIndex` | `number` | | Cursor z-index layer (not recommended to modify) |
+Check the [DOCUMENTATION](https://shuninyu.github.io/anime-cursor/docs) for details.
 
 ### `debug` (Optional)
 
@@ -122,10 +114,10 @@ If you want animated cursors to be displayed on these devices, add `enableTouch:
 
 ### 📁 Files
 
-* **For any PNG sprite animation cursor, its PNG sprite sheet should be arranged in a single horizontal row.** AnimeCursor will automatically generate the PNG sprite animation.
+* **For any sprite animation cursor, its sprite sheet should be arranged in a single horizontal row.** AnimeCursor will automatically generate the PNG sprite animation.
   For example, if you set the `size` (width, height) for a `pointer` cursor to `[64px , 64px]` and `frames` to `3`, the prepared sprite sheet dimensions (width, height) should be: `[192px , 64px]`.
 
-* For pixel art with a large number of frames, you can use the original image (whether GIF or PNG-sprite-sheet) to save storage space or bandwidth. Then, use the `scale` parameter in the configuration to resize the cursor and set `pixel` to `true` to avoid blurry scaling.
+* For pixel art with a large number of frames, you can use the original image (whether GIF or sprite-sheet) to save storage space or bandwidth. Then, use the `scale` parameter in the configuration to resize the cursor and set `pixel` to `true` to avoid blurry scaling.
 
 ### 🧩 Tagging Mechanism
 
@@ -145,11 +137,10 @@ Therefore, to assign a specific animated cursor to a particular element, simply 
 
 ### 🎞️ Animation Rules
 
-#### PNG Cursors
+#### Sprite Sheets Animation Cursors
 
 Animation is generated **only when all of the following conditions are met**:
 
-* The image is a PNG
 * `frames` is set and `frames > 1`
 * `duration` is set
 
@@ -170,8 +161,11 @@ If `duration` is not set, the cursor will be treated as a **static cursor**, eve
 # AnimeCursor(SC)
 
 <div align="center">
-  <img src="https://cdn.jsdelivr.net/gh/shuninyu/anime-cursor@main/title.gif" width="60%" alt="AnimeCursor"/>
+  <img src="https://cdn.jsdelivr.net/gh/shuninyu/anime-cursor@main/title.gif" width="384px" alt="AnimeCursor"/>
 </div>
+
+## [访问官网](https://shuninyu.github.io/anime-cursor/)以获取更多信息
+## [阅读文档](https://shuninyu.github.io/anime-cursor/docs)快速上手 AnimeCursor
 
 AnimeCursor 是一个轻量级自定义动画光标JavaScript库。
 
@@ -181,11 +175,11 @@ AnimeCursor 无需依赖任何框架，适合个人网站、创意作品集以�
 
 ## ✨ 特性
 
-* 支持 PNG 精灵图逐帧动画
+* 支持精灵图逐帧动画
 * 支持 GIF（动态gif，而不是原生光标的静止gif）
 * 自定义光标类型，由 AnimeCursor 自动切换
 * 基于 CSS 的动画实现，高性能
-* 按照格式准备好 PNG 精灵图表，AnimeCursor 将基于你的设置自动生成光标动画
+* 按照格式准备好精灵图表，AnimeCursor 将基于你的设置自动生成光标动画
 * 基于原生JavaScript，无任何第三方依赖
 
 ## 📦 部署方法
@@ -221,11 +215,12 @@ new AnimeCursor({
     cursors: {
         // 每种光标都需要 tags size 和 image
         default: {
-            tags: ['body'], // 默认光标推荐照此设置
             size: [64,64],
-            image: './cursor_default.png' // 静态光标只需要图片链接
+            image: './cursor_default.png', // 静态光标只需要图片链接
+            default: true // 将此光标设为默认光标
+            // 默认光标不需要 tags
         },
-        // png 精灵图动画光标还需要 frames 和 duration
+        // 精灵图动画光标还需要 frames 和 duration
         pointer: {
             tags: ['a', 'button'],
             size: [64,64],
@@ -258,18 +253,7 @@ new AnimeCursor({
 
 对于每个key，有以下参数可以设置，其中必填项如果缺失则会报错。
 
-|参数|类型|必填|说明|
-|-|-|-|-|
-|`tags`|`string[]`|✅|使用该光标的 HTML 标签|
-|`size`|`number`|✅|光标尺寸（宽高，像素）|
-|`image`|`string`|✅|图片路径（PNG / GIF）|
-|`frames`|`number`||PNG 帧数（静态图片请设置为 `1` ）|
-|`duration`|`number`||动画循环时长（秒）⚠️PNG精灵图动画只有设置该参数才会生效|
-|`pingpong`|`boolean`||是否启用乒乓循环（仅PNG精灵图动画）|
-|`offset`|`[number, number]`||光标对齐偏移量 [ x , y ]⚠️此参数不受 `scale` 影响|
-|`scale`|`[number, number]`||基于size的光标缩放 [ x , y ]⚠️仅支持GIF光标，PNG精灵图动画光标请勿设置，否则会使动画失效|
-|`pixel`|`boolean`||是否启用像素化渲染|
-|`zIndex`|`number`||光标层级（不建议添加此项设置）|
+查看 [官方文档](https://shuninyu.github.io/anime-cursor/docs) 查看详细可用参数。
 
 ### `debug`（选填）
 
@@ -288,10 +272,10 @@ AnimeCursor 会自动识别移动触屏设备（比如手机、平板电脑）�
 
 ### 📁 文件
 
-* **对于任何 PNG 精灵图动画光标，它的 PNG 精灵图表都应该为单行横向布局，** AnimeCursor 会自动生成 PNG 精灵图动画。
+* **对于任何精灵图动画光标，它的精灵图表都应该为单行横向布局，** AnimeCursor 会自动生成 PNG 精灵图动画。
 例如，你为 `pointer` 光标设置的`size`（长，宽）为 `[64px , 64px]` ，帧数为 `3` ，那么你准备的精灵图表尺寸（长，宽）应该为： `[192px , 64px]` 。
 
-* 对于帧数特别多的像素图，你可以使用原尺寸图片（无论是gif还是png精灵图表）以节省存储空间或带宽，并在参数中设置 `scale` 来缩放光标，并将 `pixel` 设置为 `true` 来避免缩放模糊。
+* 对于帧数特别多的像素图，你可以使用原尺寸图片（无论是gif还是精灵图表）以节省存储空间或带宽，并在参数中设置 `scale` 来缩放光标，并将 `pixel` 设置为 `true` 来避免缩放模糊。
 
 ### 🧩 标记机制
 
@@ -311,11 +295,10 @@ AnimeCursor 会根据配置自动为页面元素添加 `data-cursor`：
 
 ### 🎞️ 动画判定
 
-#### PNG 光标
+#### 精灵图表动画光标
 
 只有在 **同时满足以下条件** 时，才会生成动画：
 
-* 图片为 PNG
 * 设置了 `frames` 且 `frames > 1`
 * 设置了 `duration`
 
