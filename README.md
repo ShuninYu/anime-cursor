@@ -95,7 +95,7 @@ Each key represents a cursor type (the name can be freely defined).
 
 For each key, the following parameters can be set. Missing required parameters will cause an error.
 
-Check the [DOCUMENTATION](https://shuninyu.github.io/anime-cursor/docs) for details.
+Check the [DOCUMENTATION](https://shuninyu.github.io/anime-cursor/docs/configuration#options) for details.
 
 ### `debug` (Optional)
 
@@ -165,7 +165,7 @@ If `duration` is not set, the cursor will be treated as a **static cursor**, eve
 </div>
 
 ## [访问官网](https://shuninyu.github.io/anime-cursor/)以获取更多信息
-## [阅读文档](https://shuninyu.github.io/anime-cursor/docs)快速上手 AnimeCursor
+## [阅读文档](https://shuninyu.github.io/anime-cursor/docs/zh)快速上手 AnimeCursor
 
 AnimeCursor 是一个轻量级自定义动画光标JavaScript库。
 
@@ -253,7 +253,7 @@ new AnimeCursor({
 
 对于每个key，有以下参数可以设置，其中必填项如果缺失则会报错。
 
-查看 [官方文档](https://shuninyu.github.io/anime-cursor/docs) 查看详细可用参数。
+查看 [官方文档](https://shuninyu.github.io/anime-cursor/docs/zh/configuration#options) 查看详细可用参数。
 
 ### `debug`（选填）
 
