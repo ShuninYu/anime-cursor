@@ -72,7 +72,7 @@ function injectDocsPanel() {
                 <a class="docs-panel-list-item" href="${(docType === 'introduction')?'#features':'../zh#features'}">${(docsPanel.classList.contains('zh-CN'))?'特性':'Features'}</a>
                 <a class="docs-panel-list-item" href="${(docType === 'introduction')?'#browser-support':'../zh#browser-support'}">${(docsPanel.classList.contains('zh-CN'))?'浏览器支持':'Browser Support'}</a>
             </div>
-            <div class="docs-panel-list-folder"><p onclick="jumpTo('getting-Started')" data-cursor="pointer">${(docsPanel.classList.contains('zh-CN'))?'快速开始':'quick-start'}</p>
+            <div class="docs-panel-list-folder"><p onclick="jumpTo('getting-started')" data-cursor="pointer">${(docsPanel.classList.contains('zh-CN'))?'快速开始':'quick-start'}</p>
                 <a class="docs-panel-list-item" href="${(docType === 'getting-started')?'#installation':'getting-started#installation'}">${(docsPanel.classList.contains('zh-CN'))?'安装':'Installation'}</a>
                 <a class="docs-panel-list-item" href="${(docType === 'getting-started')?'#basic-usage':'getting-started#basic-usage'}">${(docsPanel.classList.contains('zh-CN'))?'基本用法':'Basic Usage'}</a>
                 <a class="docs-panel-list-item" href="${(docType === 'getting-started')?'#example':'getting-started#example'}">${(docsPanel.classList.contains('zh-CN'))?'示例':'Example'}</a>
