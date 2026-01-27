@@ -8,7 +8,7 @@
 ## [Visit the official website](https://shuninyu.github.io/anime-cursor/) for more informations
 ## [Read documents](https://shuninyu.github.io/anime-cursor/docs) to get started with AnimeCursor
 
-AnimeCursor is a lightweight JavaScript library for animated custom cursors.
+AnimeCursor is a lightweight JavaScript library for frame by frame animated custom cursors.
 
 AnimeCursor has no dependencies on any frameworks, making it suitable for personal websites, creative portfolios, and experimental UI projects.
 
@@ -167,7 +167,7 @@ If `duration` is not set, the cursor will be treated as a **static cursor**, eve
 ## [访问官网](https://shuninyu.github.io/anime-cursor/)以获取更多信息
 ## [阅读文档](https://shuninyu.github.io/anime-cursor/docs/zh)快速上手 AnimeCursor
 
-AnimeCursor 是一个轻量级自定义动画光标JavaScript库。
+AnimeCursor 是一个轻量级自定义逐帧动画光标 JavaScript 库。
 
 AnimeCursor 无需依赖任何框架，适合个人网站、创意作品集以及实验性 UI 项目。
 
