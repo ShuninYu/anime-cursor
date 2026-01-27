@@ -55,7 +55,7 @@ function injectDocsPanel() {
         docsPanel.innerHTML = `
         <div class="docs-panel-topbar">
             <a class="docs-panel-topbar-logo"><p>${version}</p></a>
-            <a class="home-lang" title="${(docsPanel.classList.contains('zh-CN'))?'Switch to English | 切换英文':'Switch to Chinese | 切换中文'}" href="${(docsPanel.classList.contains('zh-CN'))?`../../docs${(docType === 'introduction')? '':`/${docType}`}`:`zh${(docType === 'introduction')? '':`zh/${docType}`}`}">
+            <a class="home-lang" title="${(docsPanel.classList.contains('zh-CN'))?'Switch to English | 切换英文':'Switch to Chinese | 切换中文'}" href="${(docsPanel.classList.contains('zh-CN'))?`../../docs${(docType === 'introduction')? '':`/${docType}`}`:`zh${(docType === 'introduction')? '':`/${docType}`}`}">
                 <svg class="line-svg">
                     <line class="line" x1="100%" y1="0" x2="0" y2="100%"/>
                 </svg>
