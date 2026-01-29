@@ -107,50 +107,44 @@ cursorTypeTwo: {
 
             <h1 id="example">示例</h1>
             <p>一个最小可运行示例：</p>
-            <pre><code class="javascript">// 等 DOM 加载完成后再初始化 AnimeCursor
-document.addEventListener("DOMContentLoaded", (event) => {
-    new AnimeCursor({
-        cursors: {
-            normal: {
-                size: [32,32],
-                image: 'cursor_normal.png',
-                default: true
-            }
+            <pre><code class="javascript">new AnimeCursor({
+    cursors: {
+        normal: {
+            size: [32,32],
+            image: 'cursor_normal.png',
+            default: true
         }
-    });
+    }
 });</code></pre>
             <p>用通俗的话来说，在这段代码中我们设置了一种叫做 <span>normal</span> 的光标。这个光标的尺寸为 32 × 32 像素，图片是 <span>cursor_normal.png</span>，这个光标是默认光标（因为设置了 <span>default: true;</span>），所以不需要设置 <span>tags</span>。</p>
             <p>请注意，假设 <span>cursor_normal.png</span> 是一张精灵图表，在这个示例的情况下 <span>normal</span> 仍然只会是静态光标，因为它缺少一些精灵图动画光标必须的参数设置，具体原因我们接下来就会提到。</p>
             <p>下面是一个更丰富且更贴近实际应用的示例，包含了三种光标：</p>
-            <pre><code class="javascript">// 等 DOM 加载完成后再初始化 AnimeCursor
-document.addEventListener("DOMContentLoaded", (event) => {
-    new AnimeCursor({
-        cursors: {
-            default: {
-                size: [32,32],
-                image: 'https://animecursor.js.org/i/cursor/cursor_default.gif',
-                pixel: true,
-                default: true
-            },
-            pointer: {
-                tags: ['a','button'],
-                size: [32,36],
-                image: 'https://animecursor.js.org/i/cursor/cursor_pointer.png',
-                frames: 3,
-                duration: 0.3,
-                pingpong: true,
-                offset: [10,4],
-                pixel: true
-            },
-            text: {
-                tags: ['p','h1','h2','h3','h4','span','td','th','pre','code','footer'],
-                size: [32,32],
-                image: 'https://animecursor.js.org/i/cursor/cursor_text.png',
-                offset: [10,16],
-                pixel: true
-            }
+            <pre><code class="javascript">new AnimeCursor({
+    cursors: {
+        default: {
+            size: [32,32],
+            image: 'https://animecursor.js.org/i/cursor/cursor_default.gif',
+            pixel: true,
+            default: true
+        },
+        pointer: {
+            tags: ['a','button'],
+            size: [32,36],
+            image: 'https://animecursor.js.org/i/cursor/cursor_pointer.png',
+            frames: 3,
+            duration: 0.3,
+            pingpong: true,
+            offset: [10,4],
+            pixel: true
+        },
+        text: {
+            tags: ['p','h1','h2','h3','h4','span','td','th','pre','code','footer'],
+            size: [32,32],
+            image: 'https://animecursor.js.org/i/cursor/cursor_text.png',
+            offset: [10,16],
+            pixel: true
         }
-    });
+    }
 });</code></pre>
             <p>实际上，这就是 AnimeCursor 官网使用过的配置，其中包含了 <span>default</span> <span>pointer</span> <span>text</span> 三种光标。</p>
             <p>在这三种光标中，只有 <span>pointer</span> 设置了 <span>frames</span> 和 <span>duration</span>。这是因为 <span>pointer</span> 是 PNG 精灵图动画光标，而在 AnimeCursor 中，<span>frames</span> 和 <span>duration</span> 是精灵图动画光标必须设置的参数，当缺少二者其中任意一个参数时，该种光标都将以静态呈现。而 <span>default</span> 光标虽然没有设置 <span>frames</span> 和 <span>duration</span>，但是它的 <span>image</span> 指向的图片是一张 GIF 动图，所以 <span>default</span> 光标会以 GIF 的动画呈现（动画效果由 GIF 本身决定）。</p>
