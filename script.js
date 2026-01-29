@@ -46,7 +46,7 @@ function docFolder(element) {
 
 // 插入文档导航栏
 function injectDocsPanel() {
-    const version = 'v0.2.0';
+    const version = 'v0.3.0';
     const docsPanel = document.querySelector('.docs-panel');
     const codes = document.querySelectorAll('pre');
     if (docsPanel) {
@@ -72,7 +72,7 @@ function injectDocsPanel() {
                 <a class="docs-panel-list-item" href="${(docType === 'introduction')?'#features':'../zh#features'}">${(docsPanel.classList.contains('zh-CN'))?'特性':'Features'}</a>
                 <a class="docs-panel-list-item" href="${(docType === 'introduction')?'#browser-support':'../zh#browser-support'}">${(docsPanel.classList.contains('zh-CN'))?'浏览器支持':'Browser Support'}</a>
             </div>
-            <div class="docs-panel-list-folder"><p onclick="jumpTo('getting-started')" data-cursor="pointer">${(docsPanel.classList.contains('zh-CN'))?'快速开始':'quick-start'}</p>
+            <div class="docs-panel-list-folder"><p onclick="jumpTo('getting-started')" data-cursor="pointer">${(docsPanel.classList.contains('zh-CN'))?'开始使用':'Getting Started'}</p>
                 <a class="docs-panel-list-item" href="${(docType === 'getting-started')?'#installation':'getting-started#installation'}">${(docsPanel.classList.contains('zh-CN'))?'安装':'Installation'}</a>
                 <a class="docs-panel-list-item" href="${(docType === 'getting-started')?'#basic-usage':'getting-started#basic-usage'}">${(docsPanel.classList.contains('zh-CN'))?'基本用法':'Basic Usage'}</a>
                 <a class="docs-panel-list-item" href="${(docType === 'getting-started')?'#example':'getting-started#example'}">${(docsPanel.classList.contains('zh-CN'))?'示例':'Example'}</a>
@@ -85,7 +85,7 @@ function injectDocsPanel() {
             <div class="docs-panel-list-folder"><p onclick="jumpTo('api')" data-cursor="pointer">API</p>
                 <a class="docs-panel-list-item" href="${(docType === 'api')?'#constructor':'api#constructor'}">${(docsPanel.classList.contains('zh-CN'))?'创建实例':'Constructor'}</a>
                 <a class="docs-panel-list-item" href="${(docType === 'api')?'#refresh':'api#refresh'}">refresh</a>
-                <a class="docs-panel-list-item" href="${(docType === 'api')?'#enable-disable':'api#enable-disable'}">enable / disable</a>
+                <a class="docs-panel-list-item" href="${(docType === 'api')?'#disable-enable':'api#disable-enable'}">disable / enable</a>
                 <a class="docs-panel-list-item" href="${(docType === 'api')?'#destroy':'api#destroy'}">destroy</a>
             </div>
             <div class="docs-panel-list-folder"><p onclick="jumpTo('lcbp')" data-cursor="pointer">LC & BP</p><!-- 生命周期与最佳实践 -->

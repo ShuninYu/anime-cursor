@@ -198,6 +198,7 @@ image: 'https://example.com/image/cursor/cursor-image.png';</code></pre>
                 <colgroup><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"></colgroup>
                 <tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr>
                 <tr><td>debug</td><td>boolean</td><td>false</td><td>Enable debug overlay</td></tr>
+                <tr><td>displayOnLoad</td><td>boolean</td><td>false</td><td>Sets whether the cursor should be displayed before mouse movement is detected</td></tr>
                 <tr><td>enableTouch</td><td>boolean</td><td>false</td><td>Whether to enable on touchscreen devices</td></tr>
             </table>
             <h2>Global Option Details</h2>
@@ -206,6 +207,11 @@ image: 'https://example.com/image/cursor/cursor-image.png';</code></pre>
                     <h3>debug</h3>
                     <p>A very important option. Set to <span>true</span> to enable debug mode.</p>
                     <p>Debug mode displays the real mouse pointer position and the current cursor type, helping to correct alignment offsets or troubleshoot other errors.</p>
+                </li>
+                <li>
+                    <h3>displayOnLoad</h3>
+                    <p>Sets whether the cursor should be displayed before mouse movement is detected. If enabled, the cursor will remain top-left until mouse movement (within the viewport) is detected.</p>
+                    <p>After the cursor DOM is inserted during initialization, its initial position is at the top-left corner. It only corrects to the mouse position when the mouse moves within the viewport, which can be visually jarring. Starting to display the cursor only after the mouse moves inside the viewport is a better approach, so <span>displayOnLoad</span> generally does not need to be set.</p>
                 </li>
                 <li>
                     <h3>enableTouch</h3>

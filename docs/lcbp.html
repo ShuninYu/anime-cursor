@@ -20,8 +20,8 @@
         <div class="docs-content">
             <div class="docs-content-header"><p>Lifecycle & Best Practices</p></div>
             <h1 id="dom">DOM Injection Timing</h1>
-            <p>Since AnimeCursor needs to inject <span>data-cursor</span> into the DOM, please create the AnimeCursor instance <strong>after</strong> the DOM has fully loaded. Creating the AnimeCursor instance before the DOM is ready may cause some DOM elements to lack the <span>data-cursor</span> attribute, which can affect cursor switching.</p>
-            <p>Similarly, even if the AnimeCursor instance is created after the DOM loads, any dynamically inserted DOM elements will also lack the <span>data-cursor</span> attribute. AnimeCursor provides corresponding APIs to address such issues.</p>
+            <p>Since AnimeCursor needs to insert <span>preload</span> tags into the HTML to preload cursor images, avoid creating the AnimeCursor instance after the DOM has finished loading.</p>
+            <p>Besides, if any DOM elements are dynamically inserted after the AnimeCursor instance is created, they will lack the <span>data-cursor</span> attribute. AnimeCursor relies on <span>data-cursor</span> to determine cursor switching. However, this is not a problem because AnimeCursor provides APIs to handle such situations.</p>
             <p>❌ Incorrect example:</p>
             <pre><code class="javascript no-copy">new AnimeCursor();
 fetchMarkdown();</code></pre>

@@ -11,9 +11,35 @@
     <script src="https://cdn.jsdelivr.net/gh/ShuninYu/anime-cursor@v0.2.0-alpha/dist/anime-cursor.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.0/github-markdown-dark.min.css">
-    <!-- <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script> -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/default.min.css"> -->
     <script>
+        new AnimeCursor({
+            cursors: {
+                default: {
+                    size: [32,32],
+                    image: 'i/cursor/cursor_default.gif',
+                    pixel: true,
+                    default: true
+                },
+                pointer: {
+                    tags: ['a', 'button'],
+                    size: [32,36],
+                    image: 'i/cursor/cursor_pointer.png',
+                    frames: 3,
+                    duration: 0.3,
+                    pingpong: true,
+                    offset: [10, 4],
+                    pixel: true
+                },
+                text: {
+                    tags: ['p','h1','h2','h3','h4','span','ul','li','pre','code','footer'],
+                    size: [32,32],
+                    image: 'i/cursor/cursor_text.png',
+                    offset: [9, 16],
+                    pixel: true
+                }
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
             fetch('logs.md')
                 .then(response => response.text())
@@ -25,8 +51,8 @@
                     // 高亮代码（必须在插入之后）
                     // hljs.highlightAll();
         
-                    // 初始化 AnimeCursor
-                    initAnimeCursor();
+                    // 刷新 AnimeCursor
+                    AnimeCursor.refresh();
                 })
                 .catch(err => {
                     console.error('加载更新日志失败:', err);
@@ -34,36 +60,6 @@
                         '<p>抱歉，日志加载失败。</p>';
                 });
         });
-        
-        function initAnimeCursor() {
-            new AnimeCursor({
-                cursors: {
-                    default: {
-                        size: [32,32],
-                        image: 'i/cursor/cursor_default.gif',
-                        pixel: true,
-                        default: true
-                    },
-                    pointer: {
-                        tags: ['a', 'button'],
-                        size: [32,36],
-                        image: 'i/cursor/cursor_pointer.png',
-                        frames: 3,
-                        duration: 0.3,
-                        pingpong: true,
-                        offset: [10, 4],
-                        pixel: true
-                    },
-                    text: {
-                        tags: ['p','h1','h2','h3','h4','span','ul','li','pre','code','footer'],
-                        size: [32,32],
-                        image: 'i/cursor/cursor_text.png',
-                        offset: [9, 16],
-                        pixel: true
-                    }
-                }
-            });
-        }
         </script>
 </head>
 <body class="changelog-page">

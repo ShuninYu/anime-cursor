@@ -199,6 +199,7 @@ image: 'https://example.com/image/cursor/cursor-image.png';</code></pre>
                 <colgroup><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"></colgroup>
                 <tr><th>选项</th><th>类型</th><th>默认值</th><th>选项介绍</th></tr>
                 <tr><td>debug</td><td>boolean</td><td>false</td><td>启用debug覆盖</td></tr>
+                <tr><td>displayOnLoad</td><td>boolean</td><td>false</td><td>控制光标在检测到鼠标移动前是否显示</td></tr>
                 <tr><td>enableTouch</td><td>boolean</td><td>false</td><td>是否在触屏设备启用</td></tr>
             </table>
             <h2>全局选项介绍</h2>
@@ -207,6 +208,11 @@ image: 'https://example.com/image/cursor/cursor-image.png';</code></pre>
                     <h3>debug</h3>
                     <p>非常重要的一个选项，设置为 <span>true</span> 启用debug模式。</p>
                     <p>debug模式会显示鼠标指针的真实位置以及当前光标类型，以帮助纠正对齐偏移量或排除其他错误。</p>
+                </li>
+                <li>
+                    <h3>displayOnLoad</h3>
+                    <p>设置光标在检测到鼠标移动前是否显示，如果启用此项，在检测到鼠标（在视窗内）移动前将保持在页面左上角。</p>
+                    <p>光标 DOM 在初始化时被插入后位置在左上角，鼠标在视窗中移动时才会修正到鼠标位置，这在视觉上是不舒服的。鼠标在视窗内移动再开始显示是一种比较好的处理方法，所以一般不需要设置 <span>displayOnLoad</span>。</p>
                 </li>
                 <li>
                     <h3>enableTouch</h3>

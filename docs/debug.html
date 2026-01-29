@@ -38,8 +38,13 @@
                 <li><p>Check the image path.</p></li>
                 <li><p>Check if cursor settings are valid and see if there are any errors in the console.</p></li>
                 <li><p>Check if <span>tags</span> match the intended elements.</p></li>
-                <li><p>Check if <span>refresh</span> was called after DOM insertion.</p></li>
-                <li><p>Check if <span>destroy</span> was called.</p></li>
+                <li><p>Check if <span>refresh()</span> was called after DOM insertion.</p></li>
+                <li><p>Check if <span>destroy()</span> was called.</p></li>
+            </ul>
+            <h2>The cursor briefly disappears when switching to a new cursor for the first time</h2>
+            <ul>
+                <li><p>Check if <span>new AnimeCursor()</span> is instantiated only after the DOM has finished loading.<br>AnimeCursor inserts preload tags for cursor images into the page before the DOM finishes loading. If images are loaded after DOM completion, loading delays may occur due to image file sizes, causing the cursor image to not be ready when switching and resulting in a brief disappearance of the cursor.</p></li>
+                <li><p>Try compressing your images, especially large-sized PNG sprite sheets. When the quality difference is minimal, images compressed into the WEBP format are significantly smaller in file size compared to uncompressed PNG images, which can also help improve the loading speed of cursor images.</p></li>
             </ul>
             <div class="warningbox"><p>[Known Issue] When testing a page with live server and Firefox, the default cursor may occasionally fail to display even with correct configuration and no console errors. However, this issue does not occur when viewing the actually deployed page with Firefox. The root cause is currently unknown.</p></div>
             <h1 id="faq">FAQ</h1>

@@ -20,8 +20,8 @@
         <div class="docs-content">
             <div class="docs-content-header"><p>Lifecycle & Best Practices</p></div>
             <h1 id="dom">DOM 注入时机</h1>
-            <p>由于 AnimeCursor 需要向 DOM 注入 <span>data-cursor</span>，所以请在 DOM 加载完成后创建 AnimeCursor 实例。如果在 DOM 加载完成前创建 AnimeCursor 实例，可能导致部分 DOM 元素缺少 <span>data-cursor</span>，从而影响光标切换。</p>
-            <p>同样的，即使在 DOM 加载完成后创建 AnimeCursor 实例，如果有动态插入的 DOM，那么这些 DOM 也会缺少 <span>data-cursor</span>，而 AnimeCursor 提供了对应的解决这类问题的 API。</p>
+            <p>由于 AnimeCursor 需要在 HTML 中插入 <span>preload</span> 以预加载光标图片，所以请避免在 DOM 加载完成后创建 AnimeCursor 实例。</p>
+            <p>另外，在创建 AnimeCursor 实例后，如果有动态插入的 DOM，那么这些 DOM 会缺少 <span>data-cursor</span>，而 AnimeCursor 依赖 <span>data-cursor</span> 来判断光标切换。但是没关系，AnimeCursor 提供了解决这类问题的 API。</p>
             <p>❌错误示例：</p>
             <pre><code class="javascript no-copy">new AnimeCursor();
 fetchMarkdown();</code></pre>

@@ -17,7 +17,7 @@
         <div class="docs-content">
             <div class="docs-content-header"><p>AnimeCursor 简介</p></div>
             <h1 id="what-is-animecursor">什么是 AnimeCursor ？</h1>
-            <p>AnimeCursor 是一个用于在网页中 <b>替换系统鼠标指针</b> 的前端 JavaScript 库。<br>由于目前的 CSS cursor 并不真正的支持动画光标（虽然目前主流的浏览器支持将 cursor 设置为GIF格式的图片，但是实际上在网页中光标会保持静止），所以如果想实现真正具有动画效果的光标，就必须使用非原生的光标。</p>
+            <p>AnimeCursor 是一个在网页中用 <b>支持逐帧动画的虚拟光标</b> 替换 <b>系统鼠标指针</b> 的前端 JavaScript 库。<br>由于目前的 CSS cursor 并不真正的支持动画光标（虽然目前主流的浏览器支持将 cursor 设置为GIF格式的图片，但是实际上在网页中光标会保持静止），所以如果想实现真正具有动画效果的光标，就必须使用非原生的光标。</p>
             <p>AnimeCursor 通过在页面中注入一个跟随鼠标移动的 DOM 元素，并根据用户设置自动生成动画光标，从而实现高度定制的逐帧动画鼠标光标体验。<br>你只需要准备好动画光标的图片，然后告诉 AnimeCursor 你需要什么光标，AnimeCursor 就会自动为你的网页添加动画光标，帮助你完成你美丽网页的最后一小块拼图。</p>
             <p>AnimeCursor 并不模拟操作系统的光标行为，而是专注于 <b>视觉表现</b>，比如以下的应用场景：</p>
             <ul>
@@ -26,13 +26,13 @@
                 <li><p>特殊视觉互动式网页</p></li>
             </ul>
             <p>事实上，AnimeCursor 适合任何可以用到逐帧动画光标的网站，AnimeCursor 的主要目标就是为需要更有趣、更自由的动画光标设计提供方便的实现方法。</p>
-            <p>与之相同的，请注意 AnimeCursor <b>不一定适合</b> 以下的应用场景：</p>
+            <p>当然，对于其他类型的页面，AnimeCursor 也能够发挥作用，例如：</p>
             <ul>
                 <li><p>应用后台 / 管理系统</p></li>
                 <li><p>表单密集、可访问性要求极高的页面</p></li>
                 <li><p>需要严格遵循系统光标行为的应用</p></li>
             </ul>
-            <p>当然，尝试一下是无害的，可以先试试再说。:)</p>
+            <p>AnimeCursor 提供完整的生命周期 API，对于部分区域需要严格遵系统光标行为的页面，可以通过调用 <span>disable()</span> 和 <span>enable()</span> 在需要的地方动态开启和关闭 AnimeCursor。这样可以配合同样风格化的原生光标，即在需要的地方严格遵循系统光标行为，又能在整体上实现更丰富的效果。</p>
             <p class="ps">※ 实际上，AnimeCursor 是我为了在我的个人网站里使用而编写的，最开始它只是我网站基础JavaScript的一部分。但在我意识到我可以不用在每一个新网站中重复的造轮子后，我决定把 AnimeCursor 剥离出来作为一个独立的JavaScript库。</p>
             <h1 id="features">特性</h1>
             <ul>
