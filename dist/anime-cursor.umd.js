@@ -80,10 +80,7 @@
 
             this._validateOptions();
             this._injectPreload();
-            this._injectHTML();
-            this._injectCSS();
             this._checkDomLoad();
-            this._bindMouse();
 
             // 保存实例引用
             _instance = this;
@@ -223,6 +220,24 @@
                     console.error(`[AnimeCursor] cursor "${name}" 's duration must be a number(seconds)`);
                     throw new Error('AnimeCursor init failed');
                 }
+            }
+        }
+
+        // ----------------------------
+        // 等待 DOM 加载完成
+        // ----------------------------
+        _checkDomLoad() {
+            const init = () => {
+                this._injectHTML();
+                this._injectCSS();
+                this._bindElements();
+                this._bindMouse();
+            };
+        
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
             }
         }
 
@@ -412,14 +427,6 @@
         // ----------------------------
         // 给元素自动添加 data-cursor
         // ----------------------------
-        _checkDomLoad() {
-            // 等待 DOM 加载完成
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', () => this._bindElements());
-            } else {
-                this._bindElements();
-            }
-        }
         _bindElements(refresh) {
             if (this.disabled) return;
 
