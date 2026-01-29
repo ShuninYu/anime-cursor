@@ -1,6 +1,6 @@
 {
     "name": "anime-cursor",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "A lightweight JavaScript library for animated custom cursors",
     "main": "dist/anime-cursor.umd.js",
     "module": "dist/anime-cursor.esm.js",
@@ -22,6 +22,7 @@
     },
     "author": "ShuninYu",
     "license": "MIT",
+    "homepage": "https://animecursor.js.org",
     "devDependencies": {
         "@rollup/plugin-terser": "^0.4.4",
         "rollup": "^4.56.0"

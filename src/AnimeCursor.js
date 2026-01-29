@@ -1,10 +1,56 @@
 // AnimeCursor by github@ShuninYu
-// v0.2.0
+// v0.3.0
+
+// 静态变量存储唯一实例
+let _instance = null;
 
 export default class AnimeCursor {
 
+    static get instance() {
+        return _instance;
+    }
+
+    static destroy() {
+        if (_instance) {
+            _instance.destroy();
+            return true;
+        }
+        return false;
+    }
+
+    static refresh() {
+        if (_instance) {
+            _instance.refresh();
+            return true;
+        }
+        return false;
+    }
+
+    static disable() {
+        if (_instance) {
+            _instance.disable();
+            return true;
+        }
+        return false;
+    }
+
+    static enable() {
+        if (_instance) {
+            _instance.enable();
+            return true;
+        }
+        return false;
+    }
+
     constructor(options = {}) {
+        // 如果已有实例，直接返回它
+        if (_instance) {
+            console.warn('[AnimeCursor] AnimeCursor already exists.');
+            return _instance;
+        }
+
         this.options = {
+            displayOnLoad: false,
             enableTouch: false,
             debug: false,
             ...options
@@ -23,12 +69,18 @@ export default class AnimeCursor {
         this.cursorEl = null;
         this.lastCursorType = null;
         this.debugEl = null;
+        this.styleEl = null;
+        this._onMouseMove = null;
 
         this._validateOptions();
+        this._injectPreload();
         this._injectHTML();
         this._injectCSS();
-        this._bindElements();
+        this._checkDomLoad();
         this._bindMouse();
+
+        // 保存实例引用
+        _instance = this;
     }
     
     isMouseLikeDevice() {
@@ -75,19 +127,28 @@ export default class AnimeCursor {
             this.styleEl = null;
         }
     
-        // 4 清理 data-cursor（只清理自己加的）
+        // 4 清理 data-cursor（只清理由 AnimeCursor 添加的）
         for (const cfg of Object.values(this.options.cursors)) {
-            cfg.tags.forEach(tag => {
-                document.querySelectorAll(tag).forEach(el => {
-                    if (el.dataset.cursor) {
-                        delete el.dataset.cursor;
-                    }
+            // v0.2.1 添加检查：只有存在且为数组的 tags 才进行处理
+            if (cfg.tags && Array.isArray(cfg.tags)) {
+                cfg.tags.forEach(tag => {
+                    document.querySelectorAll(tag).forEach(el => {
+                        if (el.dataset.cursorBound) {
+                            delete el.dataset.cursor;
+                            delete el.dataset.cursorBound;
+                        }
+                    });
                 });
-            });
+            }
         }
     
         // 5 重置状态
         this.lastCursorType = null;
+
+        // 清除静态引用
+        if (_instance === this) {
+            _instance = null;
+        }
     }
     disable() {
         if (this.disabled) return;
@@ -95,6 +156,7 @@ export default class AnimeCursor {
     
         if (this.cursorEl) {
             this.cursorEl.style.display = 'none';
+            this.styleEl.innerHTML = this.styleEl.innerHTML.replace('* {cursor: none !important;}', '');
             console.log('[AnimeCursor] AnimeCursor disabled!');
         }
     }
@@ -104,6 +166,7 @@ export default class AnimeCursor {
     
         if (this.cursorEl) {
             this.cursorEl.style.display = '';
+            this.styleEl.innerHTML += '* {cursor: none; !important;}';
             console.log('[AnimeCursor] AnimeCursor enabled!');
         }
     }
@@ -158,6 +221,46 @@ export default class AnimeCursor {
     }
 
     // ----------------------------
+    // 插入光标图片预加载（）
+    // ----------------------------
+    _injectPreload() {
+        if (this.disabled) return;
+        
+        // 收集所有需要预加载的图片URL
+        const imageUrls = new Set();
+        
+        // 遍历所有光标配置，提取图片URL
+        for (const cfg of Object.values(this.options.cursors)) {
+            if (cfg.image) {
+                imageUrls.add(cfg.image);
+            }
+        }
+        
+        // 为每个图片URL创建预加载标签
+        imageUrls.forEach(url => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'image';
+            link.href = url;
+            
+            // 可选：添加跨域处理（如果图片来自不同域名）
+            if (url.startsWith('http') && !url.startsWith(window.location.origin)) {
+                link.crossOrigin = 'anonymous';
+            }
+            
+            document.head.appendChild(link);
+            
+            if (this.options.debug) {
+                console.info(`[AnimeCursor] Preloading image: ${url}`);
+            }
+        });
+        
+        if (this.options.debug && imageUrls.size > 0) {
+            console.info(`[AnimeCursor] Preloaded ${imageUrls.size} cursor image(s)`);
+        }
+    }
+
+    // ----------------------------
     // 插入光标元素 HTML
     // ----------------------------
     _injectHTML() {
@@ -166,7 +269,7 @@ export default class AnimeCursor {
         const cursor = document.createElement('div');
         cursor.id = 'anime-cursor';
         
-        // 如果debug选项存在，则添加debug子元素
+        // 如果debug选项存在，则添加debug元素
         if (this.options.debug) {
             cursor.className = 'cursor-default cursor-debugmode';
             const debuger = document.createElement('div');
@@ -175,6 +278,14 @@ export default class AnimeCursor {
             this.debugEl = debuger;
         }
         else {cursor.className = 'cursor-default';}
+        
+        // 检查是否设置初始化时显示光标
+        if (this.options.displayOnLoad) {
+            cursor.style.display = 'block';
+        } else {
+            cursor.style.display = 'none';
+            cursor.dataset.animecursorHide = 'true';
+        }
         document.body.appendChild(cursor);
         this.cursorEl = cursor;
     }
@@ -186,13 +297,12 @@ export default class AnimeCursor {
         if (this.disabled) return;
 
         const style = document.createElement('style');
+        style.id = 'animecursor-styles';
         let css = '';
 
         /* 通用样式 */
         css += `
-        * {
-        cursor: none !important;
-        }
+        * {cursor: none !important;}
         #anime-cursor {
         position: fixed;
         top: 0;
@@ -296,6 +406,14 @@ export default class AnimeCursor {
     // ----------------------------
     // 给元素自动添加 data-cursor
     // ----------------------------
+    _checkDomLoad() {
+        // 等待 DOM 加载完成
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => this._bindElements());
+        } else {
+            this._bindElements();
+        }
+    }
     _bindElements(refresh) {
         if (this.disabled) return;
 
@@ -313,7 +431,7 @@ export default class AnimeCursor {
             });
         }
         if (refresh) {
-            console.info('[AnimeCursor] refresh done!');
+            console.info('[AnimeCursor] refresh done');
         }
     }
 
@@ -324,11 +442,17 @@ export default class AnimeCursor {
         if (this.disabled) return;
 
         this._onMouseMove = (e) => {
+            if (this.disabled) return;
+
             const x = e.clientX;
             const y = e.clientY;
 
             this.cursorEl.style.left = x + 'px';
             this.cursorEl.style.top = y + 'px';
+
+            if (this.cursorEl.dataset.animecursorHide) {
+                this.cursorEl.style.display = 'block';
+            }
 
             if (this.debugEl) {
                 this.debugEl.style.left = x + 'px';
