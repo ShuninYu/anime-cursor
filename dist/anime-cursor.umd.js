@@ -193,7 +193,7 @@
             for (const [name, cfg] of Object.entries(this.options.cursors)) {
                 if (cfg.default === true) {
                     if (this.defaultCursorType) {
-                        throw new Error('[AnimeCursor] 只能有一个 default 光标');
+                        throw new Error('[AnimeCursor] There can only be one default cursor');
                     }
                     this.defaultCursorType = name;
                 }
