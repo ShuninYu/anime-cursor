@@ -41,15 +41,19 @@ import AnimeCursor from 'anime-cursor';
 new AnimeCursor({...});
 ```
 
-### Local storage
+### Host Yourself
 
 ```html
 <script src="anime-cursor.umd.min.js"></script>
 ```
 
-## 🚀 Basic Usage
+## 🚀 How to use
 
 Here is an example of how to use AnimeCursor:
+
+&zwnj;**IMPORTANT**&zwnj;
+- Ensure the initialization code is placed **within** the `<body>` tag of your HTML document.
+- For optimal performance, it is recommended to initialize AnimeCursor **before**​ the DOM has fully loaded, as certain features require execution prior to the completion of DOM loading.
 
 ```html
 <script>
@@ -58,7 +62,7 @@ new AnimeCursor({
         // each type of cursor needs tags, size and image
         idle: {
             size: [64,64],
-            image: './cursor_default.png', // static cursor only needs image
+            image: 'https://example.com/cursor_default.png', // static cursor only needs image
             default: true // set this cursor as default cursor
             // only default cursor doesn't needs tags
         },
@@ -66,7 +70,7 @@ new AnimeCursor({
         pointer: {
             tags: ['a', 'button'],
             size: [64,64],
-            image: './cursor_pointer.png',
+            image: 'https://example.com/cursor_pointer.png',
             frames: 3,
             duration: 0.3,
             pingpong: true, // enable pingpong loop
@@ -76,7 +80,7 @@ new AnimeCursor({
         text: {
             tags: ['p', 'h1', 'h2', 'span'],
             size: [32, 64],
-            image: './cursor_text.gif'
+            image: 'https://example.com/cursor_text.gif'
         }
     }
 });
@@ -209,6 +213,11 @@ new AnimeCursor({...});
 ## 🚀 基础用法
 
 下面是一个 AnimeCursor 使用示例：
+
+**重要提示**
+- 请务必将初始化代码置于HTML文档的 **`<body>`** 标签内部。
+- 为获得最佳性能，建议在DOM完全加载**之前**初始化AnimeCursor，因其部分功能需在DOM加载完成前执行。
+
 ```html
 <script>
 new AnimeCursor({
