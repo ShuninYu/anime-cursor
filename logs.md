@@ -1,6 +1,14 @@
 # AnimeCursor changelog
 [[简体中文]](#zh-cn)
 ## Current Version
+
+- ### `0.3.1`
+
+    - #### [Major Update] `tags` is no longer a required field
+        - In most creative scenarios, many special cursor styles may only be triggered on specific elements. Cursors created for such elements are usually set by users manually adding the `data-cursor` attribute to the trigger elements, and there is no need to trigger them via `tags`. Making `tags` a required field for cursor configuration has arguably added unnecessary trouble to cursors triggered by such specific elements. Although triggering can be achieved with custom tags, this approach does not strictly comply with HTML specifications in essence and may lead to other issues. Therefore, `tags` has been removed from the required fields – farewell! Now there are only two required fields left in the cursor configuration of AnimeCursor – wow!
+
+## History Version
+
 - ### `0.3.0`
 
     - #### **[Major Update]** Added the `displayOnLoad` option
@@ -24,7 +32,6 @@
     - #### Other Updates
         - The system cursor will now be shown when `disable()` is called.
 
-## History Version
 - ### `0.2.0`
     - #### [Major Update] Added the concept of a default cursor and revised the existing cursor switching logic
         - In previous versions, AnimeCursor did not have a true default cursor in the full sense. Although the example included a custom `default` cursor, it functioned as a pseudo-default cursor and could not fully fulfill the role of a true default cursor. We believe that `default` does not have to be a mandatory cursor type, and AnimeCursor should instead have a cursor that displays when the pointer is over an element that does not have a `data-cursor` attribute. This is the default cursor.
@@ -45,6 +52,13 @@
 <h1 id="zh-cn">AnimeCursor 更新日志</h1>
 
 ## 当前版本
+
+- ### `0.3.1`
+
+    - #### 【主要更新】`tags` 不再是必填项
+        - 在大多数创意性场景中，许多特殊的光标样式可能只会在特定的元素上触发。而为了这类元素创建的光标通常是由用户手动为触发元素添加 `data-cursor`，而不需要通过 `tags` 来触发。将 `tags` 作为光标设置的必填项，或许在某种程度上为这类特别元素触发的光标添加了不必要的烦恼。虽然可以通过自定义的标签来实现触发，但是这种效果本质上并未严格遵守 HTML 规范，并且可能导致其他问题，因此 `tags` 被移除出必填项，再见啦！现在 AnimeCursor 的光标设置中只有两个必填项了，哇哦！
+
+## 历史版本
 
 - ### `0.3.0`
 
@@ -69,7 +83,6 @@
     - #### 其他更新
         - 现在调用 `disable()` 以后会显示系统光标。
 
-## 历史版本
 - ### `0.2.0`
 	- #### 【主要更新】添加了默认光标概念，并修改了现有的光标切换逻辑
 		- 在之前的版本中，AnimeCursor 并不存在真正意义上的默认光标，但是在示例中有自定义的default光标，这种光标是一种类似默认光标但功能不能完全承担默认光标功能的存在。我们认为，default 并不是必须有的光标类型，而 AnimeCursor 应该有一个在指针指向不含有 `data-cursor` 元素情况下显示的光标，这就是默认光标。
