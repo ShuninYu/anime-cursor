@@ -55,20 +55,18 @@ Here is an example of how to use AnimeCursor:
 - Ensure the initialization code is placed **within** the `<body>` tag of your HTML document.
 - For optimal performance, it is recommended to initialize AnimeCursor **before**​ the DOM has fully loaded, as certain features require execution prior to the completion of DOM loading.
 
-```html
-<script>
+```javascript
 new AnimeCursor({
     cursors: {
-        // each type of cursor needs tags, size and image
+        // each type of cursor needs size and image
         idle: {
             size: [64,64],
             image: 'https://example.com/cursor_default.png', // static cursor only needs image
             default: true // set this cursor as default cursor
-            // only default cursor doesn't needs tags
         },
         // sprite animated cursor needs frames and duration
         pointer: {
-            tags: ['a', 'button'],
+            tags: ['a', 'button'], // if you need certain types of elements to trigger this cursor, set the tags
             size: [64,64],
             image: 'https://example.com/cursor_pointer.png',
             frames: 3,
@@ -81,11 +79,19 @@ new AnimeCursor({
             tags: ['p', 'h1', 'h2', 'span'],
             size: [32, 64],
             image: 'https://example.com/cursor_text.gif'
+        },
+        haha: {
+            size: [32,32],
+            image: 'https://example.com/cursor_haha.png',
+            frames: 12,
+            duration: 1,
+            pixel: true, // if the image is origin size pixel art, set pixel to true
+            scale: [2,2] // scale the cursor
         }
     }
 });
-</script>
 ```
+For non-default cursors, if you need a specific element to trigger the cursor, manually add the `data-cursor` attribute to the element. For example: if you want the `<div class="custom-div"></div>` to trigger the `haha` cursor, you need to add `data-cursor="haha"` to it, and the modified code should be as follows: `<div class="custom-div" data-cursor="haha"></div>`. This way, when the cursor hovers over the `custom-div` element, the cursor will switch to the `haha` style.
 
 ## ⚙️ Configuration Options
 
@@ -218,37 +224,43 @@ new AnimeCursor({...});
 - 请务必将初始化代码置于HTML文档的 **`<body>`** 标签内部。
 - 为获得最佳性能，建议在DOM完全加载**之前**初始化AnimeCursor，因其部分功能需在DOM加载完成前执行。
 
-```html
-<script>
+```javascript
 new AnimeCursor({
     cursors: {
-        // 每种光标都需要 tags size 和 image
+        // 每种光标都需要 size 和 image
         default: {
             size: [64,64],
-            image: './cursor_default.png', // 静态光标只需要图片链接
+            image: 'https://example.com/cursor_default.png', // 静态光标只需要图片链接
             default: true // 将此光标设为默认光标
-            // 默认光标不需要 tags
         },
         // 精灵图动画光标还需要 frames 和 duration
         pointer: {
-            tags: ['a', 'button'],
+            tags: ['a', 'button'], // 如果需要某类元素触发该光标，设置 tags
             size: [64,64],
-            image: './cursor_pointer.png',
+            image: 'https://example.com/cursor_pointer.png',
             frames: 3,
             duration: 0.3,
-            pingpong: true, // enable pingpong loop
-            offset: [10, 4] // if the pointing spot is not at the top left of the image, set offset
+            pingpong: true, // 启用乒乓循环
+            offset: [10,4] // 如果指针位置不在左上角，设置 offset
         },
         // gif 光标不需要 frames 或 duration
         text: {
             tags: ['p', 'h1', 'h2', 'span'],
-            size: [32, 64],
-            image: './cursor_text.gif'
+            size: [32,64],
+            image: 'https://example.com/cursor_text.gif'
+        },
+        haha: {
+            size: [32,32],
+            image: 'https://example.com/cursor_haha.png',
+            frames: 12,
+            duration: 1,
+            pixel: true, // 如果是原尺寸像素图，启用像素化渲染
+            scale: [2,2] // 缩放光标
         }
     }
 });
-</script>
 ```
+对于非默认光标，如果需要某元素触发该光标，请手动为该元素添加 `data-cursor`。例如：如果你想让 `<div class="custom-div"></div>` 触发 `haha` 光标，那么就要为其添加 `data-cursor="haha"`，修改完后应该是这样：`<div class="custom-div" data-cursor="haha"></div>`。这样当光标指向 `custom-div` 元素时，光标就会切换到 `haha`。
 
 ## ⚙️ 配置项说明
 

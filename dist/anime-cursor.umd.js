@@ -204,14 +204,8 @@
                         throw new Error('AnimeCursor init failed');
                     }
                 });
-
-                if (!cfg.default) {
-                    if (!Array.isArray(cfg.tags) || cfg.tags.length === 0) {
-                        console.error(`[AnimeCursor] non-default cursor "${name}" must define at least one tag`);
-                        throw new Error('AnimeCursor init failed');
-                    }
-                }
-                if (cfg.default && cfg.tags !== undefined && !Array.isArray(cfg.tags)) {
+                
+                if (cfg.tags !== undefined && !Array.isArray(cfg.tags)) {
                     console.error(`[AnimeCursor] default cursor "${name}" 's tags must be an array if provided`);
                     throw new Error('AnimeCursor init failed');
                 }
@@ -431,7 +425,7 @@
             if (this.disabled) return;
 
             for (const [type, cfg] of Object.entries(this.options.cursors)) {
-                if (!cfg.tags || cfg.tags.length === 0) continue;
+                if (!cfg.tags || !Array.isArray(cfg.tags) || cfg.tags.length === 0) continue;
                 
                 cfg.tags.forEach(tag => {
                     const tagName = tag.toUpperCase();
