@@ -54,7 +54,7 @@
                             <p>Get the latest version of AnimeCursor directly via jsDelivr's npm CDN</p>
                             <pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/anime-cursor/dist/anime-cursor.umd.min.js">&lt;/script></code></pre>
                             <p>Or get a specific version via jsDelivr's GitHub release CDN</p>
-                            <pre><code>&lt;script src="https://cdn.jsdelivr.net/gh/ShuninYu/anime-cursor@v0.2.0/dist/anime-cursor.umd.min.js">&lt;/script></code></pre>
+                            <pre><code>&lt;script src="https://cdn.jsdelivr.net/gh/ShuninYu/anime-cursor@v0.3.1/dist/anime-cursor.umd.min.js">&lt;/script></code></pre>
                         </li>
                         <li>
                             <h3>npm</h3>
@@ -109,28 +109,29 @@ cursorTypeTwo: {
             <p>A minimal runnable example:</p>
             <pre><code class="javascript">new AnimeCursor({
     cursors: {
-        normal: {
+        pointer: {
+            tags: ['a','button']
             size: [32,32],
-            image: 'cursor_normal.png',
-            default: true
+            image: 'cursor_pointer.png',
+            default: false
         }
     }
 });</code></pre>
-            <p>In simple terms, in this code we set up a cursor type called <span>normal</span>. This cursor has dimensions of 32 × 32 pixels, uses the image <span>cursor_normal.png</span>, and is the default cursor (because <span>default: true</span> is set), so no <span>tags</span> need to be set.</p>
-            <p>Please note that if <span>cursor_normal.png</span> is a sprite sheet, in this example the <span>normal</span> cursor will still only appear as a static cursor because it lacks some necessary parameter settings for sprite sheet animated cursors. The specific reasons will be mentioned next.</p>
+            <p>In simple terms, in this code we set up a cursor type called <span>pointer</span>. This cursor has dimensions of 32 × 32 pixels, uses the image <span>cursor_pointer.png</span>, and it will display when cursor hovers an 'a' element or a 'button' element.</p>
+            <p>Please note that if <span>cursor_pointer.png</span> is a sprite sheet, in this example the <span>pointer</span> cursor will still only appear as a static cursor because it lacks some necessary parameter settings for sprite sheet animated cursors. The specific reasons will be mentioned next.</p>
             <p>Here is a richer and more practical example containing three cursor types:</p>
             <pre><code class="javascript">new AnimeCursor({
     cursors: {
         default: {
             size: [32,32],
-            image: 'https://animecursor.js.org/i/cursor/cursor_default.gif',
+            image: 'https://example.com/cursor_default.gif',
             pixel: true,
             default: true
         },
         pointer: {
             tags: ['a','button'],
             size: [32,36],
-            image: 'https://animecursor.js.org/i/cursor/cursor_pointer.png',
+            image: 'https://example.com/cursor_pointer.png',
             frames: 3,
             duration: 0.3,
             pingpong: true,
@@ -140,14 +141,23 @@ cursorTypeTwo: {
         text: {
             tags: ['p','h1','h2','h3','h4','span','td','th','pre','code','footer'],
             size: [32,32],
-            image: 'https://animecursor.js.org/i/cursor/cursor_text.png',
+            image: 'https://example.com/cursor_text.png',
             offset: [10,16],
+            pixel: true
+        },
+        special: {
+            size: [48,32],
+            image: 'https://example.com/cursor_special.png',
+            frames: 24,
+            duration: 2,
+            offset: [24,16],
             pixel: true
         }
     }
 });</code></pre>
-            <p>In fact, this is the configuration used on the AnimeCursor official website before, which includes three cursor types: <span>default</span>, <span>pointer</span>, and <span>text</span>.</p>
+            <p>The example code includes four cursor types: <span>default</span>, <span>pointer</span>, <span>text</span> and <span>special</span>.</p>
             <p>Among these three cursor types, only <span>pointer</span> has <span>frames</span> and <span>duration</span> set. This is because <span>pointer</span> is a PNG sprite sheet animated cursor, and in AnimeCursor, <span>frames</span> and <span>duration</span> are required parameters for sprite sheet animated cursors. If either of these parameters is missing, that cursor type will be rendered as static. Although <span>default</span> cursor doesn't have <span>frames</span> and <span>duration</span> set, its <span>image</span> points to a GIF animation, so the <span>default</span> cursor will be presented with the GIF's animation (the animation effect is determined by the GIF itself).</p>
+            <p>You may have noticed: aside from the <span>default</span> cursor, the <span>special</span> cursor also has no <span>tags</span> set. Therefore, it can only be triggered on elements that have <span>data-cursor="special"</span> manually added to them.</p>
             <p>This is just a brief explanation of AnimeCursor configuration. For more detailed initialization configuration, please refer to the <a href="configuration">Configuration</a> page.</p>
             <footer></footer>
         </div>

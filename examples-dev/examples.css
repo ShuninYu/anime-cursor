@@ -1,0 +1,56 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: consolas, sans-serif;
+}
+@font-face {
+  font-family: 'Title';
+  src: url(/fonts/slack-light.otf) format('opentype');
+}
+@font-face {
+  font-family: 'Content';
+  src: url(/fonts/SinkinSans-300Light.otf);
+}
+.entry-page {
+  background-color: #dce6ff;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.entry-page h1 {
+  font-size: 40px;
+}
+.entry-page p {
+  margin-top: 40px;
+  font-size: 20px;
+}
+.entry-page .start-button {
+  background-color: green;
+  display: block;
+  position: relative;
+  margin-top: 100px;
+  width: 40px;
+  aspect-ratio: 1/1;
+  border-radius: 20px;
+}
+.entry-page .start-button .start-button-bg {
+  background-color: green;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  aspect-ratio: 1/1;
+  border-radius: 20px;
+  pointer-events: none;
+  transition: 0.8s;
+}
+.entry-page .start-button:hover .start-button-bg {
+  scale: 5;
+}

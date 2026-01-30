@@ -35,9 +35,9 @@
             <table class="config-table" cellspacing="0">
                 <colgroup><col style="width: 12%;"><col style="width: 20%;"><col style="width: 10%;"><col style="width: 34%;"><col style="width: 24%;"></colgroup>
                 <tr><th>选项</th> <th>类型</th> <th>必填项</th> <th>选项介绍</th> <th>留空时的行为</th></tr>
-                <tr><td>tags</td> <td>string[ ]</td> <td>✅⚠️</td> <td>生效的 HTML 标签<br>⚠️默认光标建议不设置此项</td> <td><span class="error">报错</span></td></tr>
                 <tr><td>size</td> <td>[number, number]</td> <td>✅</td> <td>光标尺寸[宽,高]（像素）</td> <td><span class="error">报错</span></td></tr>
                 <tr><td>image</td> <td>string</td> <td>✅</td> <td>光标图片路径</td> <td><span class="error">报错</span></td></tr>
+                <tr><td>tags</td> <td>string[ ]</td> <td></td> <td>生效的 HTML 标签</td> <td><span class="warning">AnimeCursor 只会在被手动设置了 <span>data-cursor</span> 的元素上时才会切换到该光标</span></td></tr>
                 <tr><td>default</td> <td>boolean</td> <td>⚠️</td> <td>光标是否是默认光标<br>⚠️最多只能设置一个默认光标</td> <td><span>与设置该项为 false 相同</span></td></tr>
                 <tr><td>frames</td> <td>number</td> <td></td> <td>精灵图动画帧数</td> <td><span class="warning">光标不会生成精灵图动画</span></td></tr>
                 <tr><td>duration</td> <td>number</td> <td></td> <td>精灵图动画循环时长</td> <td><span class="warning">光标不会生成精灵图动画</span></td></tr>
@@ -49,29 +49,6 @@
             </table>
             <h2>参数介绍</h2>
             <ul>
-                <li>
-                    <h3>tags</h3>
-                    <p><span>tags</span> 是光标参数中的一个<span>必填项</span>，它表示鼠标指针指在哪些 DOM 元素上时，AnimeCursor 会把光标切换为此参数所属光标。</p>
-                    <p>格式：</p>
-                    <pre><code class="javascript">tags['tag-1' , 'tag-2' , 'tag-3']</code></pre>
-                    <p>示例：</p>
-                    <pre><code class="javascript">// AnimeCursor 将在鼠标指针指向 a元素 button元素 和 span元素 时将光标切换到该参数所属光标
-tags['a' , 'button' , 'span']</code></pre>
-                    <p>上面的示例表示：AnimeCursor 将在鼠标指针指向 <span>a元素</span> <span>button元素</span> 和 <span>span元素</span> 时将光切换到该参数所属光标。</p>
-                    <p>假设该 <span>tags</span> 参数属于 <span>pointer</span> 光标，那么当鼠标指针指向下面任何一个元素之一时：</p>
-                    <pre><code class="html">&lt;a href="/">A element&lt;/a>
-
-&lt;button type="button">BUTTON element&lt;/button>
-
-&lt;span>SPAN element&lt;/span></code></pre>
-                    <p>AnimeCursor 会自动切换到 <span>pointer</span> 光标。</p>
-                    <div class="notebox">
-                        <p><span>default</span> 参数设置为 <span>true</span> 的光标会自动被 AnimeCursor 应用到所有没有被声明过的情况中，所以默认光标可以不设置此项。</p>
-                    </div>
-                    <div class="warningbox">
-                        <p><span>tags</span> 中设置的元素标签是 <span>全局不可重复</span> 的。<br>如果某种元素标签已经在某个光标中被声明过，那么在其他光标中就不可以被再次声明，即不同的光标不能有相同的目标元素标签。</p>
-                    </div>
-                </li>
                 <li>
                     <h3>size</h3>
                     <p><span>size</span> 是光标参数中的一个<span>必填项</span>，它表示此参数所属光标的尺寸(单位 <span>像素</span>)。</p>
@@ -93,7 +70,33 @@ image: '/image/cursor/cursor-image.png';</code></pre>
 image: 'https://example.com/image/cursor/cursor-image.png';</code></pre>
                     <p>上面的两个示例表示：该参数所属的光标的图片路径为 <span>/image/cursor/cursor-image.png</span>（第一个示例）、<span>https://example.com/image/cursor/cursor-image.png</span>（第二个示例）。</p>
                     <div class="warningbox">
+                        <p>如果是精灵图动画光标，请确保 <span>image</span> 的图片是精灵图表，而不是精灵图的某一帧或者一个文件夹。</p>
                         <p>AnimeCursor 推荐使用绝对路径来设置光标图片。如果网站有多层的页面结构，使用相对路径可能导致 AnimeCursor 的图片路径不匹配，这个问题是可以通过使用绝对路径来避免的。</p>
+                    </div>
+                </li>
+                <li>
+                    <h3>tags</h3>
+                    <p><span>tags</span> 是光标参数中的一个非必填项，它表示鼠标指针指在哪些 DOM 元素上时，AnimeCursor 会把光标切换为此参数所属光标。它的工作原理是：初始化或刷新 AnimeCursor 时，AnimeCursor 会为 <span>tags</span> 中设置的元素自动添加该种光标的 <span>data-cursor</span>（除非元素已经有 <span>data-cursor</span>），当光标移动到含有 <span>data-cursor</span> 的元素上时，AnimeCursor 会自动识别该元素所属的光标种类，并切换到该光标。</p>
+                    <p>当未设置 <span>tags</span> 时，AnimeCursor 将不会为 HTML 中的任何元素添加该种光标的 <span>data-cursor</span>，如果需要触发此光标，请为触发元素手动添加 <span>data-cursor</span>。</p>
+                    <p>格式：</p>
+                    <pre><code class="javascript">tags['tag-1' , 'tag-2' , 'tag-3']</code></pre>
+                    <p>示例：</p>
+                    <pre><code class="javascript">// AnimeCursor 将在鼠标指针指向 a元素 button元素 和 span元素 时将光标切换到该参数所属光标
+tags['a' , 'button' , 'span']</code></pre>
+                    <p>上面的示例表示：AnimeCursor 将在鼠标指针指向 <span>a元素</span> <span>button元素</span> 和 <span>span元素</span> 时将光切换到该参数所属光标。</p>
+                    <p>假设该 <span>tags</span> 参数属于 <span>pointer</span> 光标，那么当鼠标指针指向下面任何一个元素之一时：</p>
+                    <pre><code class="html">&lt;a href="/">A element&lt;/a>
+&lt;button type="button">BUTTON element&lt;/button>
+&lt;span>SPAN element&lt;/span>
+
+&lt;!-- 被用户手动添加了 data-cursor="pointer" 的元素（不管是什么标签类型的元素） -->
+&lt;div data-cursor="pointer">&lt;/div></code></pre>
+                    <p>AnimeCursor 会自动切换到 <span>pointer</span> 光标。</p>
+                    <div class="notebox">
+                        <p><span>default</span> 参数设置为 <span>true</span> 的光标会自动被 AnimeCursor 应用到所有没有被声明过的情况中。</p>
+                    </div>
+                    <div class="warningbox">
+                        <p><span>tags</span> 中设置的元素标签是 <span>全局不可重复</span> 的。<br>如果某种元素标签已经在某个光标中被声明过，那么在其他光标中就不可以被再次声明，即不同的光标不能有相同的目标元素标签。</p>
                     </div>
                 </li>
                 <li>

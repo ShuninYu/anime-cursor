@@ -35,9 +35,9 @@
             <table class="config-table" cellspacing="0">
                 <colgroup><col style="width: 12%;"><col style="width: 10%;"><col style="width: 14%;"><col style="width: 40%;"><col style="width: 24%;"></colgroup>
                 <tr><th>Option</th> <th>Type</th> <th>Required</th> <th>Description</th> <th>Behavior When Empty</th></tr>
-                <tr><td>tags</td> <td>string[ ]</td> <td>✅⚠️</td> <td>Target HTML tags<br>⚠️ Not recommended for default cursor</td> <td><span class="error">Error</span></td></tr>
                 <tr><td>size</td> <td>[number, number]</td> <td>✅</td> <td>Cursor dimensions [width, height] (pixels)</td> <td><span class="error">Error</span></td></tr>
                 <tr><td>image</td> <td>string</td> <td>✅</td> <td>Path to cursor image</td> <td><span class="error">Error</span></td></tr>
+                <tr><td>tags</td> <td>string[ ]</td> <td></td> <td>Target HTML tags</td> <td><span class="warning">AnimeCursor will only switch to this cursor when hover an element that has <span>data-cursor</span> setted by user manually</span></td></tr>
                 <tr><td>default</td> <td>boolean</td> <td>⚠️</td> <td>Whether the cursor is the default cursor<br>⚠️ Only one default cursor can be set</td> <td><span>Same as setting to false</span></td></tr>
                 <tr><td>frames</td> <td>number</td> <td></td> <td>Number of frames for sprite sheet animation</td> <td><span class="warning">Cursor will not be animated as a sprite sheet</span></td></tr>
                 <tr><td>duration</td> <td>number</td> <td></td> <td>Loop duration for sprite sheet animation (seconds)</td> <td><span class="warning">Cursor will not be animated as a sprite sheet</span></td></tr>
@@ -49,28 +49,6 @@
             </table>
             <h2>Parameter Details</h2>
             <ul>
-                <li>
-                    <h3>tags</h3>
-                    <p><span>tags</span> is a <span>required</span> parameter for cursors. It specifies which DOM elements, when hovered by the mouse pointer, will cause AnimeCursor to switch to the cursor this parameter belongs to.</p>
-                    <p>Format:</p>
-                    <pre><code class="javascript">tags['tag-1' , 'tag-2' , 'tag-3']</code></pre>
-                    <p>Example:</p>
-                    <pre><code class="javascript">tags['a' , 'button' , 'span']</code></pre>
-                    <p>The example above means: AnimeCursor will switch to this cursor when the mouse pointer hovers over <span>a elements</span>, <span>button elements</span>, and <span>span elements</span>.</p>
-                    <p>Assuming this <span>tags</span> parameter belongs to the <span>pointer</span> cursor, then when the mouse pointer hovers over any of the following elements:</p>
-                    <pre><code class="html">&lt;a href="/">A element&lt;/a>
-
-&lt;button type="button">BUTTON element&lt;/button>
-
-&lt;span>SPAN element&lt;/span></code></pre>
-                    <p>AnimeCursor will automatically switch to the <span>pointer</span> cursor.</p>
-                    <div class="notebox">
-                        <p>A cursor with its <span>default</span> parameter set to <span>true</span> will automatically be applied by AnimeCursor to all undeclared situations, so the default cursor may omit this option.</p>
-                    </div>
-                    <div class="warningbox">
-                        <p>Element tags set within <span>tags</span> are <span>globally non-repeatable</span>.<br>If an element tag has already been declared in one cursor, it cannot be declared again in other cursors. That is, different cursors cannot share the same target element tags.</p>
-                    </div>
-                </li>
                 <li>
                     <h3>size</h3>
                     <p><span>size</span> is a <span>required</span> parameter for cursors. It indicates the dimensions (unit: <span>pixels</span>) of the cursor this parameter belongs to.</p>
@@ -93,6 +71,32 @@ image: 'https://example.com/image/cursor/cursor-image.png';</code></pre>
                     <p>The two examples above mean: The image path for the cursor this parameter belongs to is <span>/image/cursor/cursor-image.png</span> (first example) or <span>https://example.com/image/cursor/cursor-image.png</span> (second example).</p>
                     <div class="warningbox">
                         <p>AnimeCursor recommends using absolute paths to set cursor images. If the website has a multi-layered page structure, using relative paths may cause AnimeCursor's image paths to mismatch, an issue that can be avoided by using absolute paths.</p>
+                    </div>
+                </li>
+                <li>
+                    <h3>tags</h3>
+                    <p><span>tags</span> is an optional parameter in the cursor configuration. It specifies on which DOM elements the cursor should switch to the associated cursor style when the mouse pointer hovers over them. It works as follows: During initialization or refresh, AnimeCursor will automatically add the cursor's corresponding <span>data-cursor</span> attribute to the elements specified in <span>tags</span> (unless an element already has a <span>data-cursor</span> attribute). When the cursor moves over an element that has a <span>data-cursor</span> attribute, AnimeCursor automatically recognizes the cursor type associated with that element and switches to that cursor.</p>
+                    <p>When <span>tags</span> is not set, AnimeCursor will not add its corresponding <span>data-cursor</span> attribute to any elements in the HTML. If you need to trigger this cursor, you must manually add the <span>data-cursor</span> attribute to the triggering element(s).</p>
+                    <p>Format:</p>
+                    <pre><code class="javascript">tags['tag-1' , 'tag-2' , 'tag-3']</code></pre>
+                    <p>Example:</p>
+                    <pre><code class="javascript">tags['a' , 'button' , 'span']</code></pre>
+                    <p>The example above means: AnimeCursor will switch to this cursor when the mouse pointer hovers over <span>a elements</span>, <span>button elements</span>, and <span>span elements</span>.</p>
+                    <p>Assuming this <span>tags</span> parameter belongs to the <span>pointer</span> cursor, then when the mouse pointer hovers over any of the following elements:</p>
+                    <pre><code class="html">&lt;a href="/">A element&lt;/a>
+&lt;button type="button">BUTTON element&lt;/button>
+&lt;span>SPAN element&lt;/span>
+
+&lt;!-- element that has a data-cursor="pointer" setted by user -->
+&lt;!-- (no matter what tag the element is) -->
+&lt;div data-cursor="pointer">&lt;/div></code></pre>
+                    <p>AnimeCursor will automatically switch to the <span>pointer</span> cursor.</p>
+                    <div class="notebox">
+                        <p>A cursor with its <span>default</span> parameter set to <span>true</span> will automatically be applied by AnimeCursor to all undeclared situations.</p>
+                    </div>
+                    <div class="warningbox">
+                        <p>If the cursor is sprite animation cursor, pleast make sure that <span>image</span> links to the sprite sheet, not one of the frames or a folder.</p>
+                        <p>Element tags set within <span>tags</span> are <span>globally non-repeatable</span>.<br>If an element tag has already been declared in one cursor, it cannot be declared again in other cursors. That is, different cursors cannot share the same target element tags.</p>
                     </div>
                 </li>
                 <li>
