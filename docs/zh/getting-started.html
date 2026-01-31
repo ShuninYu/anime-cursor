@@ -119,7 +119,7 @@ cursorTypeTwo: {
 });</code></pre>
             <p>用通俗的话来说，在这段代码中我们设置了一种叫做 <span>pointer</span> 的光标。这个光标的尺寸为 32 × 32 像素，图片是 <span>cursor_pointer.png</span>，它会在光标移动到 a 元素和 button 元素上时显示。</p>
             <p>请注意，假设 <span>cursor_pointer.png</span> 是一张精灵图表，在这个示例的情况下 <span>pointer</span> 仍然只会是静态光标，因为它缺少一些精灵图动画光标必须的参数设置，具体原因我们接下来就会提到。</p>
-            <p>下面是一个更丰富且更贴近实际应用的示例，包含了三种光标：</p>
+            <p>下面是一个更丰富且更贴近实际应用的示例，包含了四种光标：</p>
             <pre><code class="javascript">new AnimeCursor({
     cursors: {
         default: {
@@ -156,7 +156,7 @@ cursorTypeTwo: {
     }
 });</code></pre>
             <p>上面的代码中包含了 <span>default</span> <span>pointer</span> <span>text</span> <span>special</span> 四种光标。</p>
-            <p>在这三种光标中，只有 <span>pointer</span> 和 <span>special</span> 设置了 <span>frames</span> 和 <span>duration</span>。这是因为它们是 PNG 精灵图动画光标，而在 AnimeCursor 中，<span>frames</span> 和 <span>duration</span> 是精灵图动画光标必须设置的参数，当缺少二者其中任意一个参数时，该种光标都将以静态呈现。而 <span>default</span> 光标虽然没有设置 <span>frames</span> 和 <span>duration</span>，但是它的 <span>image</span> 指向的图片是一张 GIF 动图，所以 <span>default</span> 光标会以 GIF 的动画呈现（动画效果由 GIF 本身决定）。</p>
+            <p>在这四种光标中，只有 <span>pointer</span> 和 <span>special</span> 设置了 <span>frames</span> 和 <span>duration</span>。这是因为它们是 PNG 精灵图动画光标，而在 AnimeCursor 中，<span>frames</span> 和 <span>duration</span> 是精灵图动画光标必须设置的参数，当缺少二者其中任意一个参数时，该种光标都将以静态呈现。而 <span>default</span> 光标虽然没有设置 <span>frames</span> 和 <span>duration</span>，但是它的 <span>image</span> 指向的图片是一张 GIF 动图，所以 <span>default</span> 光标会以 GIF 的动画呈现（动画效果由 GIF 本身决定）。</p>
             <p>不知道你是否注意到：除了被设置成默认光标的 <span>default</span> 以外，<span>special</span> 也同样没有设置 <span>tags</span>，因此它只能在被手动添加了 <span>data-cursor="special"</span> 的元素触发。</p>
             <p>这里只是对 AnimeCursor 配置的简要说明，对于更详细的 AnimeCursor 初始化配置，请参考 <a href="configuration">配置</a> 页面。</p>
             <footer></footer>
