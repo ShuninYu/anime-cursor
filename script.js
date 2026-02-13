@@ -62,7 +62,7 @@ function injectDocsPanel() {
             </a>
             <div class="docs-panel-topbar-navbar">
                 <a href="${(docsPanel.classList.contains('zh-CN'))?'../../':'../'}" class="docs-panel-topbar-navbtn">${(docsPanel.classList.contains('zh-CN'))?'主页':'home'}<div></div></a>
-                <a href="${(docsPanel.classList.contains('zh-CN'))?'../../examples':'../examples'}" class="docs-panel-topbar-navbtn">${(docsPanel.classList.contains('zh-CN'))?'查看示例':'examples'}<div></div></a>
+                <a href="${(docsPanel.classList.contains('zh-CN'))?'../../showcase':'../showcase'}" class="docs-panel-topbar-navbtn">${(docsPanel.classList.contains('zh-CN'))?'在线演示':'showcase'}<div></div></a>
                 <a href="${(docsPanel.classList.contains('zh-CN'))?'../../changelog':'../changelog'}" class="docs-panel-topbar-navbtn" target="_blank">${(docsPanel.classList.contains('zh-CN'))?'更新日志':'changelog'}<div></div></a>
             </div>
         </div>

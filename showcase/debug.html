@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+    <title>How AnimeCursor's debug works</title>
+    <link rel="stylesheet" href="showcase.css">
+    <link rel="stylesheet" href="/monokai.min.css">
+    <script src="/highlight.min.js"></script>
+    <script src="anime-cursor-0.3.1.js"></script>
+    <script src="showcase.js"></script>
+    <script>
+        new AnimeCursor({
+            debug: true,
+            cursors: {
+                normal: {
+                    size: [32,32],
+                    image: '/i/cursor/cursor_default.gif',
+                    pixel: true,
+                    default: true
+                },
+                pointer: {
+                    size: [32,36],
+                    image: '/i/cursor/cursor_pointer.png',
+                    frames: 3,
+                    duration: 0.3,
+                    pingpong: true,
+                    offset: [10, 4],
+                    pixel: true
+                },
+                text: {
+                    tags: ['p','h1','h2','h3','h4','span','td','th','pre','code','footer','b'],
+                    size: [32,32],
+                    image: '/i/cursor/cursor_text.png',
+                    offset: [10, 16],
+                    pixel: true
+                }
+            }
+        })
+    </script>
+</head>
+<body class="debug-page">
+    <div class="title">
+        <h1>This is what things look like when debug is enabled.</h1>
+        <p>Note: This is a simple demo for AnimeCursor's debug overlay, so there is no fancy css styles.<br>And also, this page is with <b>debug: true</b> setted.</p>
+    </div>
+    <div class="explain">
+        <p>As <b>debug: true</b> setted, AnimeCursor will create an overlay that shows the pointer position and the actual size of the cursor.</p>
+        <p>Try hover this paragraph and check the pointer position(the corssing position of the two red lines).</p>
+    </div>
+    <div class="demoscript">
+        <p>Here is the example AnimeCursor setup:</p>
+        <pre><code class="javascript">new AnimeCursor({
+    debug: true, // this is what this page is about
+    cursors: {
+        normal: {
+            size: [32,32],
+            image: '/i/cursor/cursor_default.gif',
+            pixel: true,
+            default: true
+        },
+        pointer: {
+            size: [32,36],
+            image: '/i/cursor/cursor_pointer.png',
+            frames: 3,
+            duration: 0.3,
+            pingpong: true,
+            offset: [10, 4],
+            pixel: true
+        },
+        text: {
+            tags: ['p','h1','h2','h3','h4','span','td','th','pre','code','footer','b'],
+            size: [32,32],
+            image: '/i/cursor/cursor_text.png',
+            offset: [10, 16],
+            pixel: true
+        }
+    }
+})</code></pre>
+    </div>
+    <div class="showcasegrid">
+        <div data-cursor="pointer">
+            <p>This is a DIV element with</p>
+            <div class="codespace">
+                <pre><code class="javascript">data-cursor="pointer"</code></pre>
+            </div>
+            <p>So your cursor should be <b>pointer</b> when you hover it.</p>
+            <p><b>data-cursor</b> can be set by AnimeCursor(init/refresh) or you(before deploy).</p>
+        </div>
+        <div>
+            <p>This is a DIV element with no</p>
+            <div class="codespace">
+                <pre><code class="javascript">data-cursor</code></pre>
+            </div>
+            <p>So according to the setup, the cursor will be <b>normal</b> as <b>normal</b> is the default cursor type.</p>
+        </div>
+        <div>
+            <p>This is a DIV element with P elements, but your cursor will not change to <b>text</b> when you hover these text elements.</p>
+            <p>That's because this DIV's childs have:</p>
+            <pre><code class="css">pointer-events: none</code></pre>
+            <p>So nothing happened.</p>
+            <div class="codespace"></div>
+        </div>
+    </div>
+    <footer></footer>
+</body>
+</html>

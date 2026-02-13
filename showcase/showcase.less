@@ -1,0 +1,290 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: consolas , sans-serif;
+    //font-family: 'Content' , 'HarmonyOS Sans SC' , sans-serif;
+}
+@font-face {
+    font-family: 'Title';
+    src: url(/fonts/slack-light.otf) format('opentype');
+}
+@font-face {
+    font-family: 'Content';
+    src: url(/fonts/SinkinSans-300Light.otf);
+}
+@font-face {
+    font-family: 'Minecraft';
+    src: url(/fonts/minecraft.otf);
+}
+@view-transition {
+    navigation: auto;
+}
+/* 创建自定义动画 */
+@keyframes move-out {
+    from {
+        transform: translateY(0%);
+    }
+    to {
+        transform: translateY(-100%);
+    }
+}
+@keyframes move-in {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0%);
+    }
+}
+/* 将自定义动画应用于新旧页面状态 */
+::view-transition-old(root) {
+    animation: 1s cubic-bezier(0.87, 0, 0.13, 1) both move-out;
+}
+::view-transition-new(root) {
+    animation: 1s cubic-bezier(0.87, 0, 0.13, 1) both move-in;
+}
+footer {
+    width: fit-content;
+    margin: 0 auto;
+    color: black;
+    font-size: 16px;
+    text-align: center;
+    a {
+        color: black;
+        text-decoration: none;
+    }
+}
+
+.entry-page {
+    background-image: url(/i/blur.avif);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    h1 {
+        font-size: 40px;
+        pointer-events: none;
+        user-select: none;
+    }
+    p {
+        margin-top: 40px;
+        font-size: 20px;
+        pointer-events: none;
+        user-select: none;
+    }
+    .entry-navbar {
+        margin-top: 100px;
+        width: 400px;
+        height: 50px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+        .green {background-color: green;}
+        .orange {background-color: orange;}
+        .purple {background-color: purple;}
+        .start-button {
+            display: block;
+            position: relative;
+            width: 50px;
+            aspect-ratio: 1/1;
+            border-radius: 25px;
+            .start-button-bg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 50px;
+                aspect-ratio: 1/1;
+                border-radius: 25px;
+                pointer-events: none;
+                transition: 0.8s;
+            }
+            &:hover {
+                .start-button-bg {
+                    scale: 4;
+                }
+            }
+        }
+    }
+}
+
+.start-page {
+    background-image: url(/i/blur.avif);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    h1 {
+        text-align: center;
+    }
+    p {
+        text-align: center;
+        font-size: 20px;
+    }
+    .note {
+        padding: 20px;
+        border: 1px solid black;
+        background-color: white;
+        margin: 20px auto 100px auto;
+        width: fit-content;
+        max-width: 1000px;
+    }
+    .entry-navbar {
+        margin: 100px auto;
+        width: 400px;
+        height: 50px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+        .green {background-color: green;}
+        .orange {background-color: orange;}
+        .purple {background-color: purple;}
+        .start-button {
+            display: block;
+            position: relative;
+            width: 50px;
+            aspect-ratio: 1/1;
+            border-radius: 25px;
+            .start-button-bg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 50px;
+                aspect-ratio: 1/1;
+                border-radius: 25px;
+                pointer-events: none;
+                transition: 0.8s;
+            }
+            &:hover {
+                .start-button-bg {
+                    scale: 4;
+                }
+            }
+        }
+    }
+    .button-shows {
+        margin: 40px auto;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        .box {
+            margin: 0 20px;
+            width: 200px;
+            font-size: 20px;
+            text-align: center;
+            div {
+                width: 200px;
+                height: 200px;
+                color: white;
+                padding: 20px;
+                font-size: 16px;
+            }
+            .green {background-color: green;}
+            .orange {background-color: orange;}
+            .purple {background-color: purple;}
+        }
+    }
+    .bubblebox{
+        position: relative;
+        // border: 1px solid red;
+        width: 800px;
+        margin: 0 auto;
+        .slide-in-bottom{-webkit-animation:slide-in-bottom .5s cubic-bezier(.25,.46,.45,.94) both;animation:slide-in-bottom .5s cubic-bezier(.25,.46,.45,.94) both}
+        @-webkit-keyframes slide-in-bottom{0%{-webkit-transform:translateY(50px);transform:translateY(50px);opacity:0}100%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}}@keyframes slide-in-bottom{0%{-webkit-transform:translateY(50px);transform:translateY(50px);opacity:0}100%{-webkit-transform:translateY(0);transform:translateY(0);opacity:1}}
+        .bubble {
+            display: none;
+            position: absolute;
+            top: 100px;
+            right: 160px;
+            font-family: 'Minecraft';
+            padding: 40px 0 0 66px;
+            background-image: url(/i/bigbubble.png);
+            width: 244px;
+            height: 140px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            image-rendering: pixelated;
+        }
+        .board {
+            margin: 200px auto 0 auto;
+            background-image: url(/i/board.gif);
+            width: 140px;
+            height: 152px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            image-rendering: pixelated;
+        }
+    }
+    .paper {
+        width: 200px;
+        height: 300px;
+        margin: 40px auto;
+        background-color: rgb(255 255 240);
+    }
+}
+
+.debug-page {
+    .title {
+        text-align: center;
+        padding-top: 40px;
+    }
+    .explain {
+        width: 800px;
+        background-color: bisque;
+        margin: 40px auto;
+        p {
+            padding: 20px;
+        }
+    }
+    .demoscript {
+        width: 900px;
+        margin: 40px auto;
+    }
+    .showcasegrid {
+        display: grid;
+        grid-template-columns: repeat(3 , 300px);
+        grid-template-rows: 300px;
+        column-gap: 20px;
+        justify-content: center;
+        margin-bottom: 40px;
+        div {
+            background-color: bisque;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            p {
+                padding: 5px 10px;
+            }
+            & > * {
+                user-select: none;
+                pointer-events: none;
+            }
+            .codespace {
+                width: 100%;
+                margin: 10px 0;
+                pre {
+                    width: 100%;
+                    code {
+                    width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+    <title>What AnimeCursor can do</title>
+    <link rel="stylesheet" href="showcase.css">
+    <script src="showcase.js"></script>
+    <script src="anime-cursor-0.3.1.js"></script>
+    <script>
+        new AnimeCursor({
+            //debug: true,
+            cursors: {
+                default: {
+                    size: [32,32],
+                    image: '/i/cursor/cursor_default.gif',
+                    pixel: true,
+                    default: true
+                },
+                start: {
+                    size: [48,16],
+                    image: '/i/cursor/start.png',
+                    frames: 13,
+                    duration: 1,
+                    pixel: true,
+                    scale: [4,4],
+                    offset: [24,8]
+                },
+                home: {
+                    size: [48,16],
+                    image: '/i/cursor/home.png',
+                    frames: 9,
+                    duration: 0.6,
+                    pixel: true,
+                    pingpong: true,
+                    scale: [4,4],
+                    offset: [24,8]
+                },
+                debug: {
+                    size: [48,16],
+                    image: '/i/cursor/debug.png',
+                    frames: 12,
+                    duration: 1,
+                    pingpong: true,
+                    offset: [24,8],
+                    scale: [4,4],
+                    pixel: true
+                },
+                pointer: {
+                    size: [32,36],
+                    image: '/i/cursor/cursor_pointer.png',
+                    frames: 3,
+                    duration: 0.3,
+                    pingpong: true,
+                    offset: [10,4],
+                    pixel: true
+                }
+            }
+        })
+    </script>
+</head>
+<body class="entry-page">
+    <h1>Welcome to AnimeCursor's showcase page.</h1>
+    <p>Some simple showcase to inspire you about how to use AnimeCursor.</p>
+    <p style="font-size: 16px;">Tip: Don't click the buttons immediately, hover them and watch the cursor first.</p>
+    <div class="entry-navbar">
+        <a href="/" class="start-button orange" data-cursor="home"><div class="start-button-bg orange"></div></a>
+        <a href="start" class="start-button green" data-cursor="start"><div class="start-button-bg green"></div></a>
+        <a href="debug" class="start-button purple" data-cursor="debug" target="_blank"><div class="start-button-bg purple"></div></a>
+    </div>
+    <footer style="margin-top: 200px;"></footer>
+</body>
+</html>

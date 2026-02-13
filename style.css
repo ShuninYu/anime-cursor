@@ -228,6 +228,13 @@ a > * {
 .home-page .titlebox .title-navbar .home-navbtn:hover div {
   height: 8px;
 }
+.home-page .titlebox .title-navbar .home-navbtn span {
+  background-color: red;
+  color: white;
+  padding: 0 4px;
+  font-size: 14px;
+  user-select: none;
+}
 .home-page .titlebox .title-navbar .home-link {
   display: block;
   background-repeat: no-repeat;

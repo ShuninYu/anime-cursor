@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+    <title>What AnimeCursor can do</title>
+    <link rel="stylesheet" href="showcase.css">
+    <script src="showcase.js"></script>
+    <script src="anime-cursor-0.3.1.js"></script>
+    <script>
+        new AnimeCursor({
+            //debug: true,
+            cursors: {
+                default: {
+                    size: [32,32],
+                    image: '/i/cursor/cursor_default.gif',
+                    pixel: true,
+                    default: true
+                },
+                text: {
+                    tags: ['p','h1','h2','h3','h4','span','td','th','pre','code','footer','b'],
+                    size: [32,32],
+                    image: '/i/cursor/cursor_text.png',
+                    offset: [10,16],
+                    pixel: true
+                },
+                pointer: {
+                    size: [32,36],
+                    image: '/i/cursor/cursor_pointer.png',
+                    frames: 3,
+                    duration: 0.3,
+                    pingpong: true,
+                    offset: [10,4],
+                    pixel: true
+                },
+                bubble: {
+                    size: [18,13],
+                    image: '/i/cursor/bubble.png',
+                    frames: 3,
+                    duration: 0.3,
+                    offset: [5,13],
+                    scale: [4,4],
+                    pixel: true
+                },
+                start: {
+                    size: [48,16],
+                    image: '/i/cursor/start.png',
+                    frames: 13,
+                    duration: 1,
+                    pixel: true,
+                    scale: [4,4],
+                    offset: [24,8]
+                },
+                home: {
+                    size: [48,16],
+                    image: '/i/cursor/home.png',
+                    frames: 9,
+                    duration: 0.6,
+                    pixel: true,
+                    pingpong: true,
+                    scale: [4,4],
+                    offset: [24,8]
+                },
+                debug: {
+                    size: [48,16],
+                    image: '/i/cursor/debug.png',
+                    frames: 12,
+                    duration: 1,
+                    pingpong: true,
+                    offset: [24,8],
+                    scale: [4,4],
+                    pixel: true
+                },
+                write: {
+                    size: [122,142],
+                    image: '/i/cursor/cursor_write.png',
+                    frames: 4,
+                    duration: 0.3,
+                    pingpong: true,
+                    offset: [20,120]
+                },
+            }
+        })
+    </script>
+</head>
+<body class="start-page">
+    <div>
+        <h1 style="margin-top: 100px;">First of all, the basic cursors.</h1>
+        <p>Like the cursors you see anywhere, but in frame-by-frame animations.</p>
+        <div class="button-shows">
+            <div class="box">normal<div class="orange">Just like some other boring elements.</div></div>
+            <div class="box" data-cursor="pointer">pointer<div class="green" data-cursor="pointer">Like those reactable elements.</div></div>
+            <div class="box" data-cursor="text">text<div class="purple" data-cursor="text">Just pretend this block is full of texts.</div></div>
+        </div>
+    </div>
+    <div class="note" data-cursor="text">This is the most basic usage of AnimeCursor: applying frame-by-frame animation to the cursors on a webpage, making them appear more personalized and dynamic.<br>Even better, even if you need to maintain a unified style for the cursors, you don't have to create frame-by-frame animations for every type. For example, the text cursor in the example above has no animation effects at all. AnimeCursor does not force you to add frame-by-frame animations to every cursor type.</div>
+    <div>
+        <h1>Also, the entry page's buttons.</h1>
+        <div class="entry-navbar">
+            <a class="start-button orange" data-cursor="home"><div class="start-button-bg orange"></div></a>
+            <a class="start-button green" data-cursor="start"><div class="start-button-bg green"></div></a>
+            <a class="start-button purple" data-cursor="debug"><div class="start-button-bg purple"></div></a>
+        </div>
+    </div>
+    <div class="note" data-cursor="text">This is where things start to get interesting. AnimeCursor can make cursors much more engaging, and it all depends on your creativity. Beyond just making a cursor behave like a cursor, you can also create distinctive designs to achieve even more interesting interactive experiences.</div>
+    <div class="bubblebox">
+        <h1>Try talk to this... NPC?</h1>
+        <div class="bubble slide-in-bottom" id="board_talk">Hi there!<br>How's it going?</div>
+        <div class="board" data-cursor="bubble" onclick="showNext('board_talk');changeBg(this,'/i/board_focus.png');removeDataset(event);"></div>
+    </div>
+    <div class="note" data-cursor="text">In the above example, we prompt the user that this NPC can pop up dialogue by changing the cursor to a speech bubble style. This effect is achieved by pre-setting <b>data-cursor="bubble"</b> for the NPC element, and triggering the speech bubble pop-up via onclick. Since there is only one line of dialogue, after the user clicks the element, we use JavaScript to remove data-cursor to avoid the cursor changing to the speech bubble style again.</div>
+    <div>
+        <h1>And also in other styles.</h1>
+        <p>In the above examples, all cursors are pixel-art style,<br>but that doesn't mean AnimeCursor only supports pixel-art cursors.</p>
+        <p>Hover the "paper" below to see another cursor style.</p>
+        <div class="paper" data-cursor="write"></div>
+    </div>
+    <div class="note" data-cursor="text">The cursor above was drawn in about three minutes, so it may look a bit rough -- apologies for that.<br> In fact, AnimeCursor supports any frame-by-frame animation style, whether it's pixel art, hand-drawn, realistic, or any other style. As long as the cursor is composed of sprite sheets or GIFs forming frame-by-frame animations, AnimeCursor can implement it.</div>
+    <footer></footer>
+</body>
+</html>
