@@ -62,12 +62,12 @@
                     <h3>image</h3>
                     <p><span>image</span> is a <span>required</span> parameter for cursors. It indicates the image path for the cursor this parameter belongs to.</p>
                     <p>Format:</p>
-                    <pre><code class="javascript">image: 'path-to-your-image';</code></pre>
+                    <pre><code class="javascript">image: 'path-to-your-image'</code></pre>
                     <p>Example:</p>
                     <pre><code class="javascript">// Can be a relative path
-image: '/image/cursor/cursor-image.png';</code></pre>
+image: '/image/cursor/cursor-image.png'</code></pre>
                     <pre><code class="javascript">// Or an absolute path
-image: 'https://example.com/image/cursor/cursor-image.png';</code></pre>
+image: 'https://example.com/image/cursor/cursor-image.png'</code></pre>
                     <p>The two examples above mean: The image path for the cursor this parameter belongs to is <span>/image/cursor/cursor-image.png</span> (first example) or <span>https://example.com/image/cursor/cursor-image.png</span> (second example).</p>
                     <div class="warningbox">
                         <p>AnimeCursor recommends using absolute paths to set cursor images. If the website has a multi-layered page structure, using relative paths may cause AnimeCursor's image paths to mismatch, an issue that can be avoided by using absolute paths.</p>
@@ -107,9 +107,9 @@ image: 'https://example.com/image/cursor/cursor-image.png';</code></pre>
                         <p>AnimeCursor can set at most one cursor as the default cursor. If more than one cursor is set as default, AnimeCursor will throw an error.</p>
                     </div>
                     <p>Format:</p>
-                    <pre><code class="javascript">default: true-or-false;</code></pre>
+                    <pre><code class="javascript">default: true-or-false</code></pre>
                     <p>Example:</p>
-                    <pre><code class="javascript">default: true;</code></pre>
+                    <pre><code class="javascript">default: true</code></pre>
                     <p>The example above means: The cursor this parameter belongs to is the default cursor.</p>
                     <div class="notebox">
                         <p>The default cursor does not need the <span>tags</span> parameter. AnimeCursor recommends that the default cursor should not set the <span>tags</span> parameter, as it does not affect the switching logic of the default cursor. However, setting this parameter for the default cursor may cause target conflicts with other cursors.</p>
@@ -123,11 +123,11 @@ image: 'https://example.com/image/cursor/cursor-image.png';</code></pre>
                         <p>When <span>frames</span> is set as an array, <span>duration</span> must also be set as an array, and the two arrays must have exactly the same length to correspond one‑to‑one, letting AnimeCursor know the frame count and duration for each segment.</p>
                     </div>
                     <p>Format:</p>
-                    <pre><code class="javascript">frames: frames-count;</code></pre>
+                    <pre><code class="javascript">frames: frames-count</code></pre>
                     <p>Example:</p>
-                    <pre><code class="javascript">frames: 6;</code></pre>
+                    <pre><code class="javascript">frames: 6</code></pre>
                     <p>The example above means: The sprite sheet animation for the cursor this parameter belongs to has 6 frames per loop.</p>
-                    <pre><code class="javascript">frames: [6,2,4];</code></pre>
+                    <pre><code class="javascript">frames: [6,2,4]</code></pre>
                     <p>The example above means: The sprite sheet animation for the cursor this parameter belongs to has a total of 12 frames per loop, divided into three segments of 6, 2, and 4 frames respectively.</p>
                 </li>
                 <li>
@@ -138,11 +138,11 @@ image: 'https://example.com/image/cursor/cursor-image.png';</code></pre>
                         <p>When <span>duration</span> is set as an array, <span>frames</span> must also be set as an array, and the two arrays must have exactly the same length to correspond one‑to‑one, letting AnimeCursor know the frame count and duration for each segment.</p>
                     </div>
                     <p>Format:</p>
-                    <pre><code class="javascript">duration: loop-length;</code></pre>
+                    <pre><code class="javascript">duration: loop-length</code></pre>
                     <p>Example:</p>
-                    <pre><code class="javascript">duration: 2;</code></pre>
+                    <pre><code class="javascript">duration: 2</code></pre>
                     <p>The example above means: The duration of one loop of the sprite sheet animation for the cursor this parameter belongs to is 2 seconds.</p>
-                    <pre><code class="javascript">duration: [1,0.5,1.2];</code></pre>
+                    <pre><code class="javascript">duration: [1,0.5,1.2]</code></pre>
                     <p>The example above means: The sprite sheet animation for the cursor this parameter belongs to has a total duration of 2.7 seconds per loop, divided into three segments of 1 second, 0.5 seconds, and 1.2 seconds respectively.</p>
                 </li>
                 <div class="warningbox">
@@ -156,9 +156,9 @@ image: 'https://example.com/image/cursor/cursor-image.png';</code></pre>
                         <p>GIF animation playback is controlled by the image itself. AnimeCursor does not modify GIFs, so setting this option for a GIF cursor is ineffective.</p>
                     </div>
                     <p>Format:</p>
-                    <pre><code class="javascript">pingpong: true-or-false;</code></pre>
+                    <pre><code class="javascript">pingpong: true-or-false</code></pre>
                     <p>Example:</p>
-                    <pre><code class="javascript">pingpong: true;</code></pre>
+                    <pre><code class="javascript">pingpong: true</code></pre>
                     <p>The example above means: If the cursor this parameter belongs to is a sprite sheet animated cursor, the ping-pong loop is enabled.</p>
                 </li>
                 <li>
@@ -187,18 +187,18 @@ image: 'https://example.com/image/cursor/cursor-image.png';</code></pre>
                         <p>For pixel art cursors, using original-sized pixel art, enabling <span>pixel</span>, and setting a <span>scale</span> can save file size and reduce loading time.</p>
                     </div>
                     <p>Format:</p>
-                    <pre><code class="javascript">pixel: true-or-false;</code></pre>
+                    <pre><code class="javascript">pixel: true-or-false</code></pre>
                     <p>Example:</p>
-                    <pre><code class="javascript">pixel: true;</code></pre>
+                    <pre><code class="javascript">pixel: true</code></pre>
                     <p>The example above means: The image for the cursor this parameter belongs to will be rendered with pixelated filtering.</p>
                 </li>
                 <li>
                     <h3>zindex</h3>
                     <p><span>zindex</span> is an optional parameter for cursors. It sets the z-index specifically for the cursor this parameter belongs to.</p>
                     <p>Format:</p>
-                    <pre><code class="javascript">zindex: number;</code></pre>
+                    <pre><code class="javascript">zindex: number</code></pre>
                     <p>Example:</p>
-                    <pre><code class="javascript">zindex: 10;</code></pre>
+                    <pre><code class="javascript">zindex: 10</code></pre>
                     <p>The example above means: The <span>z-index</span> for the cursor this parameter belongs to is specifically set to 10.</p>
                     <div class="notebox">
                         <p>For situations where the cursor needs to be occluded by certain elements, note when setting this option: The value of <span>z-index</span> is only meaningful within the same stacking context, and AnimeCursor's cursor element is a direct child of <span>&lt;body></span>.</p>

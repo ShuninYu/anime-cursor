@@ -62,12 +62,12 @@
                     <h3>image</h3>
                     <p><span>image</span> 是光标参数中的一个<span>必填项</span>，它表示此参数所属光标的图片路径。</p>
                     <p>格式：</p>
-                    <pre><code class="javascript">image: 'path-to-your-image';</code></pre>
+                    <pre><code class="javascript">image: 'path-to-your-image'</code></pre>
                     <p>示例：</p>
                     <pre><code class="javascript">// 可以是相对路径
-image: '/image/cursor/cursor-image.png';</code></pre>
+image: '/image/cursor/cursor-image.png'</code></pre>
                     <pre><code class="javascript">// 或者是绝对路径
-image: 'https://example.com/image/cursor/cursor-image.png';</code></pre>
+image: 'https://example.com/image/cursor/cursor-image.png'</code></pre>
                     <p>上面的两个示例表示：该参数所属的光标的图片路径为 <span>/image/cursor/cursor-image.png</span>（第一个示例）、<span>https://example.com/image/cursor/cursor-image.png</span>（第二个示例）。</p>
                     <div class="warningbox">
                         <p>如果是精灵图动画光标，请确保 <span>image</span> 的图片是精灵图表，而不是精灵图的某一帧或者一个文件夹。</p>
@@ -107,9 +107,9 @@ tags['a' , 'button' , 'span']</code></pre>
                         <p>AnimeCursor 最多只能将一个光标设置为默认光标，如果有一个以上的光标被设置为默认光标，AnimeCursor 将会报错。</p>
                     </div>
                     <p>格式：</p>
-                    <pre><code class="javascript">default: true-or-false;</code></pre>
+                    <pre><code class="javascript">default: true-or-false</code></pre>
                     <p>示例：</p>
-                    <pre><code class="javascript">default: true;</code></pre>
+                    <pre><code class="javascript">default: true</code></pre>
                     <p>上面的示例表示：该参数所属的光标为默认光标。</p>
                     <div class="notebox">
                         <p>默认光标不需要设置 <span>tags</span> 参数。AnimeCursor 推荐默认光标不要设置 <span>tags</span> 参数，因为 <span>tags</span> 参数不会影响默认光标的切换逻辑，但是给默认光标设置此参数可能导致与其他光标产生目标冲突。</p>
@@ -123,11 +123,11 @@ tags['a' , 'button' , 'span']</code></pre>
                         <p>当 <span>frames</span> 被设置为数组时， <span>duration</span> 也必须被设置为数组，且二者数组长度需要完全相同以一一对应，让AnimeCursor知道每一段的帧数和持续时长。</p>
                     </div>
                     <p>格式：</p>
-                    <pre><code class="javascript">frames: frames-count;</code></pre>
+                    <pre><code class="javascript">frames: frames-count</code></pre>
                     <p>示例：</p>
-                    <pre><code class="javascript">frames: 6;</code></pre>
+                    <pre><code class="javascript">frames: 6</code></pre>
                     <p>上面的示例表示：该参数所属的光标的精灵图动画一个循环有6帧。</p>
-                    <pre><code class="javascript">frames: [6,2,4];</code></pre>
+                    <pre><code class="javascript">frames: [6,2,4]</code></pre>
                     <p>上面的示例表示：该参数所属的光标的精灵图动画一个循环有12帧，分为三段，每段长度分别为6帧、2帧、4帧。</p>
                 </li>
                 <li>
@@ -138,11 +138,11 @@ tags['a' , 'button' , 'span']</code></pre>
                         <p>当 <span>duration</span> 被设置为数组时， <span>frames</span> 也必须被设置为数组，且二者数组长度需要完全相同以一一对应，让AnimeCursor知道每一段的帧数和持续时长。</p>
                     </div>
                     <p>格式：</p>
-                    <pre><code class="javascript">duration: loop-length;</code></pre>
+                    <pre><code class="javascript">duration: loop-length</code></pre>
                     <p>示例：</p>
-                    <pre><code class="javascript">duration: 2;</code></pre>
+                    <pre><code class="javascript">duration: 2</code></pre>
                     <p>上面的示例表示：该参数所属的光标的精灵图动画一个循环的时长为2秒钟。</p>
-                    <pre><code class="javascript">duration: [1,0.5,1.2];</code></pre>
+                    <pre><code class="javascript">duration: [1,0.5,1.2]</code></pre>
                     <p>上面的示例表示：该参数所属的光标的精灵图动画一个循环的时长为2.7秒钟，分为三段，每段长分别为1秒、0.5秒、1.2秒。</p>
                 </li>
                 <div class="warningbox">
@@ -156,9 +156,9 @@ tags['a' , 'button' , 'span']</code></pre>
                         <p>GIF 动图的播放由图片本身控制，AnimeCursor 不会改变 GIF 动图，所以给 GIF 动图设置该项是无效的。</p>
                     </div>
                     <p>格式：</p>
-                    <pre><code class="javascript">pingpong: true-or-false;</code></pre>
+                    <pre><code class="javascript">pingpong: true-or-false</code></pre>
                     <p>示例：</p>
-                    <pre><code class="javascript">pingpong: true;</code></pre>
+                    <pre><code class="javascript">pingpong: true</code></pre>
                     <p>上面的示例表示：该参数所属的光标如果是精灵图动画光标，则启用乒乓循环。</p>
                 </li>
                 <li>
@@ -187,18 +187,18 @@ tags['a' , 'button' , 'span']</code></pre>
                         <p>对于像素风光标，使用原尺寸像素图，将 <span>pixel</span> 启用并设置缩放，可以节省文件体积以缩短加载时间。</p>
                     </div>
                     <p>格式：</p>
-                    <pre><code class="javascript">pixel: true-or-false;</code></pre>
+                    <pre><code class="javascript">pixel: true-or-false</code></pre>
                     <p>示例：</p>
-                    <pre><code class="javascript">pixel: true;</code></pre>
+                    <pre><code class="javascript">pixel: true</code></pre>
                     <p>上面的示例表示：该参数所属的光标的图像将启用像素化渲染。</p>
                 </li>
                 <li>
                     <h3>zindex</h3>
                     <p><span>zindex</span> 是光标参数中的一个非必填项，它表示为此参数所属光标单独设置层级。</p>
                     <p>格式：</p>
-                    <pre><code class="javascript">zindex: number;</code></pre>
+                    <pre><code class="javascript">zindex: number</code></pre>
                     <p>示例：</p>
-                    <pre><code class="javascript">zindex: 10;</code></pre>
+                    <pre><code class="javascript">zindex: 10</code></pre>
                     <p>上面的示例表示：该参数所属的光标的 <span>z-index</span> 被单独设置为10。</p>
                     <div class="notebox">
                         <p>对于需要光标被部分元素遮挡的情况，设置该项的时候需要注意：<span>z-index</span> 的值只有在同一个堆叠上下文（stacking context）中才有意义，而 AnimeCursor 的光标元素是 <span>&lt;body></span> 的直接子元素。</p>
