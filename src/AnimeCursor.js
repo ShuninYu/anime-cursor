@@ -1,5 +1,5 @@
 // AnimeCursor by github@ShuninYu
-// v0.3.1
+// v0.4.0
 
 // 静态变量存储唯一实例
 let _instance = null;
@@ -173,14 +173,14 @@ export default class AnimeCursor {
     // ----------------------------
     _validateOptions() {
         if (this.disabled) return;
-
+    
         if (!this.options || !this.options.cursors) {
             console.error('[AnimeCursor] missing cursors set up');
             throw new Error('AnimeCursor init failed');
         }
-
+    
         this.defaultCursorType = null;
-
+    
         for (const [name, cfg] of Object.entries(this.options.cursors)) {
             if (cfg.default === true) {
                 if (this.defaultCursorType) {
@@ -189,7 +189,7 @@ export default class AnimeCursor {
                 this.defaultCursorType = name;
             }
         }
-
+    
         for (const [name, cfg] of Object.entries(this.options.cursors)) {
             const required = ['size', 'image'];
             required.forEach(key => {
@@ -198,14 +198,51 @@ export default class AnimeCursor {
                     throw new Error('AnimeCursor init failed');
                 }
             });
-            
-            if (cfg.tags !== undefined && !Array.isArray(cfg.tags)) {
-                console.error(`[AnimeCursor] default cursor "${name}" 's tags must be an array if provided`);
-                throw new Error('AnimeCursor init failed');
+    
+            // 新增：校验 frames 与 duration 的类型一致性
+            if (cfg.frames !== undefined) {
+                if (Array.isArray(cfg.frames)) {
+                    // frames 为数组时，duration 必须为等长数组
+                    if (!Array.isArray(cfg.duration) || cfg.duration.length !== cfg.frames.length) {
+                        console.error(`[AnimeCursor] cursor "${name}" has frames as array but duration is not an array of same length`);
+                        throw new Error('AnimeCursor init failed');
+                    }
+                    // 检查 frames 数组元素是否为正整数
+                    for (let f of cfg.frames) {
+                        if (!Number.isInteger(f) || f <= 0) {
+                            console.error(`[AnimeCursor] cursor "${name}" frames array must contain positive integers`);
+                            throw new Error('AnimeCursor init failed');
+                        }
+                    }
+                    // 检查 duration 数组元素是否为正数
+                    for (let d of cfg.duration) {
+                        if (typeof d !== 'number' || d <= 0) {
+                            console.error(`[AnimeCursor] cursor "${name}" duration array must contain positive numbers`);
+                            throw new Error('AnimeCursor init failed');
+                        }
+                    }
+                } else if (typeof cfg.frames === 'number') {
+                    // frames 为数字时，duration 可选，但不能是数组
+                    if (Array.isArray(cfg.duration)) {
+                        console.error(`[AnimeCursor] cursor "${name}" frames is number but duration is array, must be consistent`);
+                        throw new Error('AnimeCursor init failed');
+                    }
+                    if (!Number.isInteger(cfg.frames) || cfg.frames <= 0) {
+                        console.error(`[AnimeCursor] cursor "${name}" frames must be a positive integer`);
+                        throw new Error('AnimeCursor init failed');
+                    }
+                    if (cfg.duration !== undefined && (typeof cfg.duration !== 'number' || cfg.duration <= 0)) {
+                        console.error(`[AnimeCursor] cursor "${name}" duration must be a positive number`);
+                        throw new Error('AnimeCursor init failed');
+                    }
+                } else {
+                    console.error(`[AnimeCursor] cursor "${name}" frames must be a number or an array`);
+                    throw new Error('AnimeCursor init failed');
+                }
             }
-
-            if (cfg.duration !== undefined && typeof cfg.duration !== 'number') {
-                console.error(`[AnimeCursor] cursor "${name}" 's duration must be a number(seconds)`);
+    
+            if (cfg.tags !== undefined && !Array.isArray(cfg.tags)) {
+                console.error(`[AnimeCursor] cursor "${name}" 's tags must be an array if provided`);
                 throw new Error('AnimeCursor init failed');
             }
         }
@@ -361,56 +398,109 @@ export default class AnimeCursor {
 
         /* 每种光标以及debug生成 CSS */
         for (const [type, cfg] of Object.entries(this.options.cursors)) {
-            const className = `.cursor-${type}`;
-            const size = cfg.size;
-            const frames = cfg.frames;
-            const image = cfg.image;
-            const offset = cfg.offset;
-            const zIndex = cfg.zIndex;
-            const scale = cfg.scale;
-            const isGif = image.toLowerCase().endsWith('.gif');
-            var pixel;
-            if (cfg.pixel) {pixel = 'pixelated';}
-            else {pixel = 'auto';}
+        const className = `.cursor-${type}`;
+        const size = cfg.size;
+        const image = cfg.image;
+        const offset = cfg.offset;
+        const zIndex = cfg.zIndex;
+        const scale = cfg.scale;
+        const isGif = image.toLowerCase().endsWith('.gif');
+        const pixel = cfg.pixel ? 'pixelated' : 'auto';
 
-            css += `
-            ${className} {
+        // 基础样式
+        css += `
+        ${className} {
             width: ${size[0]}px;
             height: ${size[1]}px;
             background-image: url("${image}");
             image-rendering: ${pixel};
             ${(scale || offset) ? `transform: ${[scale && `scale(${scale[0]}, ${scale[1]})`, offset && `translate(-${offset[0]}px, -${offset[1]}px)`].filter(Boolean).join(' ')};` : ''}
-            
             ${zIndex !== undefined ? `z-index:${zIndex};` : ''}
-            }`;
+        }`;
 
-            /* 精灵图动画 */
-            const duration = cfg.duration;
-            const hasAnimation =
-                !isGif &&
-                frames > 1 &&
-                typeof duration === 'number';
+        // 动画生成
+        const frames = cfg.frames;
+        const duration = cfg.duration;
+
+        // 判断是否使用新逻辑（数组形式）
+        if (Array.isArray(frames) && Array.isArray(duration) && frames.length === duration.length) {
+            // 计算总帧数和总时长
+            const totalFrames = frames.reduce((a, b) => a + b, 0);
+            const totalDuration = duration.reduce((a, b) => a + b, 0);
+            const hasAnimation = !isGif && totalFrames > 1 && totalDuration > 0;
 
             if (hasAnimation) {
                 const animName = `animecursor_${type}`;
+                // 构建关键帧数组
+                const keyframes = [];
+                let cumPercent = 0;
+                let frameIndex = 0;
 
+                for (let p = 0; p < frames.length; p++) {
+                    const segFrames = frames[p];
+                    const segDuration = duration[p];
+                    const segPercent = segDuration / totalDuration;
+                    for (let j = 0; j < segFrames; j++) {
+                        const startPercent = cumPercent + (j * segPercent) / segFrames;
+                        keyframes.push({
+                            percent: startPercent,
+                            pos: -frameIndex * size[0]
+                        });
+                        frameIndex++;
+                    }
+                    cumPercent += segPercent;
+                }
+                // 添加最后一帧的结束点（100%）
+                keyframes.push({
+                    percent: 1.0,
+                    pos: -(totalFrames - 1) * size[0]
+                });
+
+                // 生成动画属性
                 css += `
                 ${className} {
-                animation: ${animName} steps(${frames}) ${duration}s infinite ${cfg.pingpong ? 'alternate' : ''};
+                    animation: ${animName} ${totalDuration}s infinite ${cfg.pingpong ? 'alternate' : ''};
+                }`;
+
+                // 生成 @keyframes
+                css += `
+                @keyframes ${animName} {`;
+                for (let i = 0; i < keyframes.length; i++) {
+                    const kf = keyframes[i];
+                    let percent = (kf.percent * 100).toFixed(5);
+                    if (kf.percent === 1.0) percent = '100'; // 确保100%显示为整数
+                    css += `
+                    ${percent}% {
+                        background-position: ${kf.pos}px 0;
+                        ${i < keyframes.length - 1 ? 'animation-timing-function: steps(1, end);' : ''}
+                    }`;
+                }
+                css += `
+                }`;
+            }
+        } else if (typeof frames === 'number' && typeof duration === 'number') {
+            // 旧逻辑：均匀动画
+            const hasAnimation = !isGif && frames > 1 && duration > 0;
+            if (hasAnimation) {
+                const animName = `animecursor_${type}`;
+                css += `
+                ${className} {
+                    animation: ${animName} steps(${frames}) ${duration}s infinite ${cfg.pingpong ? 'alternate' : ''};
                 }
 
                 @keyframes ${animName} {
-                from { background-position: 0 0; }
-                to { background-position: -${size[0] * frames}px 0; }
-                }
-                `;
+                    from { background-position: 0 0; }
+                    to { background-position: -${size[0] * frames}px 0; }
+                }`;
             }
         }
-
-        style.textContent = css;
-        document.head.appendChild(style);
-        this.styleEl = style;
+        // 若 frames 未定义或为单帧，则不生成动画，仅保留基础样式
     }
+
+    style.textContent = css;
+    document.head.appendChild(style);
+    this.styleEl = style;
+}
 
     // ----------------------------
     // 给元素自动添加 data-cursor
