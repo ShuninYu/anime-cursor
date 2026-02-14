@@ -142,6 +142,8 @@ image: 'https://example.com/image/cursor/cursor-image.png';</code></pre>
                     <p>Example:</p>
                     <pre><code class="javascript">duration: 2;</code></pre>
                     <p>The example above means: The duration of one loop of the sprite sheet animation for the cursor this parameter belongs to is 2 seconds.</p>
+                    <pre><code class="javascript">duration: [1,0.5,1.2];</code></pre>
+                    <p>The example above means: The sprite sheet animation for the cursor this parameter belongs to has a total duration of 2.7 seconds per loop, divided into three segments of 1 second, 0.5 seconds, and 1.2 seconds respectively.</p>
                 </li>
                 <div class="warningbox">
                     <p>Only when both the <span>frames</span> and <span>duration</span> parameters are configured legally will AnimeCursor treat the cursor as a sprite sheet animated cursor. If either parameter is missing or configured illegally, AnimeCursor will throw an error.</p>
