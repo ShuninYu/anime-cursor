@@ -2,12 +2,18 @@
 [[简体中文]](#zh-cn)
 ## Current Version
 
+- ### `0.4.0`
+
+    - #### [Major Update] Variable-speed sprite sheet animation support
+    	- Previous versions of sprite sheet animation could not set different frame intervals. This meant that if an animation had a longer static state, the only option was to use a GIF image. However, GIFs are honestly only suitable for pixel-style cursors. Because GIF supports only fully transparent or fully opaque pixels, GIF cursors are forced to have hard edges, which significantly impacts the visual experience. On the other hand, if you insisted on using a sprite sheet animation, the file size of the sprite sheet would increase dramatically—the longer the pause in the animation, the larger the file size. This was certainly unacceptable for a cursor.
+    	- Now, `frames` and `duration` can be set as arrays. The lengths of the two arrays must be identical (i.e., both arrays must have the same number of parameters). They correspond one-to-one: each segment of frame count corresponds to a segment of duration. This allows for more flexible configuration of sprite sheet animations.
+
+## History Version
+
 - ### `0.3.1`
 
     - #### [Major Update] `tags` is no longer a required field
         - In most creative scenarios, many special cursor styles may only be triggered on specific elements. Cursors created for such elements are usually set by users manually adding the `data-cursor` attribute to the trigger elements, and there is no need to trigger them via `tags`. Making `tags` a required field for cursor configuration has arguably added unnecessary trouble to cursors triggered by such specific elements. Although triggering can be achieved with custom tags, this approach does not strictly comply with HTML specifications in essence and may lead to other issues. Therefore, `tags` has been removed from the required fields – farewell! Now there are only two required fields left in the cursor configuration of AnimeCursor – wow!
-
-## History Version
 
 - ### `0.3.0`
 
@@ -53,12 +59,18 @@
 
 ## 当前版本
 
+- ### `0.4.0`
+
+    - #### 【主要更新】变速精灵图动画支持
+    	- 之前版本的精灵图动画无法设置不同的帧间隔，这导致如果动画中有保持较久的静止状态的话，只能使用GIF图片，但是GIF图片说实话只适合像素风格的光标。因为GIF只有纯透明和纯不透明，这导致GIF光标只能有硬边缘，这是很影响视觉效果的。而如果强行要用精灵图动画的话，精灵图的体积就会大大增加，动画暂停时长越久，体积就越大，这对于一个光标来说肯定是无法接受的。
+    	- 现在， `frames` 和 `duration` 可以被设置为数组，二者数组长度必须相同（即两个数组得有一样多的参数），二者一一对应，每一段帧数对应一段持续时间，这样就可以更灵活的设置精灵图动画。
+
+## 历史版本
+
 - ### `0.3.1`
 
     - #### 【主要更新】`tags` 不再是必填项
         - 在大多数创意性场景中，许多特殊的光标样式可能只会在特定的元素上触发。而为了这类元素创建的光标通常是由用户手动为触发元素添加 `data-cursor`，而不需要通过 `tags` 来触发。将 `tags` 作为光标设置的必填项，或许在某种程度上为这类特别元素触发的光标添加了不必要的烦恼。虽然可以通过自定义的标签来实现触发，但是这种效果本质上并未严格遵守 HTML 规范，并且可能导致其他问题，因此 `tags` 被移除出必填项，再见啦！现在 AnimeCursor 的光标设置中只有两个必填项了，哇哦！
-
-## 历史版本
 
 - ### `0.3.0`
 

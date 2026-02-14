@@ -39,8 +39,8 @@
                 <tr><td>image</td> <td>string</td> <td>✅</td> <td>光标图片路径</td> <td><span class="error">报错</span></td></tr>
                 <tr><td>tags</td> <td>string[ ]</td> <td></td> <td>生效的 HTML 标签</td> <td><span class="warning">AnimeCursor 只会在被手动设置了 <span>data-cursor</span> 的元素上时才会切换到该光标</span></td></tr>
                 <tr><td>default</td> <td>boolean</td> <td>⚠️</td> <td>光标是否是默认光标<br>⚠️最多只能设置一个默认光标</td> <td><span>与设置该项为 false 相同</span></td></tr>
-                <tr><td>frames</td> <td>number</td> <td></td> <td>精灵图动画帧数</td> <td><span class="warning">光标不会生成精灵图动画</span></td></tr>
-                <tr><td>duration</td> <td>number</td> <td></td> <td>精灵图动画循环时长</td> <td><span class="warning">光标不会生成精灵图动画</span></td></tr>
+                <tr><td>frames</td> <td>number<br>number[]</td> <td>⚠️</td> <td>精灵图动画帧数<br>⚠️设置为数组需要与<span>duration</span>长度相同</td> <td><span class="warning">光标不会生成精灵图动画</span></td></tr>
+                <tr><td>duration</td> <td>number<br>number[]</td> <td>⚠️</td> <td>精灵图动画循环时长<br>⚠️设置为数组需要与<span>frames</span>长度相同</td> <td><span class="warning">光标不会生成精灵图动画</span></td></tr>
                 <tr><td>pingpong</td> <td>boolean</td> <td></td> <td>精灵图动画是否乒乓循环</td> <td><span>精灵图动画将以默认方式循环</span></td></tr>
                 <tr><td>offset</td> <td>[number, number]</td> <td></td> <td>光标偏移[向右,向下]（像素）</td> <td><span>光标指针位置默认左上角</span></td></tr>
                 <tr><td>scale</td> <td>[number, number]</td> <td></td> <td>光标缩放倍数[横向,纵向]</td> <td><span>光标保持 size 设定尺寸</span></td></tr>
@@ -118,20 +118,32 @@ tags['a' , 'button' , 'span']</code></pre>
                 <li>
                     <h3>frames</h3>
                     <p><span>frames</span> 是光标参数中的一个非必填项，但是精灵图动画光标必须配置该项，它表示此参数所属光标的精灵图动画所包含的帧数量（一个循环内）。</p>
+                    <p><span>frames</span> 既可以作为单独的数字存在，也可以作为数组存在。当你的动画在不同的阶段需要不同的帧率时，用数组来设置每个阶段的帧数。</p>
+                    <div class="warningbox">
+                        <p>当 <span>frames</span> 被设置为数组时， <span>duration</span> 也必须被设置为数组，且二者数组长度需要完全相同以一一对应，让AnimeCursor知道每一段的帧数和持续时长。</p>
+                    </div>
                     <p>格式：</p>
                     <pre><code class="javascript">frames: frames-count;</code></pre>
                     <p>示例：</p>
                     <pre><code class="javascript">frames: 6;</code></pre>
                     <p>上面的示例表示：该参数所属的光标的精灵图动画一个循环有6帧。</p>
+                    <pre><code class="javascript">frames: [6,2,4];</code></pre>
+                    <p>上面的示例表示：该参数所属的光标的精灵图动画一个循环有12帧，分为三段，每段长度分别为6帧、2帧、4帧。</p>
                 </li>
                 <li>
                     <h3>duration</h3>
                     <p><span>duration</span> 是光标参数中的一个非必填项，但是精灵图动画光标必须配置该项，它表示此参数所属光标的精灵图动画的时长（一个循环内，单位 <span>秒</span>）。</p>
+                    <p><span>duration</span> 既可以作为单独的数字存在，也可以作为数组存在。当你的动画在不同的阶段需要不同的帧率时，用数组来设置每个阶段的持续时间。</p>
+                    <div class="warningbox">
+                        <p>当 <span>duration</span> 被设置为数组时， <span>frames</span> 也必须被设置为数组，且二者数组长度需要完全相同以一一对应，让AnimeCursor知道每一段的帧数和持续时长。</p>
+                    </div>
                     <p>格式：</p>
                     <pre><code class="javascript">duration: loop-length;</code></pre>
                     <p>示例：</p>
                     <pre><code class="javascript">duration: 2;</code></pre>
                     <p>上面的示例表示：该参数所属的光标的精灵图动画一个循环的时长为2秒钟。</p>
+                    <pre><code class="javascript">duration: [1,0.5,1.2];</code></pre>
+                    <p>上面的示例表示：该参数所属的光标的精灵图动画一个循环的时长为2.7秒钟，分为三段，每段长分别为1秒、0.5秒、1.2秒。</p>
                 </li>
                 <div class="warningbox">
                     <p>只有 <span>frames</span> 和 <span>duration</span> 两个参数都被合法的配置的时候，AnimeCursor 才会将光标视为精灵图动画光标处理。缺少任何一个参数，或者有参数被不合法的设置的时候，AnimeCursor都会报错。</p>

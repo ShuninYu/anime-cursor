@@ -29,16 +29,12 @@
                         <li>
                             <h3>Sprite Sheet Animation</h3>
                             <p>Sprite sheet animation is the recommended method for AnimeCursor because it offers better visual presentation and more creative freedom compared to GIF images, and makes it easier to implement ping-pong loops. Future updates to AnimeCursor will also focus on features for sprite sheet animated cursors.</p>
-                            <p>Currently (as of <span>v0.2.0</span>), AnimeCursor's sprite sheet animation only supports single-row sprite sheets. Please ensure your sprite sheet layout meets this requirement; if it's not a single-row sprite sheet, please edit it into a single row.</p>
-                            <p>AnimeCursor will automatically generate CSS frame animations based on your settings. However, please note that currently (as of <span>v0.2.0</span>), AnimeCursor automatically distributes frame duration evenly based on the set animation duration and frame count. This means every frame is a keyframe with no interpolation frames. If you have frames that need to last longer than others, you'll need to place multiple duplicate frames in the sprite sheet, which increases the file size. Therefore, if you have longer-lasting frames, consider whether to switch to GIF animation to reduce loading time.</p>
-                            <div class="notebox">
-                                <p>We will add support for multi-row sprite sheets and custom frame duration in future versions (due to backward-incompatible API updates, the version is expected to be <span>v1.0.0</span>).</p>
-                            </div>
+                            <p>Currently (as of <span>v0.4.0</span>), AnimeCursor's sprite sheet animation only supports single-row sprite sheets. Please ensure your sprite sheet layout meets this requirement; if it is not a single-row sprite sheet, please edit it into a single row.</p>
+                            <p>AnimeCursor will automatically generate CSS frame animations based on your settings. If your animation has varying frame intervals—for example, some frames have a longer duration—you can achieve this by using arrays. For details, please refer to the <a href="configuration">Configuration</a> page.</p>
                         </li>
                         <li>
                             <h3>GIF Animation</h3>
-                            <p>AnimeCursor's working principle also allows GIF animations to serve as animated cursor images. If your animated cursor has long static states, consider using GIF animation.</p>
-                            <p>For GIF animations, AnimeCursor has no special requirements. However, please note that the presentation of GIF animations and sprite sheet animations will differ, so choose according to your needs.</p>
+                            <p>AnimeCursor's working principle also allows GIF animations to serve as animated cursor images. AnimeCursor has no special requirements for GIF animations. However, please note that the presentation of GIF animations and sprite sheet animations will differ, so choose according to your needs.</p>
                         </li>
                         <li>
                             <h3>Pixel Art Images</h3>
