@@ -1,5 +1,5 @@
 // AnimeCursor by github@ShuninYu
-// v0.4.0
+// v1.0.0
 
 // 静态变量存储唯一实例
 let _instance = null;
