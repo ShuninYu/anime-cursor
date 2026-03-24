@@ -1,5 +1,5 @@
 // AnimeCursor by github@ShuninYu
-// v2.0.0-alpha.1
+// v2.0.0
 
 let _instance = null;
 
@@ -42,15 +42,15 @@ class AnimeCursor {
 
     constructor(options = {}) {
         if (_instance) {
-            console.warn('[AnimeCursor] Instance already exists, returning existing instance');
+            console.warn('[AnimeCursor] Instance already exists, returning existing one');
             return _instance;
         }
 
         this.options = {
             debug: false,
             enableTouch: false,
-            fallbackCursor: 'auto',      // 备选光标类型（auto, pointer, etc.）
-            excludeSelectors: 'input, textarea, [contenteditable]', // 排除原生光标元素
+            fallbackCursor: 'auto',           // Fallback cursor type (auto, pointer, etc.)
+            excludeSelectors: 'input, textarea, [contenteditable]', // Exclude native cursor elements
             ...options
         };
 
@@ -61,7 +61,7 @@ class AnimeCursor {
         if (!this.options.enableTouch && !this.isMouseLikeDevice()) {
             this.disabled = true;
             if (this.options.debug) {
-                console.warn('[AnimeCursor] Touch device, cursor animation disabled');
+                console.warn('[AnimeCursor] Touch device detected, cursor animations disabled');
             }
             return;
         }
@@ -93,20 +93,64 @@ class AnimeCursor {
         let hasDefault = false;
         for (const [name, cfg] of Object.entries(this.cursors)) {
             // 检查必填项
-            if (!cfg.frames) {
-                throw new Error(`[AnimeCursor] Cursor "${name}" missing frames configuration`);
-            }
             if (!cfg.image) {
-                throw new Error(`[AnimeCursor] Cursor "${name}" missing image configuration`);
+                throw new Error(`[AnimeCursor] Cursor "${name}" missing required setting: image`);
             }
-            // 检查 frames 和 duration 一致性
-            if (Array.isArray(cfg.frames) && Array.isArray(cfg.duration)) {
-                if (cfg.frames.length !== cfg.duration.length) {
-                    throw new Error(`[AnimeCursor] Cursor "${name}" frames and duration array lengths do not match`);
+
+            // 处理 frames 和 duration 配置
+            if (cfg.frames !== undefined && cfg.duration !== undefined) {
+                // 检查类型一致性
+                const framesType = typeof cfg.frames;
+                const durationType = typeof cfg.duration;
+                if (framesType !== durationType) {
+                    console.warn(`[AnimeCursor] Cursor "${name}" has mismatched types for frames and duration, treating as static cursor`);
+                    delete cfg.frames;
+                    delete cfg.duration;
+                } else if (Array.isArray(cfg.frames) && Array.isArray(cfg.duration)) {
+                    // 数组形式：必须长度相等
+                    if (cfg.frames.length !== cfg.duration.length) {
+                        console.warn(`[AnimeCursor] Cursor "${name}" frames and duration arrays have different lengths, treating as static cursor`);
+                        delete cfg.frames;
+                        delete cfg.duration;
+                    } else {
+                        // 验证数组元素为正整数/正数
+                        for (let f of cfg.frames) {
+                            if (!Number.isInteger(f) || f <= 0) {
+                                console.warn(`[AnimeCursor] Cursor "${name}" frames array contains invalid value, treating as static cursor`);
+                                delete cfg.frames;
+                                delete cfg.duration;
+                                break;
+                            }
+                        }
+                        for (let d of cfg.duration) {
+                            if (typeof d !== 'number' || d <= 0) {
+                                console.warn(`[AnimeCursor] Cursor "${name}" duration array contains invalid value, treating as static cursor`);
+                                delete cfg.frames;
+                                delete cfg.duration;
+                                break;
+                            }
+                        }
+                    }
+                } else if (typeof cfg.frames === 'number' && typeof cfg.duration === 'number') {
+                    // 数字形式：合法
+                    if (cfg.frames <= 0 || cfg.duration <= 0) {
+                        console.warn(`[AnimeCursor] Cursor "${name}" frames or duration <= 0, treating as static cursor`);
+                        delete cfg.frames;
+                        delete cfg.duration;
+                    }
+                } else {
+                    // 其他情况（如一个数字一个数组）
+                    console.warn(`[AnimeCursor] Cursor "${name}" frames and duration must be both numbers or both arrays, treating as static cursor`);
+                    delete cfg.frames;
+                    delete cfg.duration;
                 }
-            } else if (typeof cfg.frames === 'number' && typeof cfg.duration === 'number') ; else {
-                throw new Error(`[AnimeCursor] Cursor "${name}" frames and duration types do not match, must both be numbers or both equal-length arrays`);
+            } else if (cfg.frames !== undefined || cfg.duration !== undefined) {
+                // 只设置了一个
+                console.warn(`[AnimeCursor] Cursor "${name}" has only frames or duration defined, treating as static cursor`);
+                delete cfg.frames;
+                delete cfg.duration;
             }
+
             // 检查 tags
             if (cfg.tags && !Array.isArray(cfg.tags)) {
                 throw new Error(`[AnimeCursor] Cursor "${name}" tags must be an array`);
@@ -118,12 +162,12 @@ class AnimeCursor {
             }
             // 检查 offset
             if (cfg.offset && (!Array.isArray(cfg.offset) || cfg.offset.length !== 2)) {
-                throw new Error(`[AnimeCursor] Cursor "${name}" offset must be an [x, y] array`);
+                throw new Error(`[AnimeCursor] Cursor "${name}" offset must be [x, y] array`);
             }
         }
 
         if (!hasDefault) {
-            throw new Error('[AnimeCursor] A default cursor must be set (default: true)');
+            throw new Error('[AnimeCursor] A default cursor (default: true) must be defined');
         }
 
         this.defaultCursorName = Object.keys(this.cursors).find(name => this.cursors[name].default);
@@ -147,20 +191,29 @@ class AnimeCursor {
             document.head.appendChild(link);
         });
         if (this.options.debug && images.size) {
-            console.info(`[AnimeCursor] Preloading ${images.size} cursor images`);
+            console.info(`[AnimeCursor] Preloaded ${images.size} cursor images`);
         }
     }
 
     // 根据配置生成所有帧的 URL 数组
     _getFrameUrls(cfg) {
-        const { frames, image } = cfg;
-        const frameCount = typeof frames === 'number' ? frames : frames.length;
-        if (frameCount === 1) return [image]; // 单帧
+        // 确定总帧数
+        let totalFrames = 1; // 默认单帧
+        if (cfg.frames !== undefined) {
+            if (Array.isArray(cfg.frames)) {
+                totalFrames = cfg.frames.reduce((a, b) => a + b, 0);
+            } else if (typeof cfg.frames === 'number') {
+                totalFrames = cfg.frames;
+            }
+        }
+
+        const { image } = cfg;
+        if (totalFrames === 1) return [image];
 
         // 解析文件名模板
         const { prefix, suffix, startNum, numFormat, ext } = this._parseImagePattern(image);
         const urls = [];
-        for (let i = 0; i < frameCount; i++) {
+        for (let i = 0; i < totalFrames; i++) {
             const frameNum = startNum + i;
             const numStr = numFormat ? this._formatNumber(frameNum, numFormat) : frameNum;
             const url = `${prefix}${numStr}${suffix}${ext}`;
@@ -172,9 +225,6 @@ class AnimeCursor {
     // 解析图片路径，提取数字模板
     _parseImagePattern(path) {
         // 匹配最后一个数字部分（包括可能的前后括号/下划线等）
-        // 示例：pointer_001.png → prefix='pointer_', num='001', suffix='', ext='.png'
-        //       pointer(01).png → prefix='pointer(', num='01', suffix=')', ext='.png'
-        //       pointer[1].png → prefix='pointer[', num='1', suffix=']', ext='.png'
         const extMatch = path.match(/\.[^.]+$/);
         const ext = extMatch ? extMatch[0] : '';
         const base = path.slice(0, -ext.length);
@@ -233,8 +283,6 @@ class AnimeCursor {
         // 为每个光标生成独立的类和关键帧
         for (const [name, cfg] of Object.entries(this.cursors)) {
             const className = `.ac-cursor-${name}`;
-            cfg.frames;
-            const duration = cfg.duration;
             const offset = cfg.offset || [0, 0];
             const fallback = cfg.fallback || this.options.fallbackCursor;
 
@@ -242,36 +290,32 @@ class AnimeCursor {
             const frameUrls = this._getFrameUrls(cfg);
             const frameCount = frameUrls.length;
 
-            // 生成动画关键帧
-            if (frameCount > 1) {
+            // 判断是否有动画（有 frames 和 duration 且都有效）
+            const hasAnimation = cfg.frames !== undefined && cfg.duration !== undefined &&
+                ((Array.isArray(cfg.frames) && Array.isArray(cfg.duration)) ||
+                    (typeof cfg.frames === 'number' && typeof cfg.duration === 'number'));
+
+            if (hasAnimation && frameCount > 1) {
                 const keyframeName = `ac_anim_${name}`;
                 let keyframesCss = `@keyframes ${keyframeName} {\n`;
 
-                // 根据 duration 类型计算每个关键帧的百分比
-                let durations = [];
-                if (Array.isArray(duration)) {
-                    durations = duration;
-                } else {
-                    durations = new Array(frameCount).fill(duration / frameCount);
-                }
-                const totalTime = durations.reduce((a, b) => a + b, 0);
-                let acc = 0;
-                for (let i = 0; i < frameCount; i++) {
-                    const percent = (acc / totalTime) * 100;
-                    const cursorRule = `cursor: url("${frameUrls[i]}") ${offset[0]} ${offset[1]}, ${fallback};`;
+                // 构建关键帧列表（百分比和对应图片）
+                const keyframes = this._buildKeyframes(cfg, frameUrls);
+                for (const kf of keyframes) {
+                    let percent = (kf.percent * 100).toFixed(5);
+                    if (kf.percent === 1.0) percent = '100';
+                    const cursorRule = `cursor: url("${kf.url}") ${offset[0]} ${offset[1]}, ${fallback};`;
                     keyframesCss += `  ${percent}% { ${cursorRule} }\n`;
-                    acc += durations[i];
                 }
-                // 100% 使用最后一帧
-                keyframesCss += `  100% { cursor: url("${frameUrls[frameCount - 1]}") ${offset[0]} ${offset[1]}, ${fallback}; }\n`;
                 keyframesCss += `}\n`;
                 css += keyframesCss;
 
                 // 应用动画的类
-                const animation = `${keyframeName} ${totalTime}s steps(1) infinite ${cfg.pingpong ? 'alternate' : ''}`;
+                const totalDuration = Array.isArray(cfg.duration) ? cfg.duration.reduce((a, b) => a + b, 0) : cfg.duration;
+                const animation = `${keyframeName} ${totalDuration}s steps(1) infinite ${cfg.pingpong ? 'alternate' : ''}`;
                 css += `${className} { cursor: url("${frameUrls[0]}") ${offset[0]} ${offset[1]}, ${fallback}; animation: ${animation}; }\n`;
             } else {
-                // 单帧无动画
+                // 静态光标
                 css += `${className} { cursor: url("${frameUrls[0]}") ${offset[0]} ${offset[1]}, ${fallback}; }\n`;
             }
 
@@ -297,13 +341,62 @@ class AnimeCursor {
         this.styleEl = style;
     }
 
-    // 生成单个光标的 CSS 声明（不包含动画）
+    // 根据 frames/duration 配置构建关键帧列表（百分比和对应图片 URL）
+    _buildKeyframes(cfg, frameUrls) {
+        let frames = cfg.frames;
+        let durations = cfg.duration;
+        const frameCount = frameUrls.length;
+
+        // 统一转换为数组形式，方便处理
+        if (typeof frames === 'number') {
+            // 均匀分配
+            const perFrameDuration = durations / frames;
+            frames = new Array(frames).fill(1);
+            durations = new Array(frames.length).fill(perFrameDuration);
+        }
+        // 此时 frames 和 durations 都是等长数组
+
+        const keyframes = [];
+        let totalTime = durations.reduce((a, b) => a + b, 0);
+        let currentTime = 0;
+        let frameIdx = 0;
+        for (let seg = 0; seg < frames.length; seg++) {
+            const segFrames = frames[seg];
+            const segDuration = durations[seg];
+            const stepTime = segDuration / segFrames; // 每帧时长
+            for (let f = 0; f < segFrames; f++) {
+                const percent = currentTime / totalTime;
+                keyframes.push({
+                    percent: percent,
+                    url: frameUrls[frameIdx]
+                });
+                currentTime += stepTime;
+                frameIdx++;
+            }
+        }
+        // 确保最后一帧在 100%
+        keyframes.push({
+            percent: 1.0,
+            url: frameUrls[frameCount - 1]
+        });
+        return keyframes;
+    }
+
+    // 生成单个光标的 CSS 声明（不包含动画，用于选择器规则）
     _buildCursorCss(name, cfg) {
         const frameUrls = this._getFrameUrls(cfg);
         const offset = cfg.offset || [0, 0];
         const fallback = cfg.fallback || this.options.fallbackCursor;
-        return `cursor: url("${frameUrls[0]}") ${offset[0]} ${offset[1]}, ${fallback};${frameUrls.length > 1 ? ` animation: ac_anim_${name} ${cfg.duration}s steps(1) infinite ${cfg.pingpong ? 'alternate' : ''};` : ''
-            }`;
+        let css = `cursor: url("${frameUrls[0]}") ${offset[0]} ${offset[1]}, ${fallback};`;
+        // 如果有动画，附加动画属性
+        const hasAnimation = cfg.frames !== undefined && cfg.duration !== undefined &&
+            ((Array.isArray(cfg.frames) && Array.isArray(cfg.duration)) ||
+                (typeof cfg.frames === 'number' && typeof cfg.duration === 'number'));
+        if (hasAnimation && frameUrls.length > 1) {
+            const totalDuration = Array.isArray(cfg.duration) ? cfg.duration.reduce((a, b) => a + b, 0) : cfg.duration;
+            css += ` animation: ac_anim_${name} ${totalDuration}s steps(1) infinite ${cfg.pingpong ? 'alternate' : ''};`;
+        }
+        return css;
     }
 
     // 调试模式：显示当前光标类型和坐标
