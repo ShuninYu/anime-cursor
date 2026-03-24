@@ -2,7 +2,7 @@
 [[简体中文]](#zh-cn)
 ## Current Version
 
-- ### `0.4.0`
+- ### `1.0.0`
 
     - #### [Major Update] Variable-speed sprite sheet animation support
     	- Previous versions of sprite sheet animation could not set different frame intervals. This meant that if an animation had a longer static state, the only option was to use a GIF image. However, GIFs are honestly only suitable for pixel-style cursors. Because GIF supports only fully transparent or fully opaque pixels, GIF cursors are forced to have hard edges, which significantly impacts the visual experience. On the other hand, if you insisted on using a sprite sheet animation, the file size of the sprite sheet would increase dramatically—the longer the pause in the animation, the larger the file size. This was certainly unacceptable for a cursor.
@@ -59,7 +59,7 @@
 
 ## 当前版本
 
-- ### `0.4.0`
+- ### `1.0.0`
 
     - #### 【主要更新】变速精灵图动画支持
     	- 之前版本的精灵图动画无法设置不同的帧间隔，这导致如果动画中有保持较久的静止状态的话，只能使用GIF图片，但是GIF图片说实话只适合像素风格的光标。因为GIF只有纯透明和纯不透明，这导致GIF光标只能有硬边缘，这是很影响视觉效果的。而如果强行要用精灵图动画的话，精灵图的体积就会大大增加，动画暂停时长越久，体积就越大，这对于一个光标来说肯定是无法接受的。
