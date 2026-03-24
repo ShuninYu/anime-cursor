@@ -1,14 +1,18 @@
-# AnimeCursor
+# AnimeCursor v2
 
 <div align="center">
   <img src="https://cdn.jsdelivr.net/gh/shuninyu/anime-cursor@main/title.gif" width="384px" alt="AnimeCursor"/>
 </div>
 
+
+
 [[简体中文]](#animecursorsc)
+
 ## [Visit the official website](https://shuninyu.github.io/anime-cursor/) for more informations
+
 ## [Read documents](https://shuninyu.github.io/anime-cursor/docs) to get started with AnimeCursor
 
-AnimeCursor is a lightweight JavaScript library for frame by frame animated custom cursors.
+AnimeCursor is a lightweight JavaScript library for frame-by-frame animated custom cursors.
 
 AnimeCursor has no dependencies on any frameworks, making it suitable for personal websites, creative portfolios, and experimental UI projects.
 
@@ -16,19 +20,20 @@ AnimeCursor has no dependencies on any frameworks, making it suitable for person
 
 ## ✨ Features
 
-* Supports sprite sheet frame-by-frame animation
-* Supports GIF (animated GIFs, not static GIFs used by native cursors)
-* Customizable cursor types, automatically switched by AnimeCursor
-* CSS-based animation implementation, high performance
-* Prepare sprite sheets in the correct format, and AnimeCursor will automatically generate cursor animations based on your settings
-* Built with native JavaScript, no third-party dependencies
+* **Native CSS Cursor** – Uses the browser's native cursor, no simulated elements, high performance and accuracy.
+* **Independent Frame Images** – Supports multi-frame animations using separate image files (PNG, SVG, etc.).
+* **Smart Frame Detection** – Automatically detects numeric suffixes in image filenames (e.g., `cursor_01.png`, `cursor (02).png`, `cursor[3].png`). Just provide the first frame, and AnimeCursor will generate all frames.
+* **Variable Speed Animation** – Use arrays for `frames` and `duration` to create complex timing patterns (e.g., `frames: [2, 3], duration: [0.2, 1]` means 2 frames in 0.2s, then 3 frames in 1s).
+* **Static Cursor Support** – If `frames` or `duration` is missing or invalid, the cursor is treated as static (single image).
+* **Automatic Cursor Switching** – Define cursor styles for specific HTML tags or via `data-cursor` attributes.
+* **Lightweight & Zero Dependencies** – Built with vanilla JavaScript, no external libraries required.
 
 ## 📦 Installation
 
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/anime-cursor/dist/anime-cursor.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/anime-cursor@v2.0.0/dist/anime-cursor.umd.min.js"></script>
 ```
 
 ### npm
@@ -36,6 +41,7 @@ AnimeCursor has no dependencies on any frameworks, making it suitable for person
 ```bash
 npm i anime-cursor
 ```
+
 ```js
 import AnimeCursor from 'anime-cursor';
 new AnimeCursor({...});
@@ -51,130 +57,128 @@ new AnimeCursor({...});
 
 Here is an example of how to use AnimeCursor:
 
-&zwnj;**IMPORTANT**&zwnj;
+**IMPORTANT**
+
 - Ensure the initialization code is placed **within** the `<body>` tag of your HTML document.
-- For optimal performance, it is recommended to initialize AnimeCursor **before**​ the DOM has fully loaded, as certain features require execution prior to the completion of DOM loading.
+- For optimal performance, it is recommended to initialize AnimeCursor **before** the DOM has fully loaded, as certain features require execution prior to the completion of DOM loading.
 
 ```javascript
 new AnimeCursor({
+    debug: true, // optional, shows debug overlay
+    enableTouch: false, // optional, enable on touch devices
+    fallbackCursor: 'auto', // optional, fallback cursor type
+    excludeSelectors: 'input, textarea, [contenteditable]', // optional, restore native text cursor
     cursors: {
-        // each type of cursor needs size and image
+        // each cursor type must have an image and frames/duration
         idle: {
-            size: [64,64],
-            image: 'https://example.com/cursor_default.png', // static cursor only needs image
-            default: true // set this cursor as default cursor
+            image: 'https://example.com/cursor_default.png', // static cursor (no animation)
+            default: true // set as default cursor
         },
-        // sprite animated cursor needs frames and duration
+        // variable speed animation with independent frames
         pointer: {
-            tags: ['a', 'button'], // if you need certain types of elements to trigger this cursor, set the tags
-            size: [64,64],
-            image: 'https://example.com/cursor_pointer.png',
-            frames: 3,
-            duration: 0.3,
-            pingpong: true, // enable pingpong loop
-            offset: [10, 4] // if the pointing spot is not at the top left of the image, set offset
+            tags: ['a', 'button'], // apply to these HTML tags
+            image: 'https://example.com/pointer_001.png', // AnimeCursor will automatically find pointer_002.png, pointer_003.png, etc.
+            frames: 4,               // total frames (uniform animation)
+            duration: 0.4,           // total duration in seconds
+            offset: [15, 25],        // hotspot offset (x, y) for url()
+            pingpong: true           // enable alternate loop
         },
-        // gif cursor doesn't needs frames and duration
+        // array-based variable speed animation
+        custom: {
+            image: 'https://example.com/custom_01.png',
+            frames: [2, 3, 1],        // first 2 frames, then 3 frames, then 1 frame
+            duration: [0.2, 1.0, 0.5], // each segment duration
+            offset: [8, 8],
+            pingpong: false
+        },
+        // static cursor (no frames or duration)
         text: {
             tags: ['p', 'h1', 'h2', 'span'],
-            size: [32, 64],
-            image: 'https://example.com/cursor_text.gif'
-        },
-        haha: {
-            size: [32,32],
-            image: 'https://example.com/cursor_haha.png',
-            frames: 12,
-            duration: 1,
-            pixel: true, // if the image is origin size pixel art, set pixel to true
-            scale: [2,2] // scale the cursor
+            image: 'https://example.com/cursor_text.png'
         }
     }
 });
 ```
-For non-default cursors, if you need a specific element to trigger the cursor, manually add the `data-cursor` attribute to the element. For example: if you want the `<div class="custom-div"></div>` to trigger the `haha` cursor, you need to add `data-cursor="haha"` to it, and the modified code should be as follows: `<div class="custom-div" data-cursor="haha"></div>`. This way, when the cursor hovers over the `custom-div` element, the cursor will switch to the `haha` style.
+
+For non-default cursors, if you need a specific element to trigger the cursor, manually add the `data-cursor` attribute to the element. For example: `<div class="custom-div" data-cursor="pointer"></div>`.
 
 ## ⚙️ Configuration Options
 
 ### `cursors` (Required)
 
-An object used to define all cursor types.
-
-Each key represents a cursor type (the name can be freely defined).
+An object that defines all cursor types. Each key is a cursor name (any string).
 
 #### Cursor Configuration Parameters
 
-For each key, the following parameters can be set. Missing required parameters will cause an error.
+| Parameter  | Type               | Required | Description                                                  |
+| ---------- | ------------------ | -------- | ------------------------------------------------------------ |
+| `image`    | string             | **Yes**  | URL of the first frame image. AnimeCursor will automatically detect numeric suffixes to generate subsequent frames (e.g., `image_001.png` → `image_002.png`, `image_003.png`). If you want a single static image, just provide one image. |
+| `frames`   | number \| number[] | **Yes**  | Number of frames (for uniform animation) or an array of segment lengths (for variable speed). Total frames = sum of array elements. If not provided, the cursor is static. |
+| `duration` | number \| number[] | **Yes**  | Total duration in seconds (for uniform) or array of segment durations (must match `frames` array length). |
+| `tags`     | string[]           | No       | HTML tag names (e.g., `['a', 'button']`) that should use this cursor. If omitted, the cursor can only be applied via `data-cursor` attribute. |
+| `offset`   | [number, number]   | No       | Hotspot offset (x, y) in pixels. Default: `[0, 0]`. The offset defines where the actual click point is relative to the top-left of the image. |
+| `pingpong` | boolean            | No       | If `true`, the animation plays forward then backward alternately. Default: `false`. |
+| `fallback` | string             | No       | Fallback cursor type (e.g., `auto`, `pointer`). Default: value of `fallbackCursor` in root options. |
+| `default`  | boolean            | No       | Set this cursor as the default cursor (used when no other cursor applies). Only one cursor can be default. |
 
-Check the [DOCUMENTATION](https://shuninyu.github.io/anime-cursor/docs/configuration#options) for details.
+### Root Options
 
-### `debug` (Optional)
-
-Enables debugging overlay.
-
-The debugging overlay shows the real mouse position and the current cursor type, helping to correct alignment offsets.
-
-### `enableTouch` (Optional)
-
-Enables animated cursors on mobile touch devices.
-
-AnimeCursor automatically detects mobile touch devices (e.g., phones, tablets) and disables animated cursors on them by default.
-If you want animated cursors to be displayed on these devices, add `enableTouch: true`.
+| Option             | Type    | Default                                | Description                                                  |
+| ------------------ | ------- | -------------------------------------- | ------------------------------------------------------------ |
+| `debug`            | boolean | `false`                                | Enables a debug overlay showing current cursor type and coordinates. |
+| `enableTouch`      | boolean | `false`                                | Allow animated cursors on touch devices (detected automatically, disabled by default). |
+| `fallbackCursor`   | string  | `'auto'`                               | Global fallback cursor for all animated cursors (e.g., `'auto'`, `'pointer'`). |
+| `excludeSelectors` | string  | `'input, textarea, [contenteditable]'` | CSS selectors that should always use the native text cursor. |
 
 ## 📝 Notes
 
-### 📁 Files
+### 🖼️ Independent Frame Images
 
-* **For any sprite animation cursor, its sprite sheet should be arranged in a single horizontal row.** AnimeCursor will automatically generate the PNG sprite animation.
-  For example, if you set the `size` (width, height) for a `pointer` cursor to `[64px , 64px]` and `frames` to `3`, the prepared sprite sheet dimensions (width, height) should be: `[192px , 64px]`.
-
-* For pixel art with a large number of frames, you can use the original image (whether GIF or sprite-sheet) to save storage space or bandwidth. Then, use the `scale` parameter in the configuration to resize the cursor and set `pixel` to `true` to avoid blurry scaling.
-
-### 🧩 Tagging Mechanism
-
-AnimeCursor automatically adds `data-cursor` attributes to page elements based on the configuration:
-
-```html
-<!-- Using the example configuration from the Basic Usage section -->
-<button data-cursor="pointer"></button>
-```
-
-`data-cursor` will NOT be added in the following cases:
-
-* The element's `tagName` is not included in the `tags` configuration of any custom cursor type.
-* The element already had a `data-cursor` attribute *before* AnimeCursor was initialized.
-
-Therefore, to assign a specific animated cursor to a particular element, simply add the corresponding `data-cursor` attribute to that element. AnimeCursor will not overwrite pre-existing `data-cursor` tags.
+- AnimeCursor expects the first frame file to contain a numeric suffix (e.g., `cursor_001.png`). It will automatically generate URLs for subsequent frames by incrementing the number while preserving formatting (leading zeros, parentheses, brackets).
+- Supported patterns:
+    - `cursor_01.png` → `cursor_02.png`, `cursor_03.png`, …
+    - `cursor(01).png` → `cursor(02).png`, `cursor(03).png`, …
+    - `cursor[1].png` → `cursor[2].png`, `cursor[3].png`, …
+    - `cursor_1.png` → `cursor_2.png`, `cursor_3.png`, … (no padding)
+    - If no number is found, the library will append `_%d` (e.g., `cursor.png` → `cursor_1.png`, `cursor_2.png`).
+- **Important**: All frames must be the same size. The actual cursor size is the natural size of the images; scale them beforehand if needed.
 
 ### 🎞️ Animation Rules
 
-#### Sprite Sheets Animation Cursors
+- **Uniform Animation**: `frames` and `duration` are both numbers. The animation cycles through all frames evenly over the total duration.
+- **Variable Speed Animation**: `frames` and `duration` are arrays of equal length. Each segment defines a number of frames and the time to play them. The frames are evenly distributed within each segment.
+- **Static Cursor**: If `frames` or `duration` is missing, or if they are invalid (e.g., non-positive numbers, mismatched array lengths), the cursor is treated as static (only the first image is used). A warning will be logged in the console.
 
-Animation is generated **only when all of the following conditions are met**:
+### 🧩 Tagging Mechanism
 
-* `frames` is set and `frames > 1`
-* `duration` is set
+AnimeCursor automatically adds the appropriate cursor style to elements based on `tags` and `data-cursor` attributes:
 
-If `duration` is not set, the cursor will be treated as a **static cursor**, even if `frames > 1`.
+- If an element's tag name matches a `tags` list, the corresponding cursor will be applied.
+- You can also manually set `data-cursor="cursorName"` on any element to force a specific cursor.
+- The default cursor is used when no other rule matches.
 
-#### GIF Cursors
+### 🔧 Performance
 
-* GIFs do not use `frames`, `duration`, or `pingpong`
-* Animation is controlled by the GIF file itself
+Because v2 uses native CSS `cursor` property and CSS animations, there is no JavaScript `mousemove` listener (except when `debug` mode is enabled). This yields optimal performance and smooth cursor movement.
 
 ## ❌ Error Handling
 
-* Missing required configuration parameters will directly terminate initialization.
-* Invalid optional configuration will also throw errors.
-* All errors are prefixed with `[AnimeCursor]` when logged to the console.
+- Missing required configuration will throw an error and stop initialization.
+- Invalid optional configuration (e.g., mismatched array lengths) will log a warning and treat the cursor as static.
+- All errors and warnings are prefixed with `[AnimeCursor]`.
 
 ---
-# AnimeCursor(SC)
+
+# AnimeCursor v2
 
 <div align="center">
   <img src="https://cdn.jsdelivr.net/gh/shuninyu/anime-cursor@main/title.gif" width="384px" alt="AnimeCursor"/>
 </div>
 
+
+
 ## [访问官网](https://shuninyu.github.io/anime-cursor/)以获取更多信息
+
 ## [阅读文档](https://shuninyu.github.io/anime-cursor/docs/zh)快速上手 AnimeCursor
 
 AnimeCursor 是一个轻量级自定义逐帧动画光标 JavaScript 库。
@@ -185,19 +189,20 @@ AnimeCursor 无需依赖任何框架，适合个人网站、创意作品集以�
 
 ## ✨ 特性
 
-* 支持精灵图逐帧动画
-* 支持 GIF（动态gif，而不是原生光标的静止gif）
-* 自定义光标类型，由 AnimeCursor 自动切换
-* 基于 CSS 的动画实现，高性能
-* 按照格式准备好精灵图表，AnimeCursor 将基于你的设置自动生成光标动画
-* 基于原生JavaScript，无任何第三方依赖
+* **原生 CSS 光标** – 使用浏览器原生光标，无需模拟元素，性能更高，定位更精准。
+* **独立帧图片支持** – 支持使用多张独立图片（PNG、SVG 等）制作逐帧动画。
+* **智能帧识别** – 自动识别文件名中的数字序号（如 `cursor_01.png`、`cursor (02).png`、`cursor[3].png`），只需提供第一帧，库会自动生成后续帧。
+* **变速动画** – `frames` 和 `duration` 可设置为数组，实现复杂的时间节奏（例如 `frames: [2, 3], duration: [0.2, 1]` 表示前 2 帧 0.2 秒，后 3 帧 1 秒）。
+* **静态光标** – 如果不设置 `frames` 或 `duration`，或设置无效，则视为静态光标（仅使用第一帧）。
+* **自动光标切换** – 通过 HTML 标签或 `data-cursor` 属性自动切换光标样式。
+* **轻量无依赖** – 原生 JavaScript 编写，不依赖任何第三方库。
 
 ## 📦 部署方法
 
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/anime-cursor/dist/anime-cursor.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/anime-cursor@v2.0.0/dist/anime-cursor.umd.min.js"></script>
 ```
 
 ### npm
@@ -205,6 +210,7 @@ AnimeCursor 无需依赖任何框架，适合个人网站、创意作品集以�
 ```bash
 npm i anime-cursor
 ```
+
 ```js
 import AnimeCursor from 'anime-cursor';
 new AnimeCursor({...});
@@ -221,117 +227,111 @@ new AnimeCursor({...});
 下面是一个 AnimeCursor 使用示例：
 
 **重要提示**
+
 - 请务必将初始化代码置于HTML文档的 **`<body>`** 标签内部。
 - 为获得最佳性能，建议在DOM完全加载**之前**初始化AnimeCursor，因其部分功能需在DOM加载完成前执行。
 
 ```javascript
 new AnimeCursor({
+    debug: true, // 可选，显示调试浮层
+    enableTouch: false, // 可选，在触屏设备上启用
+    fallbackCursor: 'auto', // 可选，备用光标类型
+    excludeSelectors: 'input, textarea, [contenteditable]', // 可选，恢复原生文本光标
     cursors: {
-        // 每种光标都需要 size 和 image
-        default: {
-            size: [64,64],
-            image: 'https://example.com/cursor_default.png', // 静态光标只需要图片链接
-            default: true // 将此光标设为默认光标
+        // 每种光标必须有 image 和 frames/duration
+        idle: {
+            image: 'https://example.com/cursor_default.png', // 静态光标（无动画）
+            default: true // 设为默认光标
         },
-        // 精灵图动画光标还需要 frames 和 duration
+        // 变速动画 + 独立帧图片
         pointer: {
-            tags: ['a', 'button'], // 如果需要某类元素触发该光标，设置 tags
-            size: [64,64],
-            image: 'https://example.com/cursor_pointer.png',
-            frames: 3,
-            duration: 0.3,
-            pingpong: true, // 启用乒乓循环
-            offset: [10,4] // 如果指针位置不在左上角，设置 offset
+            tags: ['a', 'button'], // 应用到这些标签
+            image: 'https://example.com/pointer_001.png', // 自动识别后续帧
+            frames: 4,               // 总帧数（匀速动画）
+            duration: 0.4,           // 总时长（秒）
+            offset: [15, 25],        // 热点偏移 (x, y)
+            pingpong: true           // 开启乒乓循环
         },
-        // gif 光标不需要 frames 或 duration
+        // 数组形式的变速动画
+        custom: {
+            image: 'https://example.com/custom_01.png',
+            frames: [2, 3, 1],        // 前2帧，接着3帧，最后1帧
+            duration: [0.2, 1.0, 0.5], // 对应时长
+            offset: [8, 8],
+            pingpong: false
+        },
+        // 静态光标（无 frames/duration）
         text: {
             tags: ['p', 'h1', 'h2', 'span'],
-            size: [32,64],
-            image: 'https://example.com/cursor_text.gif'
-        },
-        haha: {
-            size: [32,32],
-            image: 'https://example.com/cursor_haha.png',
-            frames: 12,
-            duration: 1,
-            pixel: true, // 如果是原尺寸像素图，启用像素化渲染
-            scale: [2,2] // 缩放光标
+            image: 'https://example.com/cursor_text.png'
         }
     }
 });
 ```
-对于非默认光标，如果需要某元素触发该光标，请手动为该元素添加 `data-cursor`。例如：如果你想让 `<div class="custom-div"></div>` 触发 `haha` 光标，那么就要为其添加 `data-cursor="haha"`，修改完后应该是这样：`<div class="custom-div" data-cursor="haha"></div>`。这样当光标指向 `custom-div` 元素时，光标就会切换到 `haha`。
+
+对于非默认光标，如果需要某元素触发该光标，请手动为该元素添加 `data-cursor`。例如：`<div class="custom-div" data-cursor="pointer"></div>`。
 
 ## ⚙️ 配置项说明
 
 ### `cursors`（必填）
 
-用于定义所有光标类型的对象。
-
-每一个 key 代表一种光标类型（名称可以自由定义）。
+用于定义所有光标类型的对象。每一个 key 代表一种光标类型（名称可以自由定义）。
 
 #### 光标配置参数
 
-对于每个key，有以下参数可以设置，其中必填项如果缺失则会报错。
+| 参数       | 类型               | 必填   | 描述                                                         |
+| ---------- | ------------------ | ------ | ------------------------------------------------------------ |
+| `image`    | string             | **是** | 第一帧图片的 URL。库会自动识别数字后缀生成后续帧（如 `image_001.png` → `image_002.png`、`image_003.png`）。如果只需要静态光标，则只需提供一张图片。 |
+| `frames`   | number \| number[] | **是** | 帧数（匀速动画时为一个数字）或帧段数组（变速动画）。总帧数 = 数组元素之和。若不设置，则视为静态光标。 |
+| `duration` | number \| number[] | **是** | 总时长（秒）（匀速动画）或时长数组（必须与 `frames` 数组长度一致）。 |
+| `tags`     | string[]           | 否     | HTML 标签名数组（如 `['a', 'button']`），应用该光标的标签。若不提供，则只能通过 `data-cursor` 属性应用。 |
+| `offset`   | [number, number]   | 否     | 热点偏移 (x, y)，单位像素。默认为 `[0, 0]`。偏移定义了相对于图片左上角的实际点击位置。 |
+| `pingpong` | boolean            | 否     | 若为 `true`，动画会正向播放再反向播放，循环交替。默认为 `false`。 |
+| `fallback` | string             | 否     | 备用光标类型（如 `auto`、`pointer`）。默认使用根选项中的 `fallbackCursor`。 |
+| `default`  | boolean            | 否     | 将此光标设为默认光标（当没有其他光标匹配时使用）。只能有一个光标设为 `true`。 |
 
-查看 [官方文档](https://shuninyu.github.io/anime-cursor/docs/zh/configuration#options) 查看详细可用参数。
+### 根选项
 
-### `debug`（选填）
-
-用于启用debug覆盖。
-
-debug覆盖会显示鼠标的真实位置以及当前光标类型，以帮助纠正对齐偏移量。
-
-### `enableTouch`（选填）
-
-用于启用移动触屏设备上的动画光标。
-
-AnimeCursor 会自动识别移动触屏设备（比如手机、平板电脑）并默认屏蔽这些设备上的动画光标。
-如果你想在这些设备上显示动画光标，可以添加 `enableTouch: true` 。
+| 选项               | 类型    | 默认值                                 | 描述                                                         |
+| ------------------ | ------- | -------------------------------------- | ------------------------------------------------------------ |
+| `debug`            | boolean | `false`                                | 启用调试浮层，显示当前光标类型和坐标。                       |
+| `enableTouch`      | boolean | `false`                                | 允许在触屏设备上显示动画光标（默认自动检测并禁用）。         |
+| `fallbackCursor`   | string  | `'auto'`                               | 全局备用光标类型，用于所有动画光标（如 `'auto'`、`'pointer'`）。 |
+| `excludeSelectors` | string  | `'input, textarea, [contenteditable]'` | 始终使用原生文本光标的 CSS 选择器。                          |
 
 ## 📝 注意事项
 
-### 📁 文件
+### 🖼️ 独立帧图片
 
-* **对于任何精灵图动画光标，它的精灵图表都应该为单行横向布局，** AnimeCursor 会自动生成 PNG 精灵图动画。
-例如，你为 `pointer` 光标设置的`size`（长，宽）为 `[64px , 64px]` ，帧数为 `3` ，那么你准备的精灵图表尺寸（长，宽）应该为： `[192px , 64px]` 。
-
-* 对于帧数特别多的像素图，你可以使用原尺寸图片（无论是gif还是精灵图表）以节省存储空间或带宽，并在参数中设置 `scale` 来缩放光标，并将 `pixel` 设置为 `true` 来避免缩放模糊。
-
-### 🧩 标记机制
-
-AnimeCursor 会根据配置自动为页面元素添加 `data-cursor`：
-
-```html
-<!-- 以上面的示例用法配置为例 -->
-<button data-cursor="pointer"></button>
-```
-
-只有在以下情况不会添加 `data-cursor`：
-
-* 元素的 `tagName` 不在任何自定义光标类型的配置中。
-* 元素在 AnimeCursor 配置之前就已经存在 `data-cursor` 。
-
-因此，如果想要给某个特定元素指定一种动画指针，只需要给该元素添加指定的 `data-cursor` 即可，AnimeCursor 不会覆盖事先设定好的标记。
+- AnimeCursor 期望第一帧图片的文件名包含数字序号（如 `cursor_001.png`）。它会自动递增该数字并保留格式（前导零、括号、方括号等）来生成后续帧的 URL。
+- 支持的格式示例：
+    - `cursor_01.png` → `cursor_02.png`、`cursor_03.png`……
+    - `cursor(01).png` → `cursor(02).png`、`cursor(03).png`……
+    - `cursor[1].png` → `cursor[2].png`、`cursor[3].png`……
+    - `cursor_1.png` → `cursor_2.png`、`cursor_3.png`……（无前导零）
+    - 如果没有找到数字，库会自动添加 `_%d`（例如 `cursor.png` → `cursor_1.png`、`cursor_2.png`）。
+- **重要**：所有帧的图片尺寸必须相同。光标实际大小即为图片的原始尺寸，如需缩放请预先处理好图片。
 
 ### 🎞️ 动画判定
 
-#### 精灵图表动画光标
+- **匀速动画**：`frames` 和 `duration` 均为数字。总帧数均匀分布到总时长中。
+- **变速动画**：`frames` 和 `duration` 均为等长数组。每个片段指定帧数和该片段的时长，片段内的帧均匀分布。
+- **静态光标**：如果缺少 `frames` 或 `duration`，或者设置无效（如非正数、数组长度不匹配），则光标被视为静态（仅使用第一帧图片）。控制台会输出警告。
 
-只有在 **同时满足以下条件** 时，才会生成动画：
+### 🧩 标记机制
 
-* 设置了 `frames` 且 `frames > 1`
-* 设置了 `duration`
+AnimeCursor 会根据 `tags` 和 `data-cursor` 自动应用光标样式：
 
-如果未设置 `duration`，即使帧数大于 1，也会被视为**静态光标**。
+- 若元素标签名匹配某个 `tags`，则应用对应的光标。
+- 你也可以手动给任意元素添加 `data-cursor="光标名称"` 来强制指定光标。
+- 当没有其他规则匹配时，使用默认光标。
 
-#### GIF 光标
+### 🔧 性能表现
 
-* GIF 不使用 `frames`、`duration` 或 `pingpong`
-* 动画由 GIF 自身控制
+v2 版本使用原生 CSS `cursor` 属性和 CSS 动画，除了 `debug` 模式外，不再需要 JavaScript 监听鼠标移动。因此性能极佳，光标移动流畅。
 
 ## ❌ 错误处理
 
-* 缺少必填配置会直接终止初始化
-* 非法的可选配置也会报错
-* 所有错误均以 `[AnimeCursor]` 前缀输出到console
+- 缺少必填配置会抛出错误并停止初始化。
+- 无效的可选配置（如数组长度不匹配）会输出警告并将该光标视为静态。
+- 所有错误和警告均以 `[AnimeCursor]` 前缀输出到控制台。
