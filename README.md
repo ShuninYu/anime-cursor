@@ -125,6 +125,7 @@ An object that defines all cursor types. Each key is a cursor name (any string).
 
 | Option             | Type    | Default                                | Description                                                  |
 | ------------------ | ------- | -------------------------------------- | ------------------------------------------------------------ |
+| `combineAnimations` | boolean | `false` | Automatically merges cursor animations with element‑defined animations (via `data-ac-animation`). When enabled, any element with the `data-ac-animation` attribute will have its own CSS animation combined with the cursor animation, allowing both to run simultaneously without overriding each other. |
 | `debug`            | boolean | `false`                                | Enables a debug overlay showing current cursor type and coordinates. |
 | `enableTouch`      | boolean | `false`                                | Allow animated cursors on touch devices (detected automatically, disabled by default). |
 | `fallbackCursor`   | string  | `'auto'`                               | Global fallback cursor for all animated cursors (e.g., `'auto'`, `'pointer'`). |
@@ -148,6 +149,21 @@ An object that defines all cursor types. Each key is a cursor name (any string).
 - **Uniform Animation**: `frames` and `duration` are both numbers. The animation cycles through all frames evenly over the total duration.
 - **Variable Speed Animation**: `frames` and `duration` are arrays of equal length. Each segment defines a number of frames and the time to play them. The frames are evenly distributed within each segment.
 - **Static Cursor**: If `frames` or `duration` is missing, or if they are invalid (e.g., non-positive numbers, mismatched array lengths), the cursor is treated as static (only the first image is used). A warning will be logged in the console.
+
+### 🎞️ Combining Animations
+
+If your elements already have their own CSS animations (e.g., `animation: spin 2s infinite`), they may override AnimeCursor's cursor animations. To make both play together, enable the `combineAnimations` global option and add a `data-ac-animation` attribute to the element with your animation definition(s). AnimeCursor will then automatically combine them.
+
+Example:
+
+```html
+<button data-ac-animation="mySpin 2s linear infinite">Click Me</button>
+new AnimeCursor({
+    combineAnimations: true,
+    cursors: { ... }
+});
+```
+Multiple animations can be listed, separated by commas.
 
 ### 🧩 Tagging Mechanism
 
@@ -294,6 +310,7 @@ new AnimeCursor({
 
 | 选项               | 类型    | 默认值                                 | 描述                                                         |
 | ------------------ | ------- | -------------------------------------- | ------------------------------------------------------------ |
+| `combineAnimations` | boolean | `false` | 自动将光标动画与元素自身定义的动画（通过 `data-ac-animation`）合并。开启后，任何带有 `data-ac-animation` 属性的元素，其光标动画与用户动画会同时播放，互不覆盖。 |
 | `debug`            | boolean | `false`                                | 启用调试浮层，显示当前光标类型和坐标。                       |
 | `enableTouch`      | boolean | `false`                                | 允许在触屏设备上显示动画光标（默认自动检测并禁用）。         |
 | `fallbackCursor`   | string  | `'auto'`                               | 全局备用光标类型，用于所有动画光标（如 `'auto'`、`'pointer'`）。 |
@@ -317,6 +334,21 @@ new AnimeCursor({
 - **匀速动画**：`frames` 和 `duration` 均为数字。总帧数均匀分布到总时长中。
 - **变速动画**：`frames` 和 `duration` 均为等长数组。每个片段指定帧数和该片段的时长，片段内的帧均匀分布。
 - **静态光标**：如果缺少 `frames` 或 `duration`，或者设置无效（如非正数、数组长度不匹配），则光标被视为静态（仅使用第一帧图片）。控制台会输出警告。
+
+### 🎞️ 组合动画
+
+如果元素自身已经拥有 CSS 动画（例如 `animation: spin 2s infinite`），这些动画可能会覆盖 AnimeCursor 的光标动画。要让两者同时播放，请启用 `combineAnimations` 全局选项，并为元素添加 `data-ac-animation` 属性，将你的动画定义写入其中。AnimeCursor 会自动将两者组合。
+
+示例：
+
+```html
+<button data-ac-animation="mySpin 2s linear infinite">点我</button>
+new AnimeCursor({
+    combineAnimations: true,
+    cursors: { ... }
+});
+```
+多个动画可用逗号分隔。
 
 ### 🧩 标记机制
 
