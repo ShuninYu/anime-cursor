@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="/monokai.min.css">
         <script src="/highlight.min.js"></script>
         <script src="/hljs-copycode.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/anime-cursor@v1.0.0/dist/anime-cursor.umd.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/anime-cursor@1/dist/anime-cursor.umd.min.js"></script>
         <script src="/animecursor.js"></script>
     </head>
 <body class="docs-page" id="getting-started">
@@ -23,46 +23,35 @@
             <ol>
                 <li>
                     <h2>Prepare Cursor Images</h2>
-                    <p>AnimeCursor is a JavaScript library that can automatically build animated virtual cursors based on user-defined settings, but it does not provide cursor images itself. Therefore, before using AnimeCursor, you need to prepare your cursor images.</p>
-                    <p>AnimeCursor supports two methods for implementing animated cursors: <span>sprite sheet animation</span> and <span>GIF animation</span>.<br>Of course, in addition to animated cursors, AnimeCursor also supports static cursors.</p>
+                    <p>AnimeCursor v2 uses <strong>independent frame images</strong> (not sprite sheets). You need to prepare a set of images for each animated cursor, with filenames that follow a numeric pattern. The first frame must contain a number (e.g., <span>cursor_01.png</span>). AnimeCursor will automatically detect the pattern and generate URLs for subsequent frames.</p>
+                    <p>Supported naming patterns:</p>
                     <ul>
-                        <li>
-                            <h3>Sprite Sheet Animation</h3>
-                            <p>Sprite sheet animation is the recommended method for AnimeCursor because it offers better visual presentation and more creative freedom compared to GIF images, and makes it easier to implement ping-pong loops. Future updates to AnimeCursor will also focus on features for sprite sheet animated cursors.</p>
-                            <p>Currently (as of <span>v0.4.0</span>), AnimeCursor's sprite sheet animation only supports single-row sprite sheets. Please ensure your sprite sheet layout meets this requirement; if it is not a single-row sprite sheet, please edit it into a single row.</p>
-                            <p>AnimeCursor will automatically generate CSS frame animations based on your settings. If your animation has varying frame intervals—for example, some frames have a longer duration—you can achieve this by using arrays. For details, please refer to the <a href="configuration">Configuration</a> page.</p>
-                        </li>
-                        <li>
-                            <h3>GIF Animation</h3>
-                            <p>AnimeCursor's working principle also allows GIF animations to serve as animated cursor images. AnimeCursor has no special requirements for GIF animations. However, please note that the presentation of GIF animations and sprite sheet animations will differ, so choose according to your needs.</p>
-                        </li>
-                        <li>
-                            <h3>Pixel Art Images</h3>
-                            <p>For pixel-style cursors, whether using sprite sheet animation or GIF animation, AnimeCursor recommends using pixel art at its original size (for example, a <span>16px × 16px</span> pixel art does not need to be scaled to <span>64px × 64px</span> in image editing software before being loaded by AnimeCursor). AnimeCursor supports scaling cursors and pixelated rendering. By combining these two features, you can achieve animated cursor effects with very small file sizes, greatly saving page loading time.</p>
-                        </li>
+                        <li><span>cursor_001.png → cursor_002.png → cursor_003.png</span></li>
+                        <li><span>cursor(01).png → cursor(02).png → cursor(03).png</span></li>
+                        <li><span>cursor[1].png → cursor[2].png → cursor[3].png</span></li>
+                        <li><span>cursor_1.png → cursor_2.png → cursor_3.png</span> (no padding)</li>
                     </ul>
+                    <p>If no number is found, AnimeCursor will add <span>_%d</span> (e.g., <span>cursor.png → cursor_1.png</span>). All frames must be the same size; the actual cursor size is the natural image size – scale images beforehand if needed.</p>
+                    <div class="notebox">
+                        <p>Static cursors (single image) are also supported – just omit <span>frames</span> and <span>duration</span>.</p>
+                    </div>
                 </li>
                 <li>
                     <h2>Deploy AnimeCursor</h2>
                     <ul>
                         <li>
                             <h3>CDN</h3>
-                            <p>Get the latest version of AnimeCursor directly via jsDelivr's npm CDN</p>
-                            <pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/anime-cursor/dist/anime-cursor.umd.min.js">&lt;/script></code></pre>
-                            <p>Or get a specific version via jsDelivr's GitHub release CDN</p>
-                            <pre><code>&lt;script src="https://cdn.jsdelivr.net/gh/ShuninYu/anime-cursor@v0.3.1/dist/anime-cursor.umd.min.js">&lt;/script></code></pre>
+                            <pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/anime-cursor@2/dist/anime-cursor.umd.min.js">&lt;/script></code></pre>
                         </li>
                         <li>
                             <h3>npm</h3>
-                            <pre><code>npm i anime-cursor</code></pre>
+                            <pre><code>npm i anime-cursor@2</code></pre>
                             <pre><code>import AnimeCursor from 'anime-cursor';
 new AnimeCursor({...});</code></pre>
                         </li>
                         <li>
                             <h3>Host Yourself</h3>
-                            <p>AnimeCursor has a small file size, so if jsDelivr's CDN is slow for your region, you can also choose to deploy AnimeCursor locally</p>
-                            <pre><code>&lt;!-- Remember to modify the src to your file path -->
-&lt;script src="anime-cursor.umd.min.js">&lt;/script></code></pre>
+                            <pre><code>&lt;script src="anime-cursor.umd.min.js">&lt;/script></code></pre>
                         </li>
                     </ul>
                 </li>
@@ -71,90 +60,65 @@ new AnimeCursor({...});</code></pre>
             <h1 id="basic-usage">Basic Usage</h1>
             <p>Initialize AnimeCursor:</p>
             <pre><code class="javascript">new AnimeCursor({
-    // Configuration area
+    // configuration
 });</code></pre>
             <div class="warningbox">
-                <p>Initializing AnimeCursor does not require DOM contents loaded.<br>You should avoid placing <span>new AnimeCursor()</span> inside code that executes only after the DOM has loaded.</p>
+                <p>You can initialize AnimeCursor before the DOM is fully loaded. Avoid placing <span>new AnimeCursor()</span> inside a DOMContentLoaded callback – preloading works best when the library is loaded early.</p>
             </div>
-            <p>In the <span>configuration area</span>, configure your AnimeCursor via <span>cursors</span>:</p>
+            <p>Define your cursors inside <span>cursors</span>:</p>
             <pre><code class="javascript">cursors: {
-    // Cursor type declaration area
+    cursorTypeOne: { /* parameters */ },
+    cursorTypeTwo: { /* parameters */ }
 }</code></pre>
-            <p>In the <span>cursor type declaration area</span>, declare your cursor types via <span>cursors</span>:</p>
-            <pre><code class="javascript">cursorTypeOne: {
-    // Cursor parameter area
-},
-/* Note: Don't forget to add commas between two cursor types */
-cursorTypeTwo: {
-    // Cursor parameter area
-}</code></pre>
-            <p>In the corresponding cursor type's <span>cursor parameter area</span>, configure the cursor parameters by referring to <a href="configuration#options">Configuration: Parameter Options</a>:</p>
-            <p>The <span>configuration structure</span> of an AnimeCursor containing two cursor types should look like this:</p>
-            <pre><code class="javascript">new AnimeCursor({
-    cursors: {
-        cursorTypeOne: {
-            // settings
-        },
-        cursorTypeTwo: {
-            // settings
-        }
-    }
-});</code></pre>
+            <p>Each cursor must have an <span>image</span> (first frame) and, if animated, <span>frames</span> and <span>duration</span>. Use <span>tags</span> to automatically apply the cursor to specific HTML elements, or manually add <span>data-cursor="cursorType"</span> to elements.</p>
 
             <h1 id="example">Example</h1>
-            <p>A minimal runnable example:</p>
-            <pre><code class="javascript">new AnimeCursor({
-    cursors: {
-        pointer: {
-            tags: ['a','button']
-            size: [32,32],
-            image: 'cursor_pointer.png',
-            default: false
-        }
-    }
-});</code></pre>
-            <p>In simple terms, in this code we set up a cursor type called <span>pointer</span>. This cursor has dimensions of 32 × 32 pixels, uses the image <span>cursor_pointer.png</span>, and it will display when cursor hovers an 'a' element or a 'button' element.</p>
-            <p>Please note that if <span>cursor_pointer.png</span> is a sprite sheet, in this example the <span>pointer</span> cursor will still only appear as a static cursor because it lacks some necessary parameter settings for sprite sheet animated cursors. The specific reasons will be mentioned next.</p>
-            <p>Here is a richer and more practical example containing four cursor types:</p>
+            <p>A minimal working example:</p>
             <pre><code class="javascript">new AnimeCursor({
     cursors: {
         default: {
-            size: [32,32],
-            image: 'https://example.com/cursor_default.gif',
-            pixel: true,
+            image: '/cursor/default.png',
             default: true
         },
         pointer: {
-            tags: ['a','button'],
-            size: [32,36],
-            image: 'https://example.com/cursor_pointer.png',
-            frames: 3,
-            duration: 0.3,
-            pingpong: true,
-            offset: [10,4],
-            pixel: true
+            tags: ['a', 'button'],
+            image: '/cursor/pointer_001.png',
+            frames: 4,
+            duration: 0.4,
+            offset: [15, 25],
+            pingpong: true
         },
         text: {
-            tags: ['p','h1','h2','h3','h4','span','td','th','pre','code','footer'],
-            size: [32,32],
-            image: 'https://example.com/cursor_text.png',
-            offset: [10,16],
-            pixel: true
-        },
-        special: {
-            size: [48,32],
-            image: 'https://example.com/cursor_special.png',
-            frames: 24,
-            duration: 2,
-            offset: [24,16],
-            pixel: true
+            tags: ['p', 'h1', 'h2', 'span'],
+            image: '/cursor/text.png'  // static cursor
         }
     }
 });</code></pre>
-            <p>The example code includes four cursor types: <span>default</span>, <span>pointer</span>, <span>text</span> and <span>special</span>.</p>
-            <p>Among these three cursor types, only <span>pointer</span> has <span>frames</span> and <span>duration</span> set. This is because <span>pointer</span> is a PNG sprite sheet animated cursor, and in AnimeCursor, <span>frames</span> and <span>duration</span> are required parameters for sprite sheet animated cursors. If either of these parameters is missing, that cursor type will be rendered as static. Although <span>default</span> cursor doesn't have <span>frames</span> and <span>duration</span> set, its <span>image</span> points to a GIF animation, so the <span>default</span> cursor will be presented with the GIF's animation (the animation effect is determined by the GIF itself).</p>
-            <p>You may have noticed: aside from the <span>default</span> cursor, the <span>special</span> cursor also has no <span>tags</span> set. Therefore, it can only be triggered on elements that have <span>data-cursor="special"</span> manually added to them.</p>
-            <p>This is just a brief explanation of AnimeCursor configuration. For more detailed initialization configuration, please refer to the <a href="configuration">Configuration</a> page.</p>
+            <p>In this example:</p>
+            <ul>
+                <li><span>default</span> cursor (static) is used when no other cursor matches.</li>
+                <li><span>pointer</span> is an animated cursor with 4 frames (uniform timing) and ping‑pong loop.</li>
+                <li><span>text</span> is a static cursor applied to text elements.</li>
+            </ul>
+            <p>You can also use array‑based variable speed:</p>
+            <pre><code class="javascript">pointer: {
+    tags: ['a', 'button'],
+    image: '/cursor/pointer_01.png',
+    frames: [2, 3],      // first 2 frames, then 3 frames
+    duration: [0.2, 1.0], // total 1.2s
+    offset: [15, 25]
+}</code></pre>
+
+            <h1 id="upgrade-from-v1">Upgrading from v1</h1>
+            <p>AnimeCursor v2 is a complete rewrite. If you're upgrading from v1, please note:</p>
+            <ul>
+                <li><strong>Sprite sheets are no longer supported</strong> – you must split your sprite sheet into individual frame images. A helper script may be provided separately.</li>
+                <li><strong>Removed options</strong>: <span>size</span>, <span>scale</span>, <span>pixel</span>, <span>zindex</span>, <span>displayOnLoad</span>. Cursor size is now determined by the image itself.</li>
+                <li><strong>New options</strong>: <span>fallbackCursor</span>, <span>excludeSelectors</span> (global). Each cursor can now have its own <span>fallback</span>.</li>
+                <li><strong>Default cursor is optional</strong> – you can omit it; elements without a matching cursor will use the system cursor.</li>
+                <li><strong>Animation timing</strong> now supports arrays for variable speed.</li>
+            </ul>
+            <p>For most projects, migration is straightforward: replace sprite sheets with numbered frames, remove deprecated options, and test.</p>
             <footer></footer>
         </div>
     </div>

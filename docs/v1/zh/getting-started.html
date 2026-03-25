@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+        <title>开始使用 | 文档 - AnimeCursor - 轻量的自定义动画光标JavaScript库</title>
+        <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="/fonts/chinese/result.css">
+        <script src="/scriptv1.js"></script>
+        <link rel="stylesheet" href="/monokai.min.css">
+        <script src="/highlight.min.js"></script>
+        <script src="/hljs-copycode.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/anime-cursor@v1.0.0/dist/anime-cursor.umd.min.js"></script>
+        <script src="/animecursor.js"></script>
+    </head>
+<body class="docs-page" id="getting-started">
+    <div class="docs-wrapper">
+        <div class="docs-panel zh-CN"></div>
+        <div class="docs-content">
+            <div class="docs-content-header"><p>开始使用</p></div>
+            <h1 id="installation">安装</h1>
+            <ol>
+                <li>
+                    <h2>准备光标的图片</h2>
+                    <p>AnimeCursor 是一个能够根据用户的自定义设置，自动构建动画虚拟光标的 JavaScript 库。AnimeCursor 本身并不提供光标图片素材，所以使用 AnimeCursor 前，你需要先准备好光标的图片。</p>
+                    <p>AnimeCursor 支持两种动画光标的实现方法：<span>精灵图动画</span> 和 <span>GIF 动图</span>。<br>当然，除了动画光标，AnimeCursor 也支持静态光标。</p>
+                    <ul>
+                        <li>
+                            <h3>精灵图动画</h3>
+                            <p>精灵图动画是 AnimeCursor 推荐的方式，因为它与 GIF 图片相比有更好的视觉呈现以及更自由的发挥空间，并且可以更轻松的实现乒乓循环。AnimeCursor 未来的更新也会把重点放在精灵图动画光标的功能上。</p>
+                            <p>AnimeCursor 精灵图动画目前（<span>v0.4.0</span>）仅支持单行精灵图表，所以请确认你的精灵图表布局是否符合要求，如果不是单行精灵图表请将其编辑为单行。</p>
+                            <p>AnimeCursor 会自动根据你的设置来生成CSS帧动画，如果你的动画的帧间隔存在变化，比如某些帧的持续时间更长，那么可以通过设置数组来实现，具体请参考“配置”页面。</p>
+                        </li>
+                        <li>
+                            <h3>GIF 动图</h3>
+                            <p>AnimeCursor 的工作原理使 GIF 动图也能作为动画光标的图片，对于 GIF 动图，AnimeCursor 没有什么特别的要求。但是请注意，GIF 动图和精灵图动画的呈现效果会有差别，所以可以根据需要来选择。</p>
+                        </li>
+                        <li>
+                            <h3>像素风图片</h3>
+                            <p>对于像素风格的光标，无论是精灵图动画还是 GIF 动图，AnimeCursor 都推荐使用原始尺寸的像素图（比如一个 <span>16px × 16px</span> 的像素图，不需要在图片编辑软件里缩放处理成 <span>64px × 64px</span> 的尺寸再给 AnimeCursor 加载）。AnimeCursor 支持缩放光标以及像素化渲染图片，结合这两个功能，你可以以很小的文件体积实现动画光标效果，大大节省页面的加载时间。</p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h2>部署 AnimeCursor</h2>
+                    <ul>
+                        <li>
+                            <h3>CDN</h3>
+                            <p>通过 jsDeliver 的 npm CDN 直接获取最新版本的 AnimeCursor</p>
+                            <pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/anime-cursor/dist/anime-cursor.umd.min.js">&lt;/script></code></pre>
+                            <p>或者通过 jsDeliver 的 github release CDN 获取指定版本的 AnimeCursor</p>
+                            <pre><code>&lt;script src="https://https://cdn.jsdelivr.net/gh/ShuninYu/anime-cursor@v0.3.1/dist/anime-cursor.umd.min.js">&lt;/script></code></pre>
+                        </li>
+                        <li>
+                            <h3>npm</h3>
+                            <pre><code>npm i anime-cursor</code></pre>
+                            <pre><code>import AnimeCursor from 'anime-cursor';
+new AnimeCursor({...});</code></pre>
+                        </li>
+                        <li>
+                            <h3>本地部署</h3>
+                            <p>AnimeCursor 的体积很小，所以当 jsDeliver 的 CDN 在你的地区速度较慢时，你也可以选择本地部署 AnimeCursor</p>
+                            <pre><code>&lt;!-- 别忘了把 src 修改为你的文件路径 -->
+&lt;script src="anime-cursor.umd.min.js">&lt;/script></code></pre>
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h1 id="basic-usage">基本用法</h1>
+            <p>初始化 AnimeCursor：</p>
+            <pre><code class="javascript">new AnimeCursor({
+    // 配置区域
+});</code></pre>
+            <div class="warningbox">
+                <p>初始化 AnimeCursor 不需要等待 DOM 加载完成。<br>尽量不要把 <span>new AnimeCursor()</span> 放在 DOM 加载完成后执行的代码中。</p>
+            </div>
+            <p>在 <span>配置区域</span> 通过 <span>cursors</span> 配置你的 AnimeCursor：</p>
+            <pre><code class="javascript">cursors: {
+    // 光标种类声明区域
+}</code></pre>
+            <p>在 <span>光标种类声明区域</span> 通过 <span>cursors</span> 声明你的光标种类：</p>
+            <pre><code class="javascript">cursorTypeOne: {
+    // 光标参数区域
+},
+/* 注意不要忘记在两个光标种类之间添加逗号 */
+cursorTypeTwo: {
+    // 光标参数区域
+}</code></pre>
+            <p>在对应光标种类的 <span>光标参数区域</span> 参考 <a href="configuration#options">配置：参数选项</a> 来配置光标的参数：</p>
+            <p>一个包含两种光标的 AnimeCursor 的 <span>配置结构</span> 应该看起来像这样：</p>
+            <pre><code class="javascript">new AnimeCursor({
+    cursors: {
+        cursorTypeOne: {
+            // settings
+        },
+        cursorTypeTwo: {
+            // settings
+        }
+    }
+});</code></pre>
+
+            <h1 id="example">示例</h1>
+            <p>一个最小可运行示例：</p>
+            <pre><code class="javascript">new AnimeCursor({
+    cursors: {
+        pointer: {
+            tags: ['a','button']
+            size: [32,32],
+            image: 'cursor_pointer.png',
+            default: false
+        }
+    }
+});</code></pre>
+            <p>用通俗的话来说，在这段代码中我们设置了一种叫做 <span>pointer</span> 的光标。这个光标的尺寸为 32 × 32 像素，图片是 <span>cursor_pointer.png</span>，它会在光标移动到 a 元素和 button 元素上时显示。</p>
+            <p>请注意，假设 <span>cursor_pointer.png</span> 是一张精灵图表，在这个示例的情况下 <span>pointer</span> 仍然只会是静态光标，因为它缺少一些精灵图动画光标必须的参数设置，具体原因我们接下来就会提到。</p>
+            <p>下面是一个更丰富且更贴近实际应用的示例，包含了四种光标：</p>
+            <pre><code class="javascript">new AnimeCursor({
+    cursors: {
+        default: {
+            size: [32,32],
+            image: 'https://example.com/cursor_default.gif',
+            pixel: true,
+            default: true
+        },
+        pointer: {
+            tags: ['a','button'],
+            size: [32,36],
+            image: 'https://example.com/cursor_pointer.png',
+            frames: 3,
+            duration: 0.3,
+            pingpong: true,
+            offset: [10,4],
+            pixel: true
+        },
+        text: {
+            tags: ['p','h1','h2','h3','h4','span','td','th','pre','code','footer'],
+            size: [32,32],
+            image: 'https://example.com/cursor_text.png',
+            offset: [10,16],
+            pixel: true
+        },
+        special: {
+            size: [48,32],
+            image: 'https://example.com/cursor_special.png',
+            frames: 24,
+            duration: 2,
+            offset: [24,16],
+            pixel: true
+        }
+    }
+});</code></pre>
+            <p>上面的代码中包含了 <span>default</span> <span>pointer</span> <span>text</span> <span>special</span> 四种光标。</p>
+            <p>在这四种光标中，只有 <span>pointer</span> 和 <span>special</span> 设置了 <span>frames</span> 和 <span>duration</span>。这是因为它们是 PNG 精灵图动画光标，而在 AnimeCursor 中，<span>frames</span> 和 <span>duration</span> 是精灵图动画光标必须设置的参数，当缺少二者其中任意一个参数时，该种光标都将以静态呈现。而 <span>default</span> 光标虽然没有设置 <span>frames</span> 和 <span>duration</span>，但是它的 <span>image</span> 指向的图片是一张 GIF 动图，所以 <span>default</span> 光标会以 GIF 的动画呈现（动画效果由 GIF 本身决定）。</p>
+            <p>不知道你是否注意到：除了被设置成默认光标的 <span>default</span> 以外，<span>special</span> 也同样没有设置 <span>tags</span>，因此它只能在被手动添加了 <span>data-cursor="special"</span> 的元素触发。</p>
+            <p>这里只是对 AnimeCursor 配置的简要说明，对于更详细的 AnimeCursor 初始化配置，请参考 <a href="configuration">配置</a> 页面。</p>
+            <footer></footer>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+        <title>调试与故障排除 | 文档 - AnimeCursor - 轻量的自定义动画光标JavaScript库</title>
+        <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="/fonts/chinese/result.css">
+        <script src="/scriptv1.js"></script>
+        <link rel="stylesheet" href="/monokai.min.css">
+        <script src="/highlight.min.js"></script>
+        <script src="/hljs-copycode.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/anime-cursor@v1.0.0/dist/anime-cursor.umd.min.js"></script>
+        <script src="/animecursor.js"></script>
+    </head>
+<body class="docs-page" id="debug">
+    <div class="docs-wrapper">
+        <div class="docs-panel zh-CN"></div>
+        <div class="docs-content">
+            <div class="docs-content-header"><p>调试与故障排除</p></div>
+            <h1 id="debug-mode">debug 模式</h1>
+            <p>启用 debug 模式</p>
+            <pre><code class="javascript">new AnimeCursor({
+    debug: true,
+    cursors: {...}
+});</code></pre>
+            <p>debug 模式会显示：</p>
+            <ul>
+                <li><p>当前鼠标坐标</p></li>
+                <li><p>当前光标类型</p></li>
+                <li><p>光标边界</p></li>
+            </ul>
+            <p>debug 模式主要可以用来校准光标、测试切换、检查光标尺寸。</p>
+            <h1 id="common-issues">常见问题</h1>
+            <h2>光标不显示 / 没有变化</h2>
+            <ul>
+                <li><p>检查图片路径</p></li>
+                <li><p>检查光标设置是否合法，检查控制台是否有报错</p></li>
+                <li><p>检查 <span>tags</span> 是否匹配元素</p></li>
+                <li><p>是否在 DOM 插入后调用 <span>refresh()</span></p></li>
+                <li><p>是否调用过 <span>destroy()</span></p></li>
+            </ul>
+            <h2>第一次切换到新的光标时，光标会消失一下</h2>
+            <ul>
+                <li><p>检查是否是在 DOM 加载完成后才 <span>new AnimeCursor()</span> 实例化 AnimeCursor。<br>AnimeCursor 会在 DOM 加载完成前在页面插入光标图片的预加载标签，如果在 DOM 加载完成后才加载图片，有可能因为图片文件尺寸产生加载延迟，导致切换光标时光标图片还未加载好，引发光标的短暂消失。</p></li>
+                <li><p>尝试压缩你的图片，尤其是大尺寸的 PNG 精灵图表。在质量差距不大的情况下，压缩成 WEBP 格式的图片的文件尺寸要比未被压缩的 PNG 图片小得多，这也能够帮助光标图片提升加载速度。</p></li>
+            </ul>
+            <div class="warningbox"><p>[已知问题] 在使用 liveserver 和 Firefox 测试页面的时候，即使配置正确且没有报错，也会偶尔出现默认光标不显示的问题，但是使用 Firefox 浏览实际部署的页面时不会出现该问题。暂时没有找到问题原因。</p></div>
+            <h1 id="faq">FAQ</h1>
+            <p class="ps">Nothing right now.<br>Waiting for update...</p>
+            <footer></footer>
+        </div>
+    </div>
+</body>
+</html>

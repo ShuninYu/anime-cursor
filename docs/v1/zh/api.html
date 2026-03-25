@@ -7,7 +7,7 @@
         <title>API | 文档 - AnimeCursor - 轻量的自定义动画光标JavaScript库</title>
         <link rel="stylesheet" href="/style.css">
         <link rel="stylesheet" href="/fonts/chinese/result.css">
-        <script src="/script.js"></script>
+        <script src="/scriptv1.js"></script>
         <link rel="stylesheet" href="/monokai.min.css">
         <script src="/highlight.min.js"></script>
         <script src="/hljs-copycode.js"></script>
@@ -24,13 +24,15 @@
             <p>创建一个新的 AnimeCursor 实例，并立即初始化光标行为。</p>
             <div class="warningbox">
                 <p>AnimeCursor 实例最多只允许存在一个。</p>
-                <p>当你尝试初始化第二个 AnimeCursor 实例时，控制台会显示一个警告，且初始化不会继续进行。</p>
+                <p>当你尝试初始化第二个 AnimeCursor 实例时，控制台会显示一个warning。并且该初始化不会继续进行。</p>
             </div>
             <h1 id="refresh">refresh</h1>
             <pre><code class="javascript">AnimeCursor.refresh()</code></pre>
-            <p><span>refresh()</span> 用于重新扫描页面，重新生成 CSS 规则，并将光标定义应用到新增的元素上。在动态 DOM 变化后（如 AJAX 内容、Markdown 渲染、SPA 路由切换）调用此方法。</p>
+            <p><span>refresh()</span> 用于在 页面 DOM 发生变化后，重新扫描并应用光标规则到新增元素。</p>
+            <p>AnimeCursor 在初始化时只会在 DOM 加载完成后扫描一次 DOM。如果你的部分页面内容是在 DOM 加载完成后动态插入的（例如 Markdown 渲染、Ajax 加载、SPA 路由切换），你必须在内容插入完成后手动调用 refresh()。</p>
             <h2>示例</h2>
-            <pre><code class="javascript">fetch('markdown.md')
+            <pre><code class="javascript">// 假设页面使用 marked 加载外部 markdown 文件并注入渲染完成的 DOM
+fetch('markdown.md')
     .then(res => res.text())
     .then(html => {
         container.innerHTML = html;
@@ -40,18 +42,22 @@
             <pre><code class="javascript">AnimeCursor.disable()</code></pre>
             <pre><code class="javascript">AnimeCursor.enable()</code></pre>
             <ul>
-                <li><p><span>disable()</span>：暂时禁用自定义光标，恢复系统光标（不销毁实例）。</p></li>
-                <li><p><span>enable()</span>：重新启用自定义光标。</p></li>
+                <li>
+                    <p><span>disable()</span>：暂时隐藏并停用光标效果（不销毁实例）</p>
+                </li>
+                <li>
+                    <p><span>enable()</span>：重新启用光标效果</p>
+                </li>
             </ul>
-            <p>适用于临时场景切换（例如进入表单区域、打开弹窗等）。</p>
+            <p>适用于临时场景切换（例如进入表单区域、弹窗等）。</p>
             <h1 id="destroy">destroy</h1>
             <pre><code class="javascript">AnimeCursor.destroy()</code></pre>
             <p>彻底销毁 AnimeCursor 实例，包括：</p>
             <ul>
-                <li><p>移除注入的 CSS 规则。</p></li>
-                <li><p>移除调试浮层（如果激活）。</p></li>
-                <li><p>移除事件监听（调试模式下的鼠标移动监听）。</p></li>
-                <li><p>清除全局禁用类。</p></li>
+                <li><p>移除注入的 DOM 元素</p></li>
+                <li><p>移除注入的 CSS</p></li>
+                <li><p>移除事件监听</p></li>
+                <li><p>清理 <span>data-cursor</span> 标记</p></li>
             </ul>
             <p>调用 <span>destroy()</span> 后，该实例不可再复用。</p>
             <footer></footer>

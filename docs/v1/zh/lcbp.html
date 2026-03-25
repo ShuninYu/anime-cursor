@@ -4,10 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
-        <title>生命周期与最佳实践 | 文档 - AnimeCursor - 轻量的自定义动画光标JavaScript库</title>
+        <title>Lifecycle & Best Practices | 文档 - AnimeCursor - 轻量的自定义动画光标JavaScript库</title>
         <link rel="stylesheet" href="/style.css">
         <link rel="stylesheet" href="/fonts/chinese/result.css">
-        <script src="/script.js"></script>
+        <script src="/scriptv1.js"></script>
         <link rel="stylesheet" href="/monokai.min.css">
         <script src="/highlight.min.js"></script>
         <script src="/hljs-copycode.js"></script>
@@ -18,16 +18,16 @@
     <div class="docs-wrapper">
         <div class="docs-panel zh-CN"></div>
         <div class="docs-content">
-            <div class="docs-content-header"><p>生命周期与最佳实践</p></div>
+            <div class="docs-content-header"><p>Lifecycle & Best Practices</p></div>
             <h1 id="dom">DOM 注入时机</h1>
-            <p>AnimeCursor v2 不会注入任何 DOM 元素（可选的调试浮层除外），因此对实例创建时机没有严格限制。但为了尽早预加载图片，建议尽可能早地初始化 AnimeCursor，最好在 DOM 加载完成前。</p>
-            <p>如果你动态添加了新内容（例如通过 AJAX、Markdown 渲染、SPA 路由切换），请在内容插入后调用 <span>refresh()</span>。这会重新生成 CSS 规则，并将光标定义应用到新元素上。</p>
+            <p>由于 AnimeCursor 需要在 HTML 中插入 <span>preload</span> 以预加载光标图片，所以请避免在 DOM 加载完成后创建 AnimeCursor 实例。</p>
+            <p>另外，在创建 AnimeCursor 实例后，如果有动态插入的 DOM，那么这些 DOM 会缺少 <span>data-cursor</span>，而 AnimeCursor 依赖 <span>data-cursor</span> 来判断光标切换。但是没关系，AnimeCursor 提供了解决这类问题的 API。</p>
             <p>❌错误示例：</p>
             <pre><code class="javascript no-copy">new AnimeCursor();
-fetchMarkdown(); // 插入后未调用 refresh()</code></pre>
+fetchMarkdown();</code></pre>
             <p>✅正确示例：</p>
             <pre><code class="javascript">fetchMarkdown().then(() => {
-    new AnimeCursor(); // 也可，但更推荐提前初始化并刷新
+    new AnimeCursor();
 });</code></pre>
             <p>或</p>
             <pre><code class="javascript">const cursor = new AnimeCursor();
@@ -36,13 +36,7 @@ fetchMarkdown().then(() => cursor.refresh());</code></pre>
             <ul>
                 <li><p>Markdown 渲染完成后调用 <span>refresh()</span></p></li>
                 <li><p>SPA 路由切换后调用 <span>refresh()</span></p></li>
-                <li><p>不要在每次更新时重新创建实例——复用已有实例，调用 <span>refresh()</span> 即可。</p></li>
-            </ul>
-            <h1 id="performance">性能提示</h1>
-            <ul>
-                <li><p>AnimeCursor v2 仅使用 CSS，没有持续的 JavaScript 监听（调试模式除外），开箱即用性能极佳。</p></li>
-                <li><p>即使定义多种光标类型，生成的 CSS 规则也很轻量，由浏览器高效应用。</p></li>
-                <li><p>使用 <span>excludeSelectors</span> 避免覆盖输入框的原生文本光标，提升可用性。</p></li>
+                <li><p>不要在每次更新时重新 <span>new AnimeCursor()</span></p></li>
             </ul>
             <footer></footer>
         </div>

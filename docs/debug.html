@@ -25,28 +25,33 @@
     debug: true,
     cursors: {...}
 });</code></pre>
-            <p>Debug mode will display:</p>
+            <p>Debug mode displays:</p>
             <ul>
                 <li><p>Current mouse coordinates</p></li>
-                <li><p>Current cursor type</p></li>
-                <li><p>Cursor boundaries</p></li>
+                <li><p>Current cursor type (or "native" if no custom cursor matches)</p></li>
             </ul>
-            <p>Debug mode is primarily useful for calibrating the cursor, testing switching behavior, and checking cursor dimensions.</p>
+            <p>Debug mode is useful for calibrating hotspot offsets, testing cursor switching, and verifying that your frames are loading correctly.</p>
             <h1 id="common-issues">Common Issues</h1>
             <h2>Cursor not showing / No change</h2>
             <ul>
-                <li><p>Check the image path.</p></li>
-                <li><p>Check if cursor settings are valid and see if there are any errors in the console.</p></li>
-                <li><p>Check if <span>tags</span> match the intended elements.</p></li>
-                <li><p>Check if <span>refresh()</span> was called after DOM insertion.</p></li>
-                <li><p>Check if <span>destroy()</span> was called.</p></li>
+                <li><p>Check the image path – ensure the first frame exists and the naming pattern is correct.</p></li>
+                <li><p>If using animated cursors, verify <span>frames</span> and <span>duration</span> are both set and valid (numbers or arrays). Check the console for warnings.</p></li>
+                <li><p>Check that <span>tags</span> match the intended elements, or that <span>data-cursor</span> is correctly set on elements.</p></li>
+                <li><p>Did you call <span>refresh()</span> after dynamic DOM changes?</p></li>
+                <li><p>Was <span>destroy()</span> called inadvertently?</p></li>
+            </ul>
+            <h2>Animation doesn't play / plays incorrectly</h2>
+            <ul>
+                <li><p>Ensure <span>frames</span> and <span>duration</span> are both set and valid.</p></li>
+                <li><p>For variable‑speed animations, make sure both are arrays of equal length and contain positive numbers.</p></li>
+                <li><p>All frame images must exist at the automatically generated URLs. Check the network tab to see if 404 errors occur.</p></li>
             </ul>
             <h2>The cursor briefly disappears when switching to a new cursor for the first time</h2>
             <ul>
-                <li><p>Check if <span>new AnimeCursor()</span> is instantiated only after the DOM has finished loading.<br>AnimeCursor inserts preload tags for cursor images into the page before the DOM finishes loading. If images are loaded after DOM completion, loading delays may occur due to image file sizes, causing the cursor image to not be ready when switching and resulting in a brief disappearance of the cursor.</p></li>
-                <li><p>Try compressing your images, especially large-sized PNG sprite sheets. When the quality difference is minimal, images compressed into the WEBP format are significantly smaller in file size compared to uncompressed PNG images, which can also help improve the loading speed of cursor images.</p></li>
+                <li><p>Images may not be fully loaded yet. Preload tags are inserted early, but large images might still cause a short delay. Consider compressing images.</p></li>
+                <li><p>Make sure AnimeCursor is initialized before the DOM finishes loading (not inside a DOMContentLoaded callback).</p></li>
             </ul>
-            <div class="warningbox"><p>[Known Issue] When testing a page with live server and Firefox, the default cursor may occasionally fail to display even with correct configuration and no console errors. However, this issue does not occur when viewing the actually deployed page with Firefox. The root cause is currently unknown.</p></div>
+            <div class="warningbox"><p>[Known Issue] When testing with live server and Firefox, the default cursor may occasionally fail to display even with correct configuration and no console errors. However, this issue does not occur when viewing the actually deployed page with Firefox. The root cause is currently unknown.</p></div>
             <h1 id="faq">FAQ</h1>
             <p class="ps">Nothing right now.<br>Waiting for update...</p>
             <footer></footer>

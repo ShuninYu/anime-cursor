@@ -7,7 +7,7 @@
         <title>API | Docs - AnimeCursor - Lightweight JS for animated website cursors</title>
         <link rel="stylesheet" href="/style.css">
         <link rel="stylesheet" href="/fonts/chinese/result.css">
-        <script src="/script.js"></script>
+        <script src="/scriptv1.js"></script>
         <link rel="stylesheet" href="/monokai.min.css">
         <script src="/highlight.min.js"></script>
         <script src="/hljs-copycode.js"></script>
@@ -23,14 +23,16 @@
             <pre><code class="javascript">new AnimeCursor(options)</code></pre>
             <p>Creates a new AnimeCursor instance and immediately initializes cursor behavior.</p>
             <div class="warningbox">
-                <p>There can be only one AnimeCursor instance at a time.</p>
-                <p>You will get a warning in the console if you try to initialize a second AnimeCursor. The initialization will not proceed.</p>
+                <p>There can be only one AnimeCursor at a time.</p>
+                <p>You will get a warning in the console if you try to initialize a second AnimeCursor. And the initialization will not be procced.</p>
             </div>
             <h1 id="refresh">refresh</h1>
             <pre><code class="javascript">AnimeCursor.refresh()</code></pre>
-            <p><span>refresh()</span> re‑scans the page, regenerates CSS rules, and applies cursor definitions to any newly added elements. Use this after dynamic DOM changes (e.g., AJAX content, Markdown rendering, SPA route changes).</p>
+            <p><span>refresh()</span> is used to re-scan the page and apply cursor rules to newly added elements after the DOM has changed.</p>
+            <p>AnimeCursor scans the DOM only once during initialization, after the DOM loads. If part of your page content is dynamically inserted after the DOM has loaded (such as Markdown rendering, Ajax loading, or SPA route switching), you must manually call <span>refresh()</span> after the content has been inserted.</p>
             <h2>Example</h2>
-            <pre><code class="javascript">fetch('markdown.md')
+            <pre><code class="javascript">// Assuming the page uses 'marked' to load an external markdown file and injects the rendered DOM
+fetch('markdown.md')
     .then(res => res.text())
     .then(html => {
         container.innerHTML = html;
@@ -40,18 +42,22 @@
             <pre><code class="javascript">AnimeCursor.disable()</code></pre>
             <pre><code class="javascript">AnimeCursor.enable()</code></pre>
             <ul>
-                <li><p><span>disable()</span>: Temporarily disables the custom cursor, restoring the system cursor (without destroying the instance).</p></li>
-                <li><p><span>enable()</span>: Re‑enables the custom cursor.</p></li>
+                <li>
+                    <p><span>disable()</span>: Temporarily hides and deactivates the cursor effect (without destroying the instance).</p>
+                </li>
+                <li>
+                    <p><span>enable()</span>: Re-enables the cursor effect.</p>
+                </li>
             </ul>
-            <p>Useful for temporary context switches (e.g., entering a form area, opening a modal).</p>
+            <p>Suitable for temporary context switching (e.g., entering a form area, opening a modal, etc.).</p>
             <h1 id="destroy">destroy</h1>
             <pre><code class="javascript">AnimeCursor.destroy()</code></pre>
             <p>Completely destroys the AnimeCursor instance, including:</p>
             <ul>
-                <li><p>Removing injected CSS rules.</p></li>
-                <li><p>Removing the debug overlay if active.</p></li>
-                <li><p>Removing event listeners (mousemove for debug).</p></li>
-                <li><p>Clearing the global disabled class.</p></li>
+                <li><p>Removing injected DOM elements.</p></li>
+                <li><p>Removing injected CSS.</p></li>
+                <li><p>Removing event listeners.</p></li>
+                <li><p>Cleaning up <span>data-cursor</span> markers.</p></li>
             </ul>
             <p>The instance cannot be reused after calling <span>destroy()</span>.</p>
             <footer></footer>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+        <title>Introduction | Docs - AnimeCursor - Lightweight JS for animated website cursors</title>
+        <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="/fonts/chinese/result.css">
+        <script src="/scriptv1.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/anime-cursor@v1.0.0/dist/anime-cursor.umd.min.js"></script>
+        <script src="/animecursor.js"></script>
+    </head>
+<body class="docs-page" id="introduction">
+    <div class="docs-wrapper">
+        <div class="docs-panel"></div>
+        <div class="docs-content">
+            <div class="docs-content-header"><p>Introduction to AnimeCursor</p></div>
+            <h1 id="what-is-animecursor">What is AnimeCursor?</h1>
+            <p>AnimeCursor is a front-end JavaScript library for web pages to replacing the <b>system mouse pointer</b> with a <b>frame-by-frame animation supported cursor</b>.<br>Since current CSS cursor does not truly support animated cursors (although mainstream browsers support setting cursor to GIF images, the cursor actually remains static on the page), achieving a genuinely animated cursor requires a non-native approach.</p>
+            <p>AnimeCursor injects a DOM element into the page that follows the mouse movement and automatically generates animated cursors based on user settings, delivering a highly customizable frame-by-frame animated cursor experience.<br>You just need to prepare your animated cursor images, tell AnimeCursor what cursors you need, and it will automatically add animated cursors to your webpage, helping you complete the final small piece of your beautiful website's puzzle.</p>
+            <p>AnimeCursor does not emulate operating system cursor behavior but focuses on <b>visual presentation</b>, such as the following scenarios:</p>
+            <ul>
+                <li><p>Personalized personal homepage</p></li>
+                <li><p>Pixel / Retro UI</p></li>
+                <li><p>Special visual interactive webpages</p></li>
+            </ul>
+            <p>In fact, AnimeCursor is suitable for any website that can utilize frame-by-frame animated cursors. Its main goal is to provide a convenient implementation method for designs requiring more interesting and free-form animated cursors.</p>
+            <p>Certainly, AnimeCursor can also be effective on other types of pages. For example:</p>
+            <ul>
+                <li><p>Application backends / Management systems</p></li>
+                <li><p>Pages form-heavy with high accessibility requirements</p></li>
+                <li><p>Applications that must strictly adhere to system cursor behavior</p></li>
+            </ul>
+            <p>AnimeCursor provides a complete lifecycle API. On pages where certain areas must strictly follow the system cursor behavior, you can dynamically enable or disable AnimeCursor by calling <span>disable()</span> and <span>enable()</span> where needed. This allows it to coordinate with a similarly stylized native cursor—strictly adhering to system cursor behavior where required, while achieving richer visual effects overall.</p>
+            <p style="font-size: 14px; color: rgb(255 255 255 / 0.5);">※ In fact, AnimeCursor was initially written for use on my personal website, where it was just part of the site's foundational JavaScript. After realizing I didn't need to reinvent the wheel for every new website, I decided to extract AnimeCursor into a standalone JavaScript library.</p>
+            <h1 id="features">Features</h1>
+            <ul>
+                <li><p>Custom cursor types and configurable tag matching rules</p></li>
+                <li><p>Sprite sheet animations supported</p></li>
+                <li><p>GIF animations supported</p></li>
+                <li><p>Optional pixelated rendering</p></li>
+                <li><p>Easy-to-use Debug mode</p></li>
+                <li><p>Lifecycle APIs such as refresh / destroy</p></li>
+            </ul>
+            <h1 id="browser-support">Browser Support</h1>
+            <p>Tested and supported browsers:</p>
+            <ul>
+                <li><p>Chrome / Edge (latest version)</p></li>
+                <li><p>Firefox (latest version)</p></li>
+            </ul>
+            <p>Browsers not fully tested:</p>
+            <ul>
+                <li><p>Safari</p></li>
+            </ul>
+            <p>AnimeCursor relies on modern browser features (such as the <span>pointer: fine</span> media query) and is not guaranteed to work properly on older browsers.</p>
+            <footer></footer>
+        </div>
+    </div>
+</body>
+</html>

@@ -28,25 +28,30 @@
             <p>debug 模式会显示：</p>
             <ul>
                 <li><p>当前鼠标坐标</p></li>
-                <li><p>当前光标类型</p></li>
-                <li><p>光标边界</p></li>
+                <li><p>当前光标类型（若无自定义光标匹配则显示 "native"）</p></li>
             </ul>
-            <p>debug 模式主要可以用来校准光标、测试切换、检查光标尺寸。</p>
+            <p>debug 模式主要可以用来校准热点偏移、测试光标切换、验证帧图片是否正常加载。</p>
             <h1 id="common-issues">常见问题</h1>
             <h2>光标不显示 / 没有变化</h2>
             <ul>
-                <li><p>检查图片路径</p></li>
-                <li><p>检查光标设置是否合法，检查控制台是否有报错</p></li>
-                <li><p>检查 <span>tags</span> 是否匹配元素</p></li>
-                <li><p>是否在 DOM 插入后调用 <span>refresh()</span></p></li>
-                <li><p>是否调用过 <span>destroy()</span></p></li>
+                <li><p>检查图片路径 – 确保第一帧存在，且命名模式正确。</p></li>
+                <li><p>如果使用动画光标，确认 <span>frames</span> 和 <span>duration</span> 均已设置且有效（数字或数组）。检查控制台警告。</p></li>
+                <li><p>检查 <span>tags</span> 是否匹配目标元素，或是否已为元素正确设置 <span>data-cursor</span>。</p></li>
+                <li><p>动态 DOM 变化后是否调用了 <span>refresh()</span>？</p></li>
+                <li><p>是否意外调用了 <span>destroy()</span>？</p></li>
+            </ul>
+            <h2>动画不播放 / 播放异常</h2>
+            <ul>
+                <li><p>确保 <span>frames</span> 和 <span>duration</span> 均已设置且有效。</p></li>
+                <li><p>对于变速动画，确保两者均为等长数组且包含正数。</p></li>
+                <li><p>所有帧图片必须存在于自动生成的 URL 中。检查网络面板是否有 404 错误。</p></li>
             </ul>
             <h2>第一次切换到新的光标时，光标会消失一下</h2>
             <ul>
-                <li><p>检查是否是在 DOM 加载完成后才 <span>new AnimeCursor()</span> 实例化 AnimeCursor。<br>AnimeCursor 会在 DOM 加载完成前在页面插入光标图片的预加载标签，如果在 DOM 加载完成后才加载图片，有可能因为图片文件尺寸产生加载延迟，导致切换光标时光标图片还未加载好，引发光标的短暂消失。</p></li>
-                <li><p>尝试压缩你的图片，尤其是大尺寸的 PNG 精灵图表。在质量差距不大的情况下，压缩成 WEBP 格式的图片的文件尺寸要比未被压缩的 PNG 图片小得多，这也能够帮助光标图片提升加载速度。</p></li>
+                <li><p>图片可能尚未完全加载。预加载标签虽已提前插入，但大图仍可能导致短暂延迟。考虑压缩图片。</p></li>
+                <li><p>确保 AnimeCursor 在 DOM 加载完成前初始化（不要放在 DOMContentLoaded 回调内）。</p></li>
             </ul>
-            <div class="warningbox"><p>[已知问题] 在使用 liveserver 和 Firefox 测试页面的时候，即使配置正确且没有报错，也会偶尔出现默认光标不显示的问题，但是使用 Firefox 浏览实际部署的页面时不会出现该问题。暂时没有找到问题原因。</p></div>
+            <div class="warningbox"><p>[已知问题] 在使用 live server 和 Firefox 测试页面时，即使配置正确且没有报错，也会偶尔出现默认光标不显示的问题，但使用 Firefox 浏览实际部署的页面时不会出现该问题。暂时没有找到问题原因。</p></div>
             <h1 id="faq">FAQ</h1>
             <p class="ps">Nothing right now.<br>Waiting for update...</p>
             <footer></footer>

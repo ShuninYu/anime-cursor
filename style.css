@@ -193,6 +193,10 @@ a > * {
   font-size: 120px;
   user-select: none;
 }
+.home-page .titlebox .title-header span {
+  font-family: 'Title';
+  font-size: 60px;
+}
 .home-page .titlebox .title-description {
   font-size: 20px;
   color: black;
