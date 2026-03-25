@@ -5,7 +5,7 @@
 })(this, (function () { 'use strict';
 
     // AnimeCursor by github@ShuninYu
-    // v2.0.1
+    // v2.1.0
 
     let _instance = null;
 
@@ -57,11 +57,14 @@
                 enableTouch: false,
                 fallbackCursor: 'auto',           // Fallback cursor type (auto, pointer, etc.)
                 excludeSelectors: 'input, textarea, [contenteditable]', // Exclude native cursor elements
+                combineAnimations: false,         // NEW: whether to combine user animations with cursor animations
                 ...options
             };
 
             this.disabled = false;
             this.cursors = this.options.cursors || {};
+            this.cursorAnimationStrings = {};     // Store animation strings for each cursor type
+            this.combinedRules = new Map();       // Store generated combined class names
 
             // 检查是否应启用（触摸设备且未强制启用则禁用）
             if (!this.options.enableTouch && !this.isMouseLikeDevice()) {
@@ -88,7 +91,7 @@
             return window.matchMedia('(pointer: fine)').matches;
         }
 
-        // 验证配置（修改点：默认光标可选）
+        // 验证配置（默认光标可选）
         _validateOptions() {
             if (this.disabled) return;
 
@@ -163,7 +166,6 @@
                 }
             }
 
-            // 不再强制要求默认光标
             this.defaultCursorName = hasDefault ? Object.keys(this.cursors).find(name => this.cursors[name].default) : null;
         }
 
@@ -253,7 +255,7 @@
             }
         }
 
-        // 注入所有 CSS 规则（修改点：只有存在默认光标才生成 * 规则）
+        // 注入所有 CSS 规则（新增组合动画支持）
         _injectStyles() {
             if (this.disabled) return;
 
@@ -281,6 +283,7 @@
                     ((Array.isArray(cfg.frames) && Array.isArray(cfg.duration)) ||
                         (typeof cfg.frames === 'number' && typeof cfg.duration === 'number'));
 
+                let cursorAnimation = '';
                 if (hasAnimation && frameCount > 1) {
                     const keyframeName = `ac_anim_${name}`;
                     let keyframesCss = `@keyframes ${keyframeName} {\n`;
@@ -296,10 +299,14 @@
 
                     const totalDuration = Array.isArray(cfg.duration) ? cfg.duration.reduce((a, b) => a + b, 0) : cfg.duration;
                     const animation = `${keyframeName} ${totalDuration}s steps(1) infinite ${cfg.pingpong ? 'alternate' : ''}`;
+                    cursorAnimation = animation;
                     css += `${className} { cursor: url("${frameUrls[0]}") ${offset[0]} ${offset[1]}, ${fallback}; animation: ${animation}; }\n`;
                 } else {
                     css += `${className} { cursor: url("${frameUrls[0]}") ${offset[0]} ${offset[1]}, ${fallback}; }\n`;
                 }
+
+                // 存储光标动画字符串（用于组合）
+                this.cursorAnimationStrings[name] = cursorAnimation;
 
                 if (cfg.tags && cfg.tags.length) {
                     const selector = cfg.tags.join(', ');
@@ -310,6 +317,38 @@
 
             if (this.options.excludeSelectors) {
                 css += `${this.options.excludeSelectors} { cursor: text !important; animation: none !important; }\n`;
+            }
+
+            // 组合动画处理（新功能）
+            if (this.options.combineAnimations) {
+                const elements = document.querySelectorAll('[data-ac-animation]');
+                for (const el of elements) {
+                    const userAnim = el.getAttribute('data-ac-animation');
+                    if (!userAnim) continue;
+                    let cursorName = null;
+                    for (const cls of el.classList) {
+                        if (cls.startsWith('ac-cursor-')) {
+                            cursorName = cls.slice('ac-cursor-'.length);
+                            break;
+                        }
+                    }
+                    if (!cursorName) continue;
+
+                    const cursorAnim = this.cursorAnimationStrings[cursorName];
+                    if (!cursorAnim) continue;
+
+                    // 生成唯一标识
+                    const key = `${cursorName}:${userAnim}`;
+                    if (!this.combinedRules.has(key)) {
+                        const hash = this._simpleHash(key);
+                        const combinedClass = `ac-combined-${hash}`;
+                        // 生成规则：组合光标动画和用户动画
+                        css += `.${combinedClass} { animation: ${cursorAnim}, ${userAnim}; }\n`;
+                        this.combinedRules.set(key, combinedClass);
+                    }
+                    const combinedClass = this.combinedRules.get(key);
+                    el.classList.add(combinedClass);
+                }
             }
 
             css += `body.animecursor-disabled * { cursor: auto !important; animation: none !important; }\n`;
@@ -370,6 +409,16 @@
             return css;
         }
 
+        _simpleHash(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash |= 0; // 转32位整数
+            }
+            return Math.abs(hash).toString(36);
+        }
+
         _initDebug() {
             const debugDiv = document.createElement('div');
             debugDiv.className = 'animecursor-debug';
@@ -405,7 +454,6 @@
                         }
                     }
                 }
-                // 如果没有匹配到任何自定义光标，且没有默认光标，则显示 "native"
                 if (!cursorType && !this.defaultCursorName) {
                     cursorType = 'native';
                 } else if (!cursorType && this.defaultCursorName) {
@@ -424,6 +472,7 @@
         refresh() {
             if (this.disabled) return;
             if (this.styleEl) this.styleEl.remove();
+            this.combinedRules.clear();
             this._injectStyles();
             if (this.options.debug) {
                 if (this.debugEl) this.debugEl.remove();
