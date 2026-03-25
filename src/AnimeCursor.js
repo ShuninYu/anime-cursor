@@ -1,5 +1,5 @@
 // AnimeCursor by github@ShuninYu
-// v2.0.1
+// v2.1.0
 
 let _instance = null;
 
@@ -49,13 +49,16 @@ export default class AnimeCursor {
         this.options = {
             debug: false,
             enableTouch: false,
-            fallbackCursor: 'auto',           // Fallback cursor type (auto, pointer, etc.)
-            excludeSelectors: 'input, textarea, [contenteditable]', // Exclude native cursor elements
+            fallbackCursor: 'auto',
+            excludeSelectors: 'input, textarea, [contenteditable]',
+            combineAnimations: false,     // 是否自动组合用户动画
             ...options
         };
 
         this.disabled = false;
         this.cursors = this.options.cursors || {};
+        this.cursorAnimationStrings = {};     // 存储每个光标类型的动画字符串
+        this.combinedRules = new Map();       // 存储已生成的组合类名
 
         // 检查是否应启用（触摸设备且未强制启用则禁用）
         if (!this.options.enableTouch && !this.isMouseLikeDevice()) {
@@ -77,12 +80,10 @@ export default class AnimeCursor {
         _instance = this;
     }
 
-    // 判断是否鼠标设备
     isMouseLikeDevice() {
         return window.matchMedia('(pointer: fine)').matches;
     }
 
-    // 验证配置（修改点：默认光标可选）
     _validateOptions() {
         if (this.disabled) return;
 
@@ -92,12 +93,11 @@ export default class AnimeCursor {
 
         let hasDefault = false;
         for (const [name, cfg] of Object.entries(this.cursors)) {
-            // 检查必填项
             if (!cfg.image) {
                 throw new Error(`[AnimeCursor] Cursor "${name}" missing required setting: image`);
             }
 
-            // 处理 frames 和 duration 配置
+            // 处理 frames 和 duration
             if (cfg.frames !== undefined && cfg.duration !== undefined) {
                 const framesType = typeof cfg.frames;
                 const durationType = typeof cfg.duration;
@@ -157,11 +157,9 @@ export default class AnimeCursor {
             }
         }
 
-        // 不再强制要求默认光标
         this.defaultCursorName = hasDefault ? Object.keys(this.cursors).find(name => this.cursors[name].default) : null;
     }
 
-    // 预加载所有图片
     _preloadImages() {
         const images = new Set();
         for (const cfg of Object.values(this.cursors)) {
@@ -183,7 +181,6 @@ export default class AnimeCursor {
         }
     }
 
-    // 根据配置生成所有帧的 URL 数组
     _getFrameUrls(cfg) {
         let totalFrames = 1;
         if (cfg.frames !== undefined) {
@@ -247,7 +244,7 @@ export default class AnimeCursor {
         }
     }
 
-    // 注入所有 CSS 规则（修改点：只有存在默认光标才生成 * 规则）
+    // 核心注入样式
     _injectStyles() {
         if (this.disabled) return;
 
@@ -275,6 +272,7 @@ export default class AnimeCursor {
                 ((Array.isArray(cfg.frames) && Array.isArray(cfg.duration)) ||
                     (typeof cfg.frames === 'number' && typeof cfg.duration === 'number'));
 
+            let cursorAnimation = '';
             if (hasAnimation && frameCount > 1) {
                 const keyframeName = `ac_anim_${name}`;
                 let keyframesCss = `@keyframes ${keyframeName} {\n`;
@@ -290,11 +288,15 @@ export default class AnimeCursor {
 
                 const totalDuration = Array.isArray(cfg.duration) ? cfg.duration.reduce((a, b) => a + b, 0) : cfg.duration;
                 const animation = `${keyframeName} ${totalDuration}s steps(1) infinite ${cfg.pingpong ? 'alternate' : ''}`;
+                cursorAnimation = animation;
                 css += `${className} { cursor: url("${frameUrls[0]}") ${offset[0]} ${offset[1]}, ${fallback}; animation: ${animation}; }\n`;
             } else {
                 css += `${className} { cursor: url("${frameUrls[0]}") ${offset[0]} ${offset[1]}, ${fallback}; }\n`;
             }
 
+            this.cursorAnimationStrings[name] = cursorAnimation;
+
+            // 标签和 data-cursor 规则
             if (cfg.tags && cfg.tags.length) {
                 const selector = cfg.tags.join(', ');
                 css += `${selector} { ${this._buildCursorCss(name, cfg)} }\n`;
@@ -306,11 +308,51 @@ export default class AnimeCursor {
             css += `${this.options.excludeSelectors} { cursor: text !important; animation: none !important; }\n`;
         }
 
+        // 自动组合动画（新功能）
+        if (this.options.combineAnimations) {
+            const elements = document.querySelectorAll('[data-ac-animation]');
+            for (const el of elements) {
+                const userAnim = el.getAttribute('data-ac-animation');
+                if (!userAnim) continue;
+
+                // 确定该元素应该使用哪个光标
+                let cursorName = this._getCursorTypeForElement(el);
+                if (!cursorName) continue;
+
+                const cursorAnim = this.cursorAnimationStrings[cursorName];
+                if (!cursorAnim) continue;
+
+                // 生成唯一标识
+                const key = `${cursorName}:${userAnim}`;
+                if (!this.combinedRules.has(key)) {
+                    const hash = this._simpleHash(key);
+                    const combinedClass = `ac-combined-${hash}`;
+                    css += `.${combinedClass} { animation: ${cursorAnim}, ${userAnim}; }\n`;
+                    this.combinedRules.set(key, combinedClass);
+                }
+                const combinedClass = this.combinedRules.get(key);
+                el.classList.add(combinedClass);
+            }
+        }
+
         css += `body.animecursor-disabled * { cursor: auto !important; animation: none !important; }\n`;
 
         style.textContent = css;
         document.head.appendChild(style);
         this.styleEl = style;
+    }
+
+    // 获取元素对应的光标类型（复用 debug 逻辑）
+    _getCursorTypeForElement(el) {
+        if (el.dataset.cursor && this.cursors[el.dataset.cursor]) {
+            return el.dataset.cursor;
+        }
+        for (const [name, cfg] of Object.entries(this.cursors)) {
+            if (cfg.tags && cfg.tags.some(tag => el.matches(tag))) {
+                return name;
+            }
+        }
+        return this.defaultCursorName; // 可能为 null
     }
 
     _buildKeyframes(cfg, frameUrls) {
@@ -364,6 +406,16 @@ export default class AnimeCursor {
         return css;
     }
 
+    _simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash |= 0;
+        }
+        return Math.abs(hash).toString(36);
+    }
+
     _initDebug() {
         const debugDiv = document.createElement('div');
         debugDiv.className = 'animecursor-debug';
@@ -399,7 +451,6 @@ export default class AnimeCursor {
                     }
                 }
             }
-            // 如果没有匹配到任何自定义光标，且没有默认光标，则显示 "native"
             if (!cursorType && !this.defaultCursorName) {
                 cursorType = 'native';
             } else if (!cursorType && this.defaultCursorName) {
@@ -418,6 +469,7 @@ export default class AnimeCursor {
     refresh() {
         if (this.disabled) return;
         if (this.styleEl) this.styleEl.remove();
+        this.combinedRules.clear();
         this._injectStyles();
         if (this.options.debug) {
             if (this.debugEl) this.debugEl.remove();
