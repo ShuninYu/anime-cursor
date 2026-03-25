@@ -32,6 +32,11 @@
             </ul>
             <p>Debug mode is useful for calibrating hotspot offsets, testing cursor switching, and verifying that your frames are loading correctly.</p>
             <h1 id="common-issues">Common Issues</h1>
+            <h2>Element's own animation overrides the cursor animation</h2>
+<ul>
+    <li><p>Enable the <code>combineAnimations: true</code> option and add a <code>data-ac-animation</code> attribute to the element, containing your custom animation definition. AnimeCursor will then combine both animations.</p></li>
+    <li><p>Example: </p><pre><code>&lt;button data-ac-animation="mySpin 2s infinite"&gt;Click Me&lt;/button&gt;</code></pre><p>with <code>combineAnimations: true</code>.</p></li>
+</ul>
             <h2>Cursor not showing / No change</h2>
             <ul>
                 <li><p>Check the image path – ensure the first frame exists and the naming pattern is correct.</p></li>

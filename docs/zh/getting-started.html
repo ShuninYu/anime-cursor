@@ -42,7 +42,7 @@
                     <ul>
                         <li>
                             <h3>CDN</h3>
-                            <pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/anime-cursor@2/dist/anime-cursor.umd.min.js">&lt;/script></code></pre>
+                            <pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/anime-cursor@2.1.0/dist/anime-cursor.umd.min.js">&lt;/script></code></pre>
                         </li>
                         <li>
                             <h3>npm</h3>
@@ -72,6 +72,15 @@ new AnimeCursor({...});</code></pre>
     cursorTypeTwo: { /* 参数 */ }
 }</code></pre>
             <p>每个光标必须包含 <span>image</span>（第一帧），如需动画还需 <span>frames</span> 和 <span>duration</span>。使用 <span>tags</span> 自动将光标应用到指定 HTML 元素，或手动为元素添加 <span>data-cursor="光标类型"</span>。</p>
+            <h2 id="combining-animations">组合动画</h2>
+<p>如果你的元素已经拥有自己的 CSS 动画（例如 <code>animation: spin 2s infinite</code>），这些动画可能会与 AnimeCursor 的光标动画冲突。要让他们同时播放，可以启用 <code>combineAnimations</code> 选项：</p>
+<pre><code class="javascript">new AnimeCursor({
+    combineAnimations: true,
+    cursors: { ... }
+});</code></pre>
+<p>然后，为元素添加 <code>data-ac-animation</code> 属性，值为你自己的动画定义。AnimeCursor 会自动将光标动画与你的动画合并：</p>
+<pre><code class="html">&lt;button data-ac-animation="mySpin 2s linear infinite"&gt;点我&lt;/button&gt;</code></pre>
+<p>多个动画可用逗号分隔。</p>
 
             <h1 id="example">示例</h1>
             <p>一个最小可运行示例：</p>
@@ -113,9 +122,9 @@ new AnimeCursor({...});</code></pre>
             <h1 id="upgrade-from-v1">从 v1 升级</h1>
             <p>AnimeCursor v2 是完全重写的版本。如果你是从 v1 升级，请注意：</p>
             <ul>
-                <li><strong>不再支持精灵图表</strong> – 请将精灵图表拆分成独立帧图片。后续可能提供辅助工具。</li>
+                <li><strong>不再支持精灵图表和GIF</strong> – 请将精灵图表拆分成独立帧图片（精灵图）。并且由于浏览器原生光标不支持GIF（可以使用但是只会停留在第一帧），因此GIF也不再支持。</li>
                 <li><strong>已移除的配置项</strong>：<span>size</span>、<span>scale</span>、<span>pixel</span>、<span>zindex</span>、<span>displayOnLoad</span>。光标尺寸现在由图片本身决定。</li>
-                <li><strong>新增配置项</strong>：全局的 <span>fallbackCursor</span>、<span>excludeSelectors</span>，每个光标可单独设置 <span>fallback</span>。</li>
+                <li><strong>新增配置项</strong>：全局的 <span>fallbackCursor</span>、<span>excludeSelectors</span>、<span>combineAnimations</span>，每个光标可单独设置 <span>fallback</span>。</li>
                 <li><strong>默认光标可选</strong> – 可以省略默认光标，未匹配的元素将使用系统光标。</li>
                 <li><strong>动画节奏</strong> 现在支持数组形式的变速动画。</li>
             </ul>

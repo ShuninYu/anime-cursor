@@ -83,17 +83,29 @@
                     <h3>fallback</h3>
                     <p>Optional. A fallback cursor type (e.g., <span>'auto'</span>, <span>'pointer'</span>) to use if the custom image fails to load or is not supported. Overrides the global <span>fallbackCursor</span> for this cursor.</p>
                 </li>
+                <li>
+                    <h3>combineAnimations</h3>
+                    <p>Global option, default <code>false</code>. When set to <code>true</code>, AnimeCursor scans all elements that have a <code>data-ac-animation</code> attribute. For each such element, it determines the corresponding cursor type (via <code>tags</code> or <code>data-cursor</code>) and generates a combined CSS rule that includes both the cursor animation and the user‑defined animation(s). This resolves conflicts where an element's own animation would otherwise override the cursor animation.</p>
+                    <p>Example:</p>
+                    <pre><code class="html">&lt;button data-ac-animation="mySpin 2s linear infinite"&gt;Click Me&lt;/button&gt;</code></pre>
+                    <p>Note: The element must match a cursor (either through <code>tags</code> or <code>data-cursor</code>) for the combination to take effect.</p>
+                </li>
             </ul>
 
             <h1 id="global-options">Global Options</h1>
             <p>Global options are placed at the same level as <span>cursors</span>.</p>
             <table class="config-table" cellspacing="0">
-                <colgroup><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"></colgroup>
-                 <tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                <colgroup><col style="width: 25%;"><col style="width: 13%;"><col style="width: 17%;"><col style="width: 45%;"></colgroup>
+                 <tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr><tr>
+                    <td>combineAnimations</td>
+                    <td>boolean</td>
+                    <td>false</td>
+                    <td>Automatically merges cursor animations with element‑defined animations (via <code>data-ac-animation</code>). When enabled, any element with the <code>data-ac-animation</code> attribute will have its own CSS animation combined with the cursor animation, allowing both to run simultaneously without overriding each other.</td>
+                </tr>
                  <tr><td>debug</td><td>boolean</td><td>false</td><td>Enables a debug overlay showing current cursor type and coordinates (uses a lightweight mousemove listener).</td></tr>
-                 <tr><td>enableTouch</td><td>boolean</td><td>false</td><td>Enable animated cursors on touch devices (by default they are disabled because pointer events behave differently).</td></tr>
                  <tr><td>fallbackCursor</td><td>string</td><td>'auto'</td><td>Global fallback cursor type (e.g., 'auto', 'pointer').</td></tr>
                  <tr><td>excludeSelectors</td><td>string</td><td>'input, textarea, [contenteditable]'</td><td>CSS selectors that should always use the native text cursor (prevents overriding on text inputs).</td></tr>
+                 <tr><td>enableTouch</td><td>boolean</td><td>false</td><td>Enable animated cursors on touch devices (by default they are disabled because pointer events behave differently).</td></tr>
             </table>
             <footer></footer>
         </div>

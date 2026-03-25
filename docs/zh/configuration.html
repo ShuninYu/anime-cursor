@@ -83,17 +83,30 @@
                     <h3>fallback</h3>
                     <p>可选。备用光标类型（如 <span>'auto'</span>、<span>'pointer'</span>），用于当自定义图片加载失败或不支持时。会覆盖全局 <span>fallbackCursor</span>。</p>
                 </li>
+                <li>
+                    <h3>combineAnimations</h3>
+                    <p>全局选项，默认 <code>false</code>。当设为 <code>true</code> 时，AnimeCursor 会查找所有带有 <code>data-ac-animation</code> 属性的元素，并自动确定每个元素对应的光标类型（通过 <code>tags</code> 或 <code>data-cursor</code>），然后生成组合 CSS 规则，将光标动画与用户定义的动画合并，避免覆盖。</p>
+                    <p>示例：</p>
+                    <pre><code class="html">&lt;button data-ac-animation="mySpin 2s linear infinite"&gt;点我&lt;/button&gt;</code></pre>
+                    <p>注意：元素必须能够匹配某个光标（通过 <code>tags</code> 或 <code>data-cursor</code>），组合动画才会生效。</p>
+                </li>
             </ul>
 
             <h1 id="global-options">全局选项</h1>
             <p>全局选项与 <span>cursors</span> 同级。</p>
             <table class="config-table" cellspacing="0">
-                <colgroup><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"><col style="width: 25%;"></colgroup>
+                <colgroup><col style="width: 25%;"><col style="width: 13%;"><col style="width: 17%;"><col style="width: 45%;"></colgroup>
                  <tr><th>选项</th><th>类型</th><th>默认值</th><th>描述</th></tr>
+                 <tr>
+                    <td>combineAnimations</td>
+                    <td>boolean</td>
+                    <td>false</td>
+                    <td>自动将光标动画与元素自身定义的动画（通过 <code>data-ac-animation</code>）合并。开启后，任何带有 <code>data-ac-animation</code> 属性的元素，其光标动画与用户动画会同时播放，互不覆盖。</td>
+                </tr>
                  <tr><td>debug</td><td>boolean</td><td>false</td><td>启用调试浮层，显示当前光标类型和坐标（会启用轻量级鼠标监听）。</td></tr>
-                 <tr><td>enableTouch</td><td>boolean</td><td>false</td><td>在触屏设备上启用动画光标（默认禁用，因为触屏行为不同）。</td></tr>
                  <tr><td>fallbackCursor</td><td>string</td><td>'auto'</td><td>全局备用光标类型（如 'auto', 'pointer'）。</td></tr>
                  <tr><td>excludeSelectors</td><td>string</td><td>'input, textarea, [contenteditable]'</td><td>始终使用原生文本光标的 CSS 选择器（防止覆盖文本输入框）。</td></tr>
+                 <tr><td>enableTouch</td><td>boolean</td><td>false</td><td>在触屏设备上启用动画光标（默认禁用，因为触屏行为不同）。</td></tr>
             </table>
             <footer></footer>
         </div>

@@ -42,7 +42,7 @@
                     <ul>
                         <li>
                             <h3>CDN</h3>
-                            <pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/anime-cursor@2/dist/anime-cursor.umd.min.js">&lt;/script></code></pre>
+                            <pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/anime-cursor@2.1.0/dist/anime-cursor.umd.min.js">&lt;/script></code></pre>
                         </li>
                         <li>
                             <h3>npm</h3>
@@ -72,6 +72,15 @@ new AnimeCursor({...});</code></pre>
     cursorTypeTwo: { /* parameters */ }
 }</code></pre>
             <p>Each cursor must have an <span>image</span> (first frame) and, if animated, <span>frames</span> and <span>duration</span>. Use <span>tags</span> to automatically apply the cursor to specific HTML elements, or manually add <span>data-cursor="cursorType"</span> to elements.</p>
+            <h2 id="combining-animations">Combining Animations</h2>
+<p>If you have elements that already use CSS animations (e.g., <code>animation: spin 2s infinite</code>), those animations can conflict with AnimeCursor's cursor animations. To let both play simultaneously, enable the <code>combineAnimations</code> option:</p>
+<pre><code class="javascript">new AnimeCursor({
+    combineAnimations: true,
+    cursors: { ... }
+});</code></pre>
+<p>Then, add the <code>data-ac-animation</code> attribute to the element, with the value being your own animation definition(s). AnimeCursor will automatically merge the cursor animation with yours:</p>
+<pre><code class="html">&lt;button data-ac-animation="mySpin 2s linear infinite"&gt;Click Me&lt;/button&gt;</code></pre>
+<p>Multiple animations can be listed, separated by commas.</p>
 
             <h1 id="example">Example</h1>
             <p>A minimal working example:</p>
@@ -113,9 +122,9 @@ new AnimeCursor({...});</code></pre>
             <h1 id="upgrade-from-v1">Upgrading from v1</h1>
             <p>AnimeCursor v2 is a complete rewrite. If you're upgrading from v1, please note:</p>
             <ul>
-                <li><strong>Sprite sheets are no longer supported</strong> – you must split your sprite sheet into individual frame images. A helper script may be provided separately.</li>
+                <li><strong>Sprite sheets and GIF are no longer supported</strong> – you must split your sprite sheet into individual frame images (sprites). A helper script may be provided separately. Also, GIF are nolonger supported, due to native cursor doesn't supports GIF (it will work but no animation will be played).</li>
                 <li><strong>Removed options</strong>: <span>size</span>, <span>scale</span>, <span>pixel</span>, <span>zindex</span>, <span>displayOnLoad</span>. Cursor size is now determined by the image itself.</li>
-                <li><strong>New options</strong>: <span>fallbackCursor</span>, <span>excludeSelectors</span> (global). Each cursor can now have its own <span>fallback</span>.</li>
+                <li><strong>New options</strong>: <code>fallbackCursor</code>, <code>excludeSelectors</code> (global), <code>combineAnimations</code>, and per‑cursor <code>fallback</code>.</li>
                 <li><strong>Default cursor is optional</strong> – you can omit it; elements without a matching cursor will use the system cursor.</li>
                 <li><strong>Animation timing</strong> now supports arrays for variable speed.</li>
             </ul>
