@@ -2,13 +2,31 @@
 [[简体中文]](#zh-cn)
 ## Current Version
 
-- ### `1.0.0`
+- ### `2.1.0`
 
-    - #### [Major Update] Variable-speed sprite sheet animation support
-    	- Previous versions of sprite sheet animation could not set different frame intervals. This meant that if an animation had a longer static state, the only option was to use a GIF image. However, GIFs are honestly only suitable for pixel-style cursors. Because GIF supports only fully transparent or fully opaque pixels, GIF cursors are forced to have hard edges, which significantly impacts the visual experience. On the other hand, if you insisted on using a sprite sheet animation, the file size of the sprite sheet would increase dramatically—the longer the pause in the animation, the larger the file size. This was certainly unacceptable for a cursor.
-    	- Now, `frames` and `duration` can be set as arrays. The lengths of the two arrays must be identical (i.e., both arrays must have the same number of parameters). They correspond one-to-one: each segment of frame count corresponds to a segment of duration. This allows for more flexible configuration of sprite sheet animations.
+    - #### [New Feature] Combine animations (`combineAnimations`)
+        - Added global option `combineAnimations` (default `false`). When enabled, AnimeCursor automatically looks for elements with the `data-ac-animation` attribute and merges the user-defined animation(s) with the cursor animation, allowing both to run simultaneously. This solves the issue where an element's own animation would override the cursor animation.
+        - Usage: set `combineAnimations: true` and add `data-ac-animation="yourAnimationString"` to the element.
+
+    - #### [Improvement] Default cursor is now optional
+        - It is no longer required to have a default cursor. If none is set, elements that do not match any custom cursor will use the system cursor, offering greater flexibility.
 
 ## History Version
+
+- ### `2.0.0`
+
+    - #### [Major Update] Native CSS cursor animation
+        - Completely refactored to use native CSS `cursor: url()` with keyframe animations, replacing the simulated cursor div. This improves performance and accuracy.
+    - #### [New Feature] Independent frame image detection
+        - Automatically detects numeric suffixes in filenames to generate subsequent frame URLs.
+    - #### [Removed] Deprecated options: `size`, `scale`, `pixel`, `displayOnLoad`, sprite sheet support.
+    - #### [Change] Default cursor is optional.
+    - #### [Change] Debug mode now shows a floating overlay.
+
+- ### `1.0.0`
+    - #### [Major Update] Variable-speed sprite sheet animation support
+        - Previous versions of sprite sheet animation could not set different frame intervals. This meant that if an animation had a longer static state, the only option was to use a GIF image. However, GIFs are honestly only suitable for pixel-style cursors. Because GIF supports only fully transparent or fully opaque pixels, GIF cursors are forced to have hard edges, which significantly impacts the visual experience. On the other hand, if you insisted on using a sprite sheet animation, the file size of the sprite sheet would increase dramatically—the longer the pause in the animation, the larger the file size. This was certainly unacceptable for a cursor.
+        - Now, `frames` and `duration` can be set as arrays. The lengths of the two arrays must be identical (i.e., both arrays must have the same number of parameters). They correspond one-to-one: each segment of frame count corresponds to a segment of duration. This allows for more flexible configuration of sprite sheet animations.
 
 - ### `0.3.1`
 
@@ -59,13 +77,32 @@
 
 ## 当前版本
 
-- ### `1.0.0`
+- ### `2.1.0`
 
-    - #### 【主要更新】变速精灵图动画支持
-    	- 之前版本的精灵图动画无法设置不同的帧间隔，这导致如果动画中有保持较久的静止状态的话，只能使用GIF图片，但是GIF图片说实话只适合像素风格的光标。因为GIF只有纯透明和纯不透明，这导致GIF光标只能有硬边缘，这是很影响视觉效果的。而如果强行要用精灵图动画的话，精灵图的体积就会大大增加，动画暂停时长越久，体积就越大，这对于一个光标来说肯定是无法接受的。
-    	- 现在， `frames` 和 `duration` 可以被设置为数组，二者数组长度必须相同（即两个数组得有一样多的参数），二者一一对应，每一段帧数对应一段持续时间，这样就可以更灵活的设置精灵图动画。
+    - #### 【新增功能】组合动画支持（combineAnimations）
+        - 新增全局选项 `combineAnimations`（默认 `false`）。启用后，AnimeCursor 会自动查找带有 `data-ac-animation` 属性的元素，将该元素的用户自定义动画与光标动画合并，使两者同时播放，解决元素自身动画覆盖光标动画的问题。
+        - 用法：设置 `combineAnimations: true`，并在元素上添加 `data-ac-animation="你的动画定义"`。
+
+    - #### 【优化】默认光标不再强制要求
+        - 现在可以完全不设置默认光标。未匹配任何自定义光标的元素将使用系统光标，使库更灵活。
 
 ## 历史版本
+
+- ### `2.0.0`
+
+    - #### 【重大更新】原生 CSS 光标动画
+        - 彻底重构，使用原生 CSS `cursor: url()` 配合关键帧动画，不再模拟光标元素。性能更优，定位更准。
+    - #### 【新增功能】独立帧图片自动识别
+        - 自动识别文件名中的数字后缀，生成后续帧 URL。
+    - #### 【移除项】弃用配置：`size`、`scale`、`pixel`、`displayOnLoad`、精灵图模式。
+    - #### 【改动】默认光标可选。
+    - #### 【改动】调试模式改为浮层显示。
+
+- ### `1.0.0`
+    - #### 【主要更新】变速精灵图动画支持
+        - 之前版本的精灵图动画无法设置不同的帧间隔，这导致如果动画中有保持较久的静止状态的话，只能使用GIF图片，但是GIF图片说实话只适合像素风格的光标。因为GIF只有纯透明和纯不透明，这导致GIF光标只能有硬边缘，这是很影响视觉效果的。而如果强行要用精灵图动画的话，精灵图的体积就会大大增加，动画暂停时长越久，体积就越大，这对于一个光标来说肯定是无法接受的。
+        - 现在， `frames` 和 `duration` 可以被设置为数组，二者数组长度必须相同（即两个数组得有一样多的参数），二者一一对应，每一段帧数对应一段持续时间，这样就可以更灵活的设置精灵图动画。
+
 
 - ### `0.3.1`
 
