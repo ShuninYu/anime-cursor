@@ -2,6 +2,15 @@
 [[简体中文]](#zh-cn)
 ## Current Version
 
+- ### `2.1.2`
+
+    - #### [Bug Fix] Static cursor now has a non-looping one-frame animation to prevent being overridden by default cursor animation
+        - Previously, static cursors (without `frames`/`duration`) could still inherit the default cursor's animation due to CSS cascade, causing visual glitches.
+        - Now, static cursors are given a one-frame animation that plays once and then stops (`forwards` fill mode), ensuring they correctly override the default cursor without causing continuous repaints.
+        - This approach eliminates the performance overhead of an infinite loop animation.
+
+## History Version
+
 - ### `2.1.1`
 
     - #### [Bug Fix] Improved `disable()` / `enable()` to avoid affecting other animations
@@ -9,8 +18,6 @@
         - Now, `disable()` removes AnimeCursor's injected style sheet and debug elements, restoring native cursors without touching any other animations.
         - `enable()` re-injects the style sheet and rebuilds the debug overlay, fully restoring AnimeCursor functionality.
         - This change makes the API safe to use in any context without side effects.
-
-## History Version
 
 - ### `2.1.0`
 
@@ -85,6 +92,14 @@
 
 ## 当前版本
 
+- ### `2.1.2`
+
+    - #### 【Bug修复】静态光标现具有一次性一帧动画，避免被默认光标动画覆盖且无性能损耗
+        - 之前当存在带有动画的默认光标时，静态光标（无 `frames`/`duration`）会因 CSS 层叠规则继承默认光标的动画，导致显示异常。
+        - 现在静态光标也生成一帧动画，但仅播放一次（`forwards` 模式），动画结束后光标保持在最后一帧，既保证了覆盖默认光标动画，又避免了无限循环带来的持续重绘开销。
+
+## 历史版本
+
 - ### `2.1.1`
 
     - #### 【Bug修复】优化 `disable()` / `enable()`，避免影响页面其他动画
@@ -92,8 +107,6 @@
         - 现在，`disable()` 直接移除 AnimeCursor 注入的样式表和调试元素，恢复原生光标，完全不触碰其他动画。
         - `enable()` 重新注入样式表并重建调试浮层，完整恢复 AnimeCursor 功能。
         - 这一改进使 API 在任何场景下都能安全使用，无副作用。
-
-## 历史版本
 
 - ### `2.1.0`
 
