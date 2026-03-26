@@ -2,6 +2,16 @@
 [[简体中文]](#zh-cn)
 ## Current Version
 
+- ### `2.1.1`
+
+    - #### [Bug Fix] Improved `disable()` / `enable()` to avoid affecting other animations
+        - Previously, `disable()` added a global CSS rule `body.animecursor-disabled * { cursor: auto !important; animation: none !important; }`, which would accidentally disable all animations on the page.
+        - Now, `disable()` removes AnimeCursor's injected style sheet and debug elements, restoring native cursors without touching any other animations.
+        - `enable()` re-injects the style sheet and rebuilds the debug overlay, fully restoring AnimeCursor functionality.
+        - This change makes the API safe to use in any context without side effects.
+
+## History Version
+
 - ### `2.1.0`
 
     - #### [New Feature] Combine animations (`combineAnimations`)
@@ -10,8 +20,6 @@
 
     - #### [Improvement] Default cursor is now optional
         - It is no longer required to have a default cursor. If none is set, elements that do not match any custom cursor will use the system cursor, offering greater flexibility.
-
-## History Version
 
 - ### `2.0.0`
 
@@ -77,6 +85,16 @@
 
 ## 当前版本
 
+- ### `2.1.1`
+
+    - #### 【Bug修复】优化 `disable()` / `enable()`，避免影响页面其他动画
+        - 之前版本中，`disable()` 会添加全局 CSS 规则 `body.animecursor-disabled * { cursor: auto !important; animation: none !important; }`，导致页面中所有动画都被意外禁用。
+        - 现在，`disable()` 直接移除 AnimeCursor 注入的样式表和调试元素，恢复原生光标，完全不触碰其他动画。
+        - `enable()` 重新注入样式表并重建调试浮层，完整恢复 AnimeCursor 功能。
+        - 这一改进使 API 在任何场景下都能安全使用，无副作用。
+
+## 历史版本
+
 - ### `2.1.0`
 
     - #### 【新增功能】组合动画支持（combineAnimations）
@@ -85,8 +103,6 @@
 
     - #### 【优化】默认光标不再强制要求
         - 现在可以完全不设置默认光标。未匹配任何自定义光标的元素将使用系统光标，使库更灵活。
-
-## 历史版本
 
 - ### `2.0.0`
 
