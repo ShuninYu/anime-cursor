@@ -247,6 +247,7 @@ export default class AnimeCursor {
     // 核心注入样式
     _injectStyles() {
         if (this.disabled) return;
+        this.combinedRules.clear();   // 清空旧组合规则
 
         const style = document.createElement('style');
         style.id = 'animecursor-styles';
@@ -492,15 +493,33 @@ export default class AnimeCursor {
 
     disable() {
         if (this.disabled) return;
+        // 移除样式表
+        if (this.styleEl) {
+            this.styleEl.remove();
+            this.styleEl = null;
+        }
+        // 移除 debug 相关
+        if (this.debugEl) {
+            this.debugEl.remove();
+            this.debugEl = null;
+        }
+        if (this._onMouseMove) {
+            document.removeEventListener('mousemove', this._onMouseMove);
+            this._onMouseMove = null;
+        }
         this.disabled = true;
-        document.body.classList.add('animecursor-disabled');
         if (this.options.debug) console.log('[AnimeCursor] Disabled');
     }
 
     enable() {
         if (!this.disabled) return;
         this.disabled = false;
-        document.body.classList.remove('animecursor-disabled');
+        // 重新注入样式
+        this._injectStyles();
+        // 如果 debug 模式开启，重新初始化 debug
+        if (this.options.debug) {
+            this._initDebug();
+        }
         if (this.options.debug) console.log('[AnimeCursor] Enabled');
     }
 }
