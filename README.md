@@ -6,7 +6,7 @@
 
 
 
-[[简体中文]](#animecursorsc)
+[[简体中文]](#sc)
 
 ## [Visit the official website](https://shuninyu.github.io/anime-cursor/) for more informations
 
@@ -185,6 +185,7 @@ Because v2 uses native CSS `cursor` property and CSS animations, there is no Jav
 
 ---
 
+<span id="sc"></span>
 # AnimeCursor v2
 
 <div align="center">
