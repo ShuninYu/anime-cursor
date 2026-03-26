@@ -46,7 +46,7 @@ function docFolder(element) {
 
 // 插入文档导航栏
 function injectDocsPanel() {
-    const version = 'v1.0.0';
+    const version = 'v1';
     const docsPanel = document.querySelector('.docs-panel');
     const docPage = document.querySelector('.docs-page');
     if (!docsPanel || !docPage) return;
