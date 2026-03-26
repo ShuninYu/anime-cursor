@@ -1,5 +1,5 @@
 // AnimeCursor by github@ShuninYu
-// v2.1.0
+// v2.1.2
 
 let _instance = null;
 
@@ -247,7 +247,7 @@ export default class AnimeCursor {
     // 核心注入样式
     _injectStyles() {
         if (this.disabled) return;
-        this.combinedRules.clear();   // 清空旧组合规则
+        this.combinedRules.clear();
 
         const style = document.createElement('style');
         style.id = 'animecursor-styles';
@@ -292,7 +292,14 @@ export default class AnimeCursor {
                 cursorAnimation = animation;
                 css += `${className} { cursor: url("${frameUrls[0]}") ${offset[0]} ${offset[1]}, ${fallback}; animation: ${animation}; }\n`;
             } else {
-                css += `${className} { cursor: url("${frameUrls[0]}") ${offset[0]} ${offset[1]}, ${fallback}; }\n`;
+                // 静态光标：生成一帧动画，只播放一次，结束后保持最后一帧
+                const staticKeyframeName = `ac_anim_${name}_static`;
+                css += `@keyframes ${staticKeyframeName} {\n`;
+                css += `  0%, 100% { cursor: url("${frameUrls[0]}") ${offset[0]} ${offset[1]}, ${fallback}; }\n`;
+                css += `}\n`;
+                const staticAnimation = `${staticKeyframeName} 0.001s forwards steps(1)`;
+                cursorAnimation = staticAnimation;
+                css += `${className} { cursor: url("${frameUrls[0]}") ${offset[0]} ${offset[1]}, ${fallback}; animation: ${staticAnimation}; }\n`;
             }
 
             this.cursorAnimationStrings[name] = cursorAnimation;
@@ -309,21 +316,19 @@ export default class AnimeCursor {
             css += `${this.options.excludeSelectors} { cursor: text !important; animation: none !important; }\n`;
         }
 
-        // 自动组合动画（新功能）
+        // 自动组合动画
         if (this.options.combineAnimations) {
             const elements = document.querySelectorAll('[data-ac-animation]');
             for (const el of elements) {
                 const userAnim = el.getAttribute('data-ac-animation');
                 if (!userAnim) continue;
 
-                // 确定该元素应该使用哪个光标
                 let cursorName = this._getCursorTypeForElement(el);
                 if (!cursorName) continue;
 
                 const cursorAnim = this.cursorAnimationStrings[cursorName];
                 if (!cursorAnim) continue;
 
-                // 生成唯一标识
                 const key = `${cursorName}:${userAnim}`;
                 if (!this.combinedRules.has(key)) {
                     const hash = this._simpleHash(key);
@@ -397,12 +402,17 @@ export default class AnimeCursor {
         const offset = cfg.offset || [0, 0];
         const fallback = cfg.fallback || this.options.fallbackCursor;
         let css = `cursor: url("${frameUrls[0]}") ${offset[0]} ${offset[1]}, ${fallback};`;
+
         const hasAnimation = cfg.frames !== undefined && cfg.duration !== undefined &&
             ((Array.isArray(cfg.frames) && Array.isArray(cfg.duration)) ||
                 (typeof cfg.frames === 'number' && typeof cfg.duration === 'number'));
+
         if (hasAnimation && frameUrls.length > 1) {
             const totalDuration = Array.isArray(cfg.duration) ? cfg.duration.reduce((a, b) => a + b, 0) : cfg.duration;
             css += ` animation: ac_anim_${name} ${totalDuration}s steps(1) infinite ${cfg.pingpong ? 'alternate' : ''};`;
+        } else {
+            // 静态光标：一帧动画，只播放一次，结束后保持
+            css += ` animation: ac_anim_${name}_static 0.001s forwards steps(1);`;
         }
         return css;
     }
