@@ -33,7 +33,7 @@ AnimeCursor has no dependencies on any frameworks, making it suitable for person
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/anime-cursor@v2.1.0/dist/anime-cursor.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/anime-cursor@v2.1.1/dist/anime-cursor.umd.min.js"></script>
 ```
 
 ### npm
@@ -218,7 +218,7 @@ AnimeCursor 无需依赖任何框架，适合个人网站、创意作品集以�
 ### CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/anime-cursor@v2.1.0/dist/anime-cursor.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/anime-cursor@v2.1.1/dist/anime-cursor.umd.min.js"></script>
 ```
 
 ### npm
