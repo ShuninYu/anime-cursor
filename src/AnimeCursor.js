@@ -1,5 +1,5 @@
 // AnimeCursor by github@ShuninYu
-// v2.1.2
+// v2.1.3
 
 let _instance = null;
 
@@ -51,16 +51,15 @@ export default class AnimeCursor {
             enableTouch: false,
             fallbackCursor: 'auto',
             excludeSelectors: 'input, textarea, [contenteditable]',
-            combineAnimations: false,     // 是否自动组合用户动画
+            combineAnimations: false,
             ...options
         };
 
         this.disabled = false;
         this.cursors = this.options.cursors || {};
-        this.cursorAnimationStrings = {};     // 存储每个光标类型的动画字符串
-        this.combinedRules = new Map();       // 存储已生成的组合类名
+        this.cursorAnimationStrings = {};
+        this.combinedRules = new Map();
 
-        // 检查是否应启用（触摸设备且未强制启用则禁用）
         if (!this.options.enableTouch && !this.isMouseLikeDevice()) {
             this.disabled = true;
             if (this.options.debug) {
@@ -71,6 +70,7 @@ export default class AnimeCursor {
 
         this.styleEl = null;
         this.debugEl = null;
+        this.crosshairEl = null;
         this._onMouseMove = null;
 
         this._validateOptions();
@@ -97,7 +97,6 @@ export default class AnimeCursor {
                 throw new Error(`[AnimeCursor] Cursor "${name}" missing required setting: image`);
             }
 
-            // 处理 frames 和 duration
             if (cfg.frames !== undefined && cfg.duration !== undefined) {
                 const framesType = typeof cfg.frames;
                 const durationType = typeof cfg.duration;
@@ -244,7 +243,6 @@ export default class AnimeCursor {
         }
     }
 
-    // 核心注入样式
     _injectStyles() {
         if (this.disabled) return;
         this.combinedRules.clear();
@@ -253,14 +251,12 @@ export default class AnimeCursor {
         style.id = 'animecursor-styles';
         let css = '';
 
-        // 如果有默认光标，生成全局规则
         if (this.defaultCursorName) {
             const defaultCfg = this.cursors[this.defaultCursorName];
             const defaultCursorDef = this._buildCursorCss(this.defaultCursorName, defaultCfg);
             css += `* { ${defaultCursorDef} }\n`;
         }
 
-        // 为每个光标生成独立的类和关键帧
         for (const [name, cfg] of Object.entries(this.cursors)) {
             const className = `.ac-cursor-${name}`;
             const offset = cfg.offset || [0, 0];
@@ -292,7 +288,6 @@ export default class AnimeCursor {
                 cursorAnimation = animation;
                 css += `${className} { cursor: url("${frameUrls[0]}") ${offset[0]} ${offset[1]}, ${fallback}; animation: ${animation}; }\n`;
             } else {
-                // 静态光标：生成一帧动画，只播放一次，结束后保持最后一帧
                 const staticKeyframeName = `ac_anim_${name}_static`;
                 css += `@keyframes ${staticKeyframeName} {\n`;
                 css += `  0%, 100% { cursor: url("${frameUrls[0]}") ${offset[0]} ${offset[1]}, ${fallback}; }\n`;
@@ -304,7 +299,6 @@ export default class AnimeCursor {
 
             this.cursorAnimationStrings[name] = cursorAnimation;
 
-            // 标签和 data-cursor 规则
             if (cfg.tags && cfg.tags.length) {
                 const selector = cfg.tags.join(', ');
                 css += `${selector} { ${this._buildCursorCss(name, cfg)} }\n`;
@@ -316,7 +310,6 @@ export default class AnimeCursor {
             css += `${this.options.excludeSelectors} { cursor: text !important; animation: none !important; }\n`;
         }
 
-        // 自动组合动画
         if (this.options.combineAnimations) {
             const elements = document.querySelectorAll('[data-ac-animation]');
             for (const el of elements) {
@@ -348,7 +341,6 @@ export default class AnimeCursor {
         this.styleEl = style;
     }
 
-    // 获取元素对应的光标类型（复用 debug 逻辑）
     _getCursorTypeForElement(el) {
         if (el.dataset.cursor && this.cursors[el.dataset.cursor]) {
             return el.dataset.cursor;
@@ -358,7 +350,7 @@ export default class AnimeCursor {
                 return name;
             }
         }
-        return this.defaultCursorName; // 可能为 null
+        return this.defaultCursorName;
     }
 
     _buildKeyframes(cfg, frameUrls) {
@@ -411,7 +403,6 @@ export default class AnimeCursor {
             const totalDuration = Array.isArray(cfg.duration) ? cfg.duration.reduce((a, b) => a + b, 0) : cfg.duration;
             css += ` animation: ac_anim_${name} ${totalDuration}s steps(1) infinite ${cfg.pingpong ? 'alternate' : ''};`;
         } else {
-            // 静态光标：一帧动画，只播放一次，结束后保持
             css += ` animation: ac_anim_${name}_static 0.001s forwards steps(1);`;
         }
         return css;
@@ -428,27 +419,82 @@ export default class AnimeCursor {
     }
 
     _initDebug() {
+        // 创建左上角信息浮层（现有 debug 面板）
         const debugDiv = document.createElement('div');
         debugDiv.className = 'animecursor-debug';
         debugDiv.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      background: rgba(0,0,0,0.7);
-      color: #0f0;
-      padding: 4px 8px;
-      font-family: monospace;
-      font-size: 12px;
-      z-index: 2147483647;
-      pointer-events: none;
-      white-space: nowrap;
-    `;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0,0,0,0.7);
+            color: #0f0;
+            padding: 4px 8px;
+            font-family: monospace;
+            font-size: 12px;
+            z-index: 2147483647;
+            pointer-events: auto;
+            white-space: nowrap;
+            transition: opacity 0.2s ease;
+        `;
+        // hover 时半透明，便于查看被遮挡内容
+        debugDiv.addEventListener('mouseenter', () => { debugDiv.style.opacity = '0.5'; });
+        debugDiv.addEventListener('mouseleave', () => { debugDiv.style.opacity = '1'; });
         document.body.appendChild(debugDiv);
         this.debugEl = debugDiv;
 
+        // 创建跟随鼠标的十字辅助线层（横竖双色线）
+        const crosshair = document.createElement('div');
+        crosshair.className = 'animecursor-crosshair';
+        crosshair.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+            z-index: 2147483646;
+        `;
+        // 横线
+        const hLine = document.createElement('div');
+        hLine.className = 'ac-crosshair-h';
+        hLine.style.cssText = `
+            position: fixed;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: rgba(255,0,0,0.6);
+            pointer-events: none;
+            transform: translateY(-0.5px);
+        `;
+        // 竖线
+        const vLine = document.createElement('div');
+        vLine.className = 'ac-crosshair-v';
+        vLine.style.cssText = `
+            position: fixed;
+            top: 0;
+            width: 1px;
+            height: 100%;
+            background-color: rgba(255,0,0,0.6);
+            pointer-events: none;
+            transform: translateX(-0.5px);
+        `;
+        crosshair.appendChild(hLine);
+        crosshair.appendChild(vLine);
+        document.body.appendChild(crosshair);
+        this.crosshairEl = { container: crosshair, hLine, vLine };
+
         let lastCursor = '';
         this._onMouseMove = (e) => {
-            const target = document.elementFromPoint(e.clientX, e.clientY);
+            const x = e.clientX;
+            const y = e.clientY;
+
+            // 更新十字线位置
+            if (this.crosshairEl) {
+                this.crosshairEl.hLine.style.top = y + 'px';
+                this.crosshairEl.vLine.style.left = x + 'px';
+            }
+
+            const target = document.elementFromPoint(x, y);
             let cursorType = null;
             if (target) {
                 if (target.dataset.cursor && this.cursors[target.dataset.cursor]) {
@@ -469,9 +515,9 @@ export default class AnimeCursor {
             }
             if (cursorType !== lastCursor) {
                 lastCursor = cursorType;
-                debugDiv.textContent = `🎯 ${cursorType} @ (${e.clientX}, ${e.clientY})`;
+                debugDiv.textContent = `${cursorType} @ (${x}, ${y})`;
             } else {
-                debugDiv.textContent = `🎯 ${cursorType} @ (${e.clientX}, ${e.clientY})`;
+                debugDiv.textContent = `${cursorType} @ (${x}, ${y})`;
             }
         };
         document.addEventListener('mousemove', this._onMouseMove);
@@ -484,6 +530,7 @@ export default class AnimeCursor {
         this._injectStyles();
         if (this.options.debug) {
             if (this.debugEl) this.debugEl.remove();
+            if (this.crosshairEl) this.crosshairEl.container.remove();
             this._initDebug();
         }
         console.log('[AnimeCursor] Refresh complete');
@@ -493,6 +540,7 @@ export default class AnimeCursor {
         if (this.disabled) return;
         if (this.styleEl) this.styleEl.remove();
         if (this.debugEl) this.debugEl.remove();
+        if (this.crosshairEl) this.crosshairEl.container.remove();
         if (this._onMouseMove) {
             document.removeEventListener('mousemove', this._onMouseMove);
         }
@@ -503,15 +551,17 @@ export default class AnimeCursor {
 
     disable() {
         if (this.disabled) return;
-        // 移除样式表
         if (this.styleEl) {
             this.styleEl.remove();
             this.styleEl = null;
         }
-        // 移除 debug 相关
         if (this.debugEl) {
             this.debugEl.remove();
             this.debugEl = null;
+        }
+        if (this.crosshairEl) {
+            this.crosshairEl.container.remove();
+            this.crosshairEl = null;
         }
         if (this._onMouseMove) {
             document.removeEventListener('mousemove', this._onMouseMove);
@@ -524,9 +574,7 @@ export default class AnimeCursor {
     enable() {
         if (!this.disabled) return;
         this.disabled = false;
-        // 重新注入样式
         this._injectStyles();
-        // 如果 debug 模式开启，重新初始化 debug
         if (this.options.debug) {
             this._initDebug();
         }
