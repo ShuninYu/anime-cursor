@@ -88,7 +88,7 @@ function injectDocsPanel() {
                 <a class="docs-panel-list-item" href="${(docType === 'api')?'#disable-enable':'api#disable-enable'}">disable / enable</a>
                 <a class="docs-panel-list-item" href="${(docType === 'api')?'#destroy':'api#destroy'}">destroy</a>
             </div>
-            <div class="docs-panel-list-folder"><p onclick="jumpTo('lcbp')" data-cursor="pointer">LC & BP</p><!-- 生命周期与最佳实践 -->
+            <div class="docs-panel-list-folder"><p onclick="jumpTo('lcbp')" data-cursor="pointer">${(docsPanel.classList.contains('zh-CN'))?'生命周期与最佳实践':'LC & BP'}</p>
                 <a class="docs-panel-list-item" href="${(docType === 'lcbp')?'#dom':'lcbp#dom'}">${(docsPanel.classList.contains('zh-CN'))?'DOM 注入时机':'DOM Injection Timing'}</a>
                 <a class="docs-panel-list-item" href="${(docType === 'lcbp')?'#markdown':'lcbp#markdown'}">${(docsPanel.classList.contains('zh-CN'))?'配合 Markdown / SPA 使用':'Working With Markdown / SPA'}</a>
             </div>
