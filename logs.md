@@ -2,14 +2,21 @@
 [[简体中文]](#zh-cn)
 ## Current Version
 
+- ### `2.1.3`
+
+    - #### [New Feature] Enhanced debug mode: crosshair helper + hover transparent info panel
+        - Added a mouse‑following crosshair (horizontal and vertical red lines) in debug mode, helping users visually calibrate cursor hot spot offset.
+        - The top‑left debug information panel now becomes semi‑transparent when hovered, allowing users to see the content underneath.
+        - The crosshair is properly created or cleaned up during `disable`/`enable`/`refresh`/`destroy`, fully compatible with existing debug behavior.
+
+## History Version
+
 - ### `2.1.2`
 
     - #### [Bug Fix] Static cursor now has a non-looping one-frame animation to prevent being overridden by default cursor animation
         - Previously, static cursors (without `frames`/`duration`) could still inherit the default cursor's animation due to CSS cascade, causing visual glitches.
         - Now, static cursors are given a one-frame animation that plays once and then stops (`forwards` fill mode), ensuring they correctly override the default cursor without causing continuous repaints.
         - This approach eliminates the performance overhead of an infinite loop animation.
-
-## History Version
 
 - ### `2.1.1`
 
@@ -92,13 +99,20 @@
 
 ## 当前版本
 
+- ### `2.1.3`
+
+    - #### 【新增功能】Debug 模式增强：跟随鼠标十字辅助线 + 信息面板 hover 半透明
+        - 为 debug 模式添加了跟随鼠标移动的十字辅助线（横竖双色红线），方便用户视觉识别光标热点偏移。
+        - 左上角 debug 信息面板现在在鼠标悬停时会变为半透明，便于查看被遮挡的页面内容，移开鼠标后恢复不透明。
+        - 十字辅助线在 disable/enable/refresh/destroy 时会被正确创建或清理，与原有 debug 行为完全兼容。
+
+## 历史版本
+
 - ### `2.1.2`
 
     - #### 【Bug修复】静态光标现具有一次性一帧动画，避免被默认光标动画覆盖且无性能损耗
         - 之前当存在带有动画的默认光标时，静态光标（无 `frames`/`duration`）会因 CSS 层叠规则继承默认光标的动画，导致显示异常。
         - 现在静态光标也生成一帧动画，但仅播放一次（`forwards` 模式），动画结束后光标保持在最后一帧，既保证了覆盖默认光标动画，又避免了无限循环带来的持续重绘开销。
-
-## 历史版本
 
 - ### `2.1.1`
 
