@@ -12,6 +12,8 @@
 
 ## [Read documents](https://shuninyu.github.io/anime-cursor/docs) to get started with AnimeCursor
 
+## [Here](https://github.com/users/ShuninYu/projects/1/views/1) to check the development status of AnimeCursor
+
 AnimeCursor is a lightweight JavaScript library for frame-by-frame animated custom cursors.
 
 AnimeCursor has no dependencies on any frameworks, making it suitable for personal websites, creative portfolios, and experimental UI projects.
