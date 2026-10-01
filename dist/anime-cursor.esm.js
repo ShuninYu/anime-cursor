@@ -1,5 +1,5 @@
 // AnimeCursor by github@ShuninYu
-// v2.1.3
+// v2.2.0
 
 let _instance = null;
 
@@ -284,7 +284,7 @@ class AnimeCursor {
                 css += keyframesCss;
 
                 const totalDuration = Array.isArray(cfg.duration) ? cfg.duration.reduce((a, b) => a + b, 0) : cfg.duration;
-                const animation = `${keyframeName} ${totalDuration}s steps(1) infinite ${cfg.pingpong ? 'alternate' : ''}`;
+                const animation = this._buildAnimation(keyframeName, totalDuration, cfg.pingpong, cfg.once);
                 cursorAnimation = animation;
                 css += `${className} { cursor: url("${frameUrls[0]}") ${offset[0]} ${offset[1]}, ${fallback}; animation: ${animation}; }\n`;
             } else {
@@ -389,6 +389,16 @@ class AnimeCursor {
         return keyframes;
     }
 
+    _buildAnimation(name, duration, pingpong, once) {
+        // 乒乓模式需要两次迭代，才能从最后一帧反向回到第一帧。
+        const iterationCount = once ? (pingpong ? 2 : 1) : 'infinite';
+        const direction = pingpong ? 'alternate' : '';
+        const fillMode = once ? 'forwards' : '';
+        return [name, `${duration}s`, 'steps(1)', iterationCount, direction, fillMode]
+            .filter(Boolean)
+            .join(' ');
+    }
+
     _buildCursorCss(name, cfg) {
         const frameUrls = this._getFrameUrls(cfg);
         const offset = cfg.offset || [0, 0];
@@ -401,7 +411,7 @@ class AnimeCursor {
 
         if (hasAnimation && frameUrls.length > 1) {
             const totalDuration = Array.isArray(cfg.duration) ? cfg.duration.reduce((a, b) => a + b, 0) : cfg.duration;
-            css += ` animation: ac_anim_${name} ${totalDuration}s steps(1) infinite ${cfg.pingpong ? 'alternate' : ''};`;
+            css += ` animation: ${this._buildAnimation(`ac_anim_${name}`, totalDuration, cfg.pingpong, cfg.once)};`;
         } else {
             css += ` animation: ac_anim_${name}_static 0.001s forwards steps(1);`;
         }

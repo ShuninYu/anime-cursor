@@ -1,0 +1,1166 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>AnimeCursor Animation Lab</title>
+    <script src="data:text/javascript;base64,IWZ1bmN0aW9uKGUsdCl7Im9iamVjdCI9PXR5cGVvZiBleHBvcnRzJiYidW5kZWZpbmVkIiE9dHlwZW9mIG1vZHVsZT9tb2R1bGUuZXhwb3J0cz10KCk6ImZ1bmN0aW9uIj09dHlwZW9mIGRlZmluZSYmZGVmaW5lLmFtZD9kZWZpbmUodCk6KGU9InVuZGVmaW5lZCIhPXR5cGVvZiBnbG9iYWxUaGlzP2dsb2JhbFRoaXM6ZXx8c2VsZikuQW5pbWVDdXJzb3I9dCgpfSh0aGlzLGZ1bmN0aW9uKCl7InVzZSBzdHJpY3QiO2xldCBlPW51bGw7cmV0dXJuIGNsYXNze3N0YXRpYyBnZXQgaW5zdGFuY2UoKXtyZXR1cm4gZX1zdGF0aWMgZGVzdHJveSgpe3JldHVybiEhZSYmKGUuZGVzdHJveSgpLCEwKX1zdGF0aWMgcmVmcmVzaCgpe3JldHVybiEhZSYmKGUucmVmcmVzaCgpLCEwKX1zdGF0aWMgZGlzYWJsZSgpe3JldHVybiEhZSYmKGUuZGlzYWJsZSgpLCEwKX1zdGF0aWMgZW5hYmxlKCl7cmV0dXJuISFlJiYoZS5lbmFibGUoKSwhMCl9Y29uc3RydWN0b3IodD17fSl7cmV0dXJuIGU/KGNvbnNvbGUud2FybigiW0FuaW1lQ3Vyc29yXSBJbnN0YW5jZSBhbHJlYWR5IGV4aXN0cywgcmV0dXJuaW5nIGV4aXN0aW5nIG9uZSIpLGUpOih0aGlzLm9wdGlvbnM9e2RlYnVnOiExLGVuYWJsZVRvdWNoOiExLGZhbGxiYWNrQ3Vyc29yOiJhdXRvIixleGNsdWRlU2VsZWN0b3JzOiJpbnB1dCwgdGV4dGFyZWEsIFtjb250ZW50ZWRpdGFibGVdIixjb21iaW5lQW5pbWF0aW9uczohMSwuLi50fSx0aGlzLmRpc2FibGVkPSExLHRoaXMuY3Vyc29ycz10aGlzLm9wdGlvbnMuY3Vyc29yc3x8e30sdGhpcy5jdXJzb3JBbmltYXRpb25TdHJpbmdzPXt9LHRoaXMuY29tYmluZWRSdWxlcz1uZXcgTWFwLHRoaXMub3B0aW9ucy5lbmFibGVUb3VjaHx8dGhpcy5pc01vdXNlTGlrZURldmljZSgpPyh0aGlzLnN0eWxlRWw9bnVsbCx0aGlzLmRlYnVnRWw9bnVsbCx0aGlzLmNyb3NzaGFpckVsPW51bGwsdGhpcy5fb25Nb3VzZU1vdmU9bnVsbCx0aGlzLl92YWxpZGF0ZU9wdGlvbnMoKSx0aGlzLl9wcmVsb2FkSW1hZ2VzKCksdGhpcy5fY2hlY2tEb21Mb2FkKCksdm9pZChlPXRoaXMpKToodGhpcy5kaXNhYmxlZD0hMCx2b2lkKHRoaXMub3B0aW9ucy5kZWJ1ZyYmY29uc29sZS53YXJuKCJbQW5pbWVDdXJzb3JdIFRvdWNoIGRldmljZSBkZXRlY3RlZCwgY3Vyc29yIGFuaW1hdGlvbnMgZGlzYWJsZWQiKSkpKX1pc01vdXNlTGlrZURldmljZSgpe3JldHVybiB3aW5kb3cubWF0Y2hNZWRpYSgiKHBvaW50ZXI6IGZpbmUpIikubWF0Y2hlc31fdmFsaWRhdGVPcHRpb25zKCl7aWYodGhpcy5kaXNhYmxlZClyZXR1cm47aWYoIXRoaXMuY3Vyc29yc3x8MD09PU9iamVjdC5rZXlzKHRoaXMuY3Vyc29ycykubGVuZ3RoKXRocm93IG5ldyBFcnJvcigiW0FuaW1lQ3Vyc29yXSBBdCBsZWFzdCBvbmUgY3Vyc29yIG11c3QgYmUgZGVmaW5lZCIpO2xldCBlPSExO2Zvcihjb25zdFt0LHNdb2YgT2JqZWN0LmVudHJpZXModGhpcy5jdXJzb3JzKSl7aWYoIXMuaW1hZ2UpdGhyb3cgbmV3IEVycm9yKGBbQW5pbWVDdXJzb3JdIEN1cnNvciAiJHt0fSIgbWlzc2luZyByZXF1aXJlZCBzZXR0aW5nOiBpbWFnZWApO2lmKHZvaWQgMCE9PXMuZnJhbWVzJiZ2b2lkIDAhPT1zLmR1cmF0aW9uKXtpZih0eXBlb2Ygcy5mcmFtZXMhPT10eXBlb2Ygcy5kdXJhdGlvbiljb25zb2xlLndhcm4oYFtBbmltZUN1cnNvcl0gQ3Vyc29yICIke3R9IiBoYXMgbWlzbWF0Y2hlZCB0eXBlcyBmb3IgZnJhbWVzIGFuZCBkdXJhdGlvbiwgdHJlYXRpbmcgYXMgc3RhdGljIGN1cnNvcmApLGRlbGV0ZSBzLmZyYW1lcyxkZWxldGUgcy5kdXJhdGlvbjtlbHNlIGlmKEFycmF5LmlzQXJyYXkocy5mcmFtZXMpJiZBcnJheS5pc0FycmF5KHMuZHVyYXRpb24pKWlmKHMuZnJhbWVzLmxlbmd0aCE9PXMuZHVyYXRpb24ubGVuZ3RoKWNvbnNvbGUud2FybihgW0FuaW1lQ3Vyc29yXSBDdXJzb3IgIiR7dH0iIGZyYW1lcyBhbmQgZHVyYXRpb24gYXJyYXlzIGhhdmUgZGlmZmVyZW50IGxlbmd0aHMsIHRyZWF0aW5nIGFzIHN0YXRpYyBjdXJzb3JgKSxkZWxldGUgcy5mcmFtZXMsZGVsZXRlIHMuZHVyYXRpb247ZWxzZXtmb3IobGV0IGUgb2Ygcy5mcmFtZXMpaWYoIU51bWJlci5pc0ludGVnZXIoZSl8fGU8PTApe2NvbnNvbGUud2FybihgW0FuaW1lQ3Vyc29yXSBDdXJzb3IgIiR7dH0iIGZyYW1lcyBhcnJheSBjb250YWlucyBpbnZhbGlkIHZhbHVlLCB0cmVhdGluZyBhcyBzdGF0aWMgY3Vyc29yYCksZGVsZXRlIHMuZnJhbWVzLGRlbGV0ZSBzLmR1cmF0aW9uO2JyZWFrfWZvcihsZXQgZSBvZiBzLmR1cmF0aW9uKWlmKCJudW1iZXIiIT10eXBlb2YgZXx8ZTw9MCl7Y29uc29sZS53YXJuKGBbQW5pbWVDdXJzb3JdIEN1cnNvciAiJHt0fSIgZHVyYXRpb24gYXJyYXkgY29udGFpbnMgaW52YWxpZCB2YWx1ZSwgdHJlYXRpbmcgYXMgc3RhdGljIGN1cnNvcmApLGRlbGV0ZSBzLmZyYW1lcyxkZWxldGUgcy5kdXJhdGlvbjticmVha319ZWxzZSJudW1iZXIiPT10eXBlb2Ygcy5mcmFtZXMmJiJudW1iZXIiPT10eXBlb2Ygcy5kdXJhdGlvbj8ocy5mcmFtZXM8PTB8fHMuZHVyYXRpb248PTApJiYoY29uc29sZS53YXJuKGBbQW5pbWVDdXJzb3JdIEN1cnNvciAiJHt0fSIgZnJhbWVzIG9yIGR1cmF0aW9uIDw9IDAsIHRyZWF0aW5nIGFzIHN0YXRpYyBjdXJzb3JgKSxkZWxldGUgcy5mcmFtZXMsZGVsZXRlIHMuZHVyYXRpb24pOihjb25zb2xlLndhcm4oYFtBbmltZUN1cnNvcl0gQ3Vyc29yICIke3R9IiBmcmFtZXMgYW5kIGR1cmF0aW9uIG11c3QgYmUgYm90aCBudW1iZXJzIG9yIGJvdGggYXJyYXlzLCB0cmVhdGluZyBhcyBzdGF0aWMgY3Vyc29yYCksZGVsZXRlIHMuZnJhbWVzLGRlbGV0ZSBzLmR1cmF0aW9uKX1lbHNlIHZvaWQgMD09PXMuZnJhbWVzJiZ2b2lkIDA9PT1zLmR1cmF0aW9ufHwoY29uc29sZS53YXJuKGBbQW5pbWVDdXJzb3JdIEN1cnNvciAiJHt0fSIgaGFzIG9ubHkgZnJhbWVzIG9yIGR1cmF0aW9uIGRlZmluZWQsIHRyZWF0aW5nIGFzIHN0YXRpYyBjdXJzb3JgKSxkZWxldGUgcy5mcmFtZXMsZGVsZXRlIHMuZHVyYXRpb24pO2lmKHMudGFncyYmIUFycmF5LmlzQXJyYXkocy50YWdzKSl0aHJvdyBuZXcgRXJyb3IoYFtBbmltZUN1cnNvcl0gQ3Vyc29yICIke3R9IiB0YWdzIG11c3QgYmUgYW4gYXJyYXlgKTtpZihzLmRlZmF1bHQpe2lmKGUpdGhyb3cgbmV3IEVycm9yKCJbQW5pbWVDdXJzb3JdIE9ubHkgb25lIGRlZmF1bHQgY3Vyc29yIGFsbG93ZWQiKTtlPSEwfWlmKHMub2Zmc2V0JiYoIUFycmF5LmlzQXJyYXkocy5vZmZzZXQpfHwyIT09cy5vZmZzZXQubGVuZ3RoKSl0aHJvdyBuZXcgRXJyb3IoYFtBbmltZUN1cnNvcl0gQ3Vyc29yICIke3R9IiBvZmZzZXQgbXVzdCBiZSBbeCwgeV0gYXJyYXlgKX10aGlzLmRlZmF1bHRDdXJzb3JOYW1lPWU/T2JqZWN0LmtleXModGhpcy5jdXJzb3JzKS5maW5kKGU9PnRoaXMuY3Vyc29yc1tlXS5kZWZhdWx0KTpudWxsfV9wcmVsb2FkSW1hZ2VzKCl7Y29uc3QgZT1uZXcgU2V0O2Zvcihjb25zdCB0IG9mIE9iamVjdC52YWx1ZXModGhpcy5jdXJzb3JzKSl7dGhpcy5fZ2V0RnJhbWVVcmxzKHQpLmZvckVhY2godD0+ZS5hZGQodCkpfWUuZm9yRWFjaChlPT57Y29uc3QgdD1kb2N1bWVudC5jcmVhdGVFbGVtZW50KCJsaW5rIik7dC5yZWw9InByZWxvYWQiLHQuYXM9ImltYWdlIix0LmhyZWY9ZSxlLnN0YXJ0c1dpdGgoImh0dHAiKSYmIWUuc3RhcnRzV2l0aCh3aW5kb3cubG9jYXRpb24ub3JpZ2luKSYmKHQuY3Jvc3NPcmlnaW49ImFub255bW91cyIpLGRvY3VtZW50LmhlYWQuYXBwZW5kQ2hpbGQodCl9KSx0aGlzLm9wdGlvbnMuZGVidWcmJmUuc2l6ZSYmY29uc29sZS5pbmZvKGBbQW5pbWVDdXJzb3JdIFByZWxvYWRlZCAke2Uuc2l6ZX0gY3Vyc29yIGltYWdlc2ApfV9nZXRGcmFtZVVybHMoZSl7bGV0IHQ9MTt2b2lkIDAhPT1lLmZyYW1lcyYmKEFycmF5LmlzQXJyYXkoZS5mcmFtZXMpP3Q9ZS5mcmFtZXMucmVkdWNlKChlLHQpPT5lK3QsMCk6Im51bWJlciI9PXR5cGVvZiBlLmZyYW1lcyYmKHQ9ZS5mcmFtZXMpKTtjb25zdHtpbWFnZTpzfT1lO2lmKDE9PT10KXJldHVybltzXTtjb25zdHtwcmVmaXg6cixzdWZmaXg6byxzdGFydE51bTpuLG51bUZvcm1hdDppLGV4dDphfT10aGlzLl9wYXJzZUltYWdlUGF0dGVybihzKSx1PVtdO2ZvcihsZXQgZT0wO2U8dDtlKyspe2NvbnN0IHQ9bitlLHM9YCR7cn0ke2k/dGhpcy5fZm9ybWF0TnVtYmVyKHQsaSk6dH0ke299JHthfWA7dS5wdXNoKHMpfXJldHVybiB1fV9wYXJzZUltYWdlUGF0dGVybihlKXtjb25zdCB0PWUubWF0Y2goL1wuW14uXSskLykscz10P3RbMF06IiIscj1lLnNsaWNlKDAsLXMubGVuZ3RoKSxvPXIubWF0Y2goLyhcZCspKD8hLipcZCkvKTtpZighbylyZXR1cm57cHJlZml4OnIrIl8iLHN1ZmZpeDoiIixzdGFydE51bToxLG51bUZvcm1hdDpudWxsLGV4dDpzfTtjb25zdCBuPW9bMF0saT1wYXJzZUludChuLDEwKSxhPW4ubGVuZ3RoO3JldHVybntwcmVmaXg6ci5zbGljZSgwLG8uaW5kZXgpLHN1ZmZpeDpyLnNsaWNlKG8uaW5kZXgrbi5sZW5ndGgpLHN0YXJ0TnVtOmksbnVtRm9ybWF0OmEsZXh0OnN9fV9mb3JtYXROdW1iZXIoZSx0KXtyZXR1cm4gU3RyaW5nKGUpLnBhZFN0YXJ0KHQsIjAiKX1fY2hlY2tEb21Mb2FkKCl7Y29uc3QgZT0oKT0+e3RoaXMuX2luamVjdFN0eWxlcygpLHRoaXMub3B0aW9ucy5kZWJ1ZyYmdGhpcy5faW5pdERlYnVnKCksY29uc29sZS5sb2coIltBbmltZUN1cnNvcl0gSW5pdGlhbGl6YXRpb24gY29tcGxldGUiKX07ImxvYWRpbmciPT09ZG9jdW1lbnQucmVhZHlTdGF0ZT9kb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCJET01Db250ZW50TG9hZGVkIixlKTplKCl9X2luamVjdFN0eWxlcygpe2lmKHRoaXMuZGlzYWJsZWQpcmV0dXJuO3RoaXMuY29tYmluZWRSdWxlcy5jbGVhcigpO2NvbnN0IGU9ZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgic3R5bGUiKTtlLmlkPSJhbmltZWN1cnNvci1zdHlsZXMiO2xldCB0PSIiO2lmKHRoaXMuZGVmYXVsdEN1cnNvck5hbWUpe2NvbnN0IGU9dGhpcy5jdXJzb3JzW3RoaXMuZGVmYXVsdEN1cnNvck5hbWVdO3QrPWAqIHsgJHt0aGlzLl9idWlsZEN1cnNvckNzcyh0aGlzLmRlZmF1bHRDdXJzb3JOYW1lLGUpfSB9XG5gfWZvcihjb25zdFtlLHNdb2YgT2JqZWN0LmVudHJpZXModGhpcy5jdXJzb3JzKSl7Y29uc3Qgcj1gLmFjLWN1cnNvci0ke2V9YCxvPXMub2Zmc2V0fHxbMCwwXSxuPXMuZmFsbGJhY2t8fHRoaXMub3B0aW9ucy5mYWxsYmFja0N1cnNvcixpPXRoaXMuX2dldEZyYW1lVXJscyhzKSxhPWkubGVuZ3RoO2xldCB1PSIiO2lmKHZvaWQgMCE9PXMuZnJhbWVzJiZ2b2lkIDAhPT1zLmR1cmF0aW9uJiYoQXJyYXkuaXNBcnJheShzLmZyYW1lcykmJkFycmF5LmlzQXJyYXkocy5kdXJhdGlvbil8fCJudW1iZXIiPT10eXBlb2Ygcy5mcmFtZXMmJiJudW1iZXIiPT10eXBlb2Ygcy5kdXJhdGlvbikmJmE+MSl7Y29uc3QgYT1gYWNfYW5pbV8ke2V9YDtsZXQgbD1gQGtleWZyYW1lcyAke2F9IHtcbmA7Y29uc3QgYz10aGlzLl9idWlsZEtleWZyYW1lcyhzLGkpO2Zvcihjb25zdCBlIG9mIGMpe2xldCB0PSgxMDAqZS5wZXJjZW50KS50b0ZpeGVkKDUpOzE9PT1lLnBlcmNlbnQmJih0PSIxMDAiKTtsKz1gICAke3R9JSB7ICR7YGN1cnNvcjogdXJsKCIke2UudXJsfSIpICR7b1swXX0gJHtvWzFdfSwgJHtufTtgfSB9XG5gfWwrPSJ9XG4iLHQrPWw7Y29uc3QgZD1BcnJheS5pc0FycmF5KHMuZHVyYXRpb24pP3MuZHVyYXRpb24ucmVkdWNlKChlLHQpPT5lK3QsMCk6cy5kdXJhdGlvbixtPXRoaXMuX2J1aWxkQW5pbWF0aW9uKGEsZCxzLnBpbmdwb25nLHMub25jZSk7dT1tLHQrPWAke3J9IHsgY3Vyc29yOiB1cmwoIiR7aVswXX0iKSAke29bMF19ICR7b1sxXX0sICR7bn07IGFuaW1hdGlvbjogJHttfTsgfVxuYH1lbHNle2NvbnN0IHM9YGFjX2FuaW1fJHtlfV9zdGF0aWNgO3QrPWBAa2V5ZnJhbWVzICR7c30ge1xuYCx0Kz1gICAwJSwgMTAwJSB7IGN1cnNvcjogdXJsKCIke2lbMF19IikgJHtvWzBdfSAke29bMV19LCAke259OyB9XG5gLHQrPSJ9XG4iO2NvbnN0IGE9YCR7c30gMC4wMDFzIGZvcndhcmRzIHN0ZXBzKDEpYDt1PWEsdCs9YCR7cn0geyBjdXJzb3I6IHVybCgiJHtpWzBdfSIpICR7b1swXX0gJHtvWzFdfSwgJHtufTsgYW5pbWF0aW9uOiAke2F9OyB9XG5gfWlmKHRoaXMuY3Vyc29yQW5pbWF0aW9uU3RyaW5nc1tlXT11LHMudGFncyYmcy50YWdzLmxlbmd0aCl7dCs9YCR7cy50YWdzLmpvaW4oIiwgIil9IHsgJHt0aGlzLl9idWlsZEN1cnNvckNzcyhlLHMpfSB9XG5gfXQrPWBbZGF0YS1jdXJzb3I9IiR7ZX0iXSB7ICR7dGhpcy5fYnVpbGRDdXJzb3JDc3MoZSxzKX0gfVxuYH1pZih0aGlzLm9wdGlvbnMuZXhjbHVkZVNlbGVjdG9ycyYmKHQrPWAke3RoaXMub3B0aW9ucy5leGNsdWRlU2VsZWN0b3JzfSB7IGN1cnNvcjogdGV4dCAhaW1wb3J0YW50OyBhbmltYXRpb246IG5vbmUgIWltcG9ydGFudDsgfVxuYCksdGhpcy5vcHRpb25zLmNvbWJpbmVBbmltYXRpb25zKXtjb25zdCBlPWRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoIltkYXRhLWFjLWFuaW1hdGlvbl0iKTtmb3IoY29uc3QgcyBvZiBlKXtjb25zdCBlPXMuZ2V0QXR0cmlidXRlKCJkYXRhLWFjLWFuaW1hdGlvbiIpO2lmKCFlKWNvbnRpbnVlO2xldCByPXRoaXMuX2dldEN1cnNvclR5cGVGb3JFbGVtZW50KHMpO2lmKCFyKWNvbnRpbnVlO2NvbnN0IG89dGhpcy5jdXJzb3JBbmltYXRpb25TdHJpbmdzW3JdO2lmKCFvKWNvbnRpbnVlO2NvbnN0IG49YCR7cn06JHtlfWA7aWYoIXRoaXMuY29tYmluZWRSdWxlcy5oYXMobikpe2NvbnN0IHM9YGFjLWNvbWJpbmVkLSR7dGhpcy5fc2ltcGxlSGFzaChuKX1gO3QrPWAuJHtzfSB7IGFuaW1hdGlvbjogJHtvfSwgJHtlfTsgfVxuYCx0aGlzLmNvbWJpbmVkUnVsZXMuc2V0KG4scyl9Y29uc3QgaT10aGlzLmNvbWJpbmVkUnVsZXMuZ2V0KG4pO3MuY2xhc3NMaXN0LmFkZChpKX19dCs9ImJvZHkuYW5pbWVjdXJzb3ItZGlzYWJsZWQgKiB7IGN1cnNvcjogYXV0byAhaW1wb3J0YW50OyBhbmltYXRpb246IG5vbmUgIWltcG9ydGFudDsgfVxuIixlLnRleHRDb250ZW50PXQsZG9jdW1lbnQuaGVhZC5hcHBlbmRDaGlsZChlKSx0aGlzLnN0eWxlRWw9ZX1fZ2V0Q3Vyc29yVHlwZUZvckVsZW1lbnQoZSl7aWYoZS5kYXRhc2V0LmN1cnNvciYmdGhpcy5jdXJzb3JzW2UuZGF0YXNldC5jdXJzb3JdKXJldHVybiBlLmRhdGFzZXQuY3Vyc29yO2Zvcihjb25zdFt0LHNdb2YgT2JqZWN0LmVudHJpZXModGhpcy5jdXJzb3JzKSlpZihzLnRhZ3MmJnMudGFncy5zb21lKHQ9PmUubWF0Y2hlcyh0KSkpcmV0dXJuIHQ7cmV0dXJuIHRoaXMuZGVmYXVsdEN1cnNvck5hbWV9X2J1aWxkS2V5ZnJhbWVzKGUsdCl7bGV0IHM9ZS5mcmFtZXMscj1lLmR1cmF0aW9uO2NvbnN0IG89dC5sZW5ndGg7aWYoIm51bWJlciI9PXR5cGVvZiBzKXtjb25zdCBlPXIvcztzPW5ldyBBcnJheShzKS5maWxsKDEpLHI9bmV3IEFycmF5KHMubGVuZ3RoKS5maWxsKGUpfWNvbnN0IG49W107bGV0IGk9ci5yZWR1Y2UoKGUsdCk9PmUrdCwwKSxhPTAsdT0wO2ZvcihsZXQgZT0wO2U8cy5sZW5ndGg7ZSsrKXtjb25zdCBvPXNbZV0sbD1yW2VdL287Zm9yKGxldCBlPTA7ZTxvO2UrKyl7Y29uc3QgZT1hL2k7bi5wdXNoKHtwZXJjZW50OmUsdXJsOnRbdV19KSxhKz1sLHUrK319cmV0dXJuIG4ucHVzaCh7cGVyY2VudDoxLHVybDp0W28tMV19KSxufV9idWlsZEFuaW1hdGlvbihlLHQscyxyKXtyZXR1cm5bZSxgJHt0fXNgLCJzdGVwcygxKSIscj9zPzI6MToiaW5maW5pdGUiLHM/ImFsdGVybmF0ZSI6IiIscj8iZm9yd2FyZHMiOiIiXS5maWx0ZXIoQm9vbGVhbikuam9pbigiICIpfV9idWlsZEN1cnNvckNzcyhlLHQpe2NvbnN0IHM9dGhpcy5fZ2V0RnJhbWVVcmxzKHQpLHI9dC5vZmZzZXR8fFswLDBdLG89dC5mYWxsYmFja3x8dGhpcy5vcHRpb25zLmZhbGxiYWNrQ3Vyc29yO2xldCBuPWBjdXJzb3I6IHVybCgiJHtzWzBdfSIpICR7clswXX0gJHtyWzFdfSwgJHtvfTtgO2lmKHZvaWQgMCE9PXQuZnJhbWVzJiZ2b2lkIDAhPT10LmR1cmF0aW9uJiYoQXJyYXkuaXNBcnJheSh0LmZyYW1lcykmJkFycmF5LmlzQXJyYXkodC5kdXJhdGlvbil8fCJudW1iZXIiPT10eXBlb2YgdC5mcmFtZXMmJiJudW1iZXIiPT10eXBlb2YgdC5kdXJhdGlvbikmJnMubGVuZ3RoPjEpe2NvbnN0IHM9QXJyYXkuaXNBcnJheSh0LmR1cmF0aW9uKT90LmR1cmF0aW9uLnJlZHVjZSgoZSx0KT0+ZSt0LDApOnQuZHVyYXRpb247bis9YCBhbmltYXRpb246ICR7dGhpcy5fYnVpbGRBbmltYXRpb24oYGFjX2FuaW1fJHtlfWAscyx0LnBpbmdwb25nLHQub25jZSl9O2B9ZWxzZSBuKz1gIGFuaW1hdGlvbjogYWNfYW5pbV8ke2V9X3N0YXRpYyAwLjAwMXMgZm9yd2FyZHMgc3RlcHMoMSk7YDtyZXR1cm4gbn1fc2ltcGxlSGFzaChlKXtsZXQgdD0wO2ZvcihsZXQgcz0wO3M8ZS5sZW5ndGg7cysrKXt0PSh0PDw1KS10K2UuY2hhckNvZGVBdChzKSx0fD0wfXJldHVybiBNYXRoLmFicyh0KS50b1N0cmluZygzNil9X2luaXREZWJ1Zygpe2NvbnN0IGU9ZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgiZGl2Iik7ZS5jbGFzc05hbWU9ImFuaW1lY3Vyc29yLWRlYnVnIixlLnN0eWxlLmNzc1RleHQ9IlxuICAgICAgICAgICAgcG9zaXRpb246IGZpeGVkO1xuICAgICAgICAgICAgdG9wOiAwO1xuICAgICAgICAgICAgbGVmdDogMDtcbiAgICAgICAgICAgIGJhY2tncm91bmQ6IHJnYmEoMCwwLDAsMC43KTtcbiAgICAgICAgICAgIGNvbG9yOiAjMGYwO1xuICAgICAgICAgICAgcGFkZGluZzogNHB4IDhweDtcbiAgICAgICAgICAgIGZvbnQtZmFtaWx5OiBtb25vc3BhY2U7XG4gICAgICAgICAgICBmb250LXNpemU6IDEycHg7XG4gICAgICAgICAgICB6LWluZGV4OiAyMTQ3NDgzNjQ3O1xuICAgICAgICAgICAgcG9pbnRlci1ldmVudHM6IGF1dG87XG4gICAgICAgICAgICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICAgICAgICAgICAgdHJhbnNpdGlvbjogb3BhY2l0eSAwLjJzIGVhc2U7XG4gICAgICAgICIsZS5hZGRFdmVudExpc3RlbmVyKCJtb3VzZWVudGVyIiwoKT0+e2Uuc3R5bGUub3BhY2l0eT0iMC41In0pLGUuYWRkRXZlbnRMaXN0ZW5lcigibW91c2VsZWF2ZSIsKCk9PntlLnN0eWxlLm9wYWNpdHk9IjEifSksZG9jdW1lbnQuYm9keS5hcHBlbmRDaGlsZChlKSx0aGlzLmRlYnVnRWw9ZTtjb25zdCB0PWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoImRpdiIpO3QuY2xhc3NOYW1lPSJhbmltZWN1cnNvci1jcm9zc2hhaXIiLHQuc3R5bGUuY3NzVGV4dD0iXG4gICAgICAgICAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgICAgICAgICB0b3A6IDA7XG4gICAgICAgICAgICBsZWZ0OiAwO1xuICAgICAgICAgICAgd2lkdGg6IDA7XG4gICAgICAgICAgICBoZWlnaHQ6IDA7XG4gICAgICAgICAgICBwb2ludGVyLWV2ZW50czogbm9uZTtcbiAgICAgICAgICAgIHotaW5kZXg6IDIxNDc0ODM2NDY7XG4gICAgICAgICI7Y29uc3Qgcz1kb2N1bWVudC5jcmVhdGVFbGVtZW50KCJkaXYiKTtzLmNsYXNzTmFtZT0iYWMtY3Jvc3NoYWlyLWgiLHMuc3R5bGUuY3NzVGV4dD0iXG4gICAgICAgICAgICBwb3NpdGlvbjogZml4ZWQ7XG4gICAgICAgICAgICBsZWZ0OiAwO1xuICAgICAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgICAgICBoZWlnaHQ6IDFweDtcbiAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMjU1LDAsMCwwLjYpO1xuICAgICAgICAgICAgcG9pbnRlci1ldmVudHM6IG5vbmU7XG4gICAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTAuNXB4KTtcbiAgICAgICAgIjtjb25zdCByPWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoImRpdiIpO3IuY2xhc3NOYW1lPSJhYy1jcm9zc2hhaXItdiIsci5zdHlsZS5jc3NUZXh0PSJcbiAgICAgICAgICAgIHBvc2l0aW9uOiBmaXhlZDtcbiAgICAgICAgICAgIHRvcDogMDtcbiAgICAgICAgICAgIHdpZHRoOiAxcHg7XG4gICAgICAgICAgICBoZWlnaHQ6IDEwMCU7XG4gICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwwLDAsMC42KTtcbiAgICAgICAgICAgIHBvaW50ZXItZXZlbnRzOiBub25lO1xuICAgICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKC0wLjVweCk7XG4gICAgICAgICIsdC5hcHBlbmRDaGlsZChzKSx0LmFwcGVuZENoaWxkKHIpLGRvY3VtZW50LmJvZHkuYXBwZW5kQ2hpbGQodCksdGhpcy5jcm9zc2hhaXJFbD17Y29udGFpbmVyOnQsaExpbmU6cyx2TGluZTpyfTtsZXQgbz0iIjt0aGlzLl9vbk1vdXNlTW92ZT10PT57Y29uc3Qgcz10LmNsaWVudFgscj10LmNsaWVudFk7dGhpcy5jcm9zc2hhaXJFbCYmKHRoaXMuY3Jvc3NoYWlyRWwuaExpbmUuc3R5bGUudG9wPXIrInB4Iix0aGlzLmNyb3NzaGFpckVsLnZMaW5lLnN0eWxlLmxlZnQ9cysicHgiKTtjb25zdCBuPWRvY3VtZW50LmVsZW1lbnRGcm9tUG9pbnQocyxyKTtsZXQgaT1udWxsO2lmKG4paWYobi5kYXRhc2V0LmN1cnNvciYmdGhpcy5jdXJzb3JzW24uZGF0YXNldC5jdXJzb3JdKWk9bi5kYXRhc2V0LmN1cnNvcjtlbHNlIGZvcihjb25zdFtlLHRdb2YgT2JqZWN0LmVudHJpZXModGhpcy5jdXJzb3JzKSlpZih0LnRhZ3MmJnQudGFncy5zb21lKGU9Pm4ubWF0Y2hlcyhlKSkpe2k9ZTticmVha31pfHx0aGlzLmRlZmF1bHRDdXJzb3JOYW1lPyFpJiZ0aGlzLmRlZmF1bHRDdXJzb3JOYW1lJiYoaT10aGlzLmRlZmF1bHRDdXJzb3JOYW1lKTppPSJuYXRpdmUiLGkhPT1vPyhvPWksZS50ZXh0Q29udGVudD1gJHtpfSBAICgke3N9LCAke3J9KWApOmUudGV4dENvbnRlbnQ9YCR7aX0gQCAoJHtzfSwgJHtyfSlgfSxkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCJtb3VzZW1vdmUiLHRoaXMuX29uTW91c2VNb3ZlKX1yZWZyZXNoKCl7dGhpcy5kaXNhYmxlZHx8KHRoaXMuc3R5bGVFbCYmdGhpcy5zdHlsZUVsLnJlbW92ZSgpLHRoaXMuY29tYmluZWRSdWxlcy5jbGVhcigpLHRoaXMuX2luamVjdFN0eWxlcygpLHRoaXMub3B0aW9ucy5kZWJ1ZyYmKHRoaXMuZGVidWdFbCYmdGhpcy5kZWJ1Z0VsLnJlbW92ZSgpLHRoaXMuY3Jvc3NoYWlyRWwmJnRoaXMuY3Jvc3NoYWlyRWwuY29udGFpbmVyLnJlbW92ZSgpLHRoaXMuX2luaXREZWJ1ZygpKSxjb25zb2xlLmxvZygiW0FuaW1lQ3Vyc29yXSBSZWZyZXNoIGNvbXBsZXRlIikpfWRlc3Ryb3koKXt0aGlzLmRpc2FibGVkfHwodGhpcy5zdHlsZUVsJiZ0aGlzLnN0eWxlRWwucmVtb3ZlKCksdGhpcy5kZWJ1Z0VsJiZ0aGlzLmRlYnVnRWwucmVtb3ZlKCksdGhpcy5jcm9zc2hhaXJFbCYmdGhpcy5jcm9zc2hhaXJFbC5jb250YWluZXIucmVtb3ZlKCksdGhpcy5fb25Nb3VzZU1vdmUmJmRvY3VtZW50LnJlbW92ZUV2ZW50TGlzdGVuZXIoIm1vdXNlbW92ZSIsdGhpcy5fb25Nb3VzZU1vdmUpLGRvY3VtZW50LmJvZHkuY2xhc3NMaXN0LnJlbW92ZSgiYW5pbWVjdXJzb3ItZGlzYWJsZWQiKSxlPW51bGwsY29uc29sZS5sb2coIltBbmltZUN1cnNvcl0gRGVzdHJveWVkIikpfWRpc2FibGUoKXt0aGlzLmRpc2FibGVkfHwodGhpcy5zdHlsZUVsJiYodGhpcy5zdHlsZUVsLnJlbW92ZSgpLHRoaXMuc3R5bGVFbD1udWxsKSx0aGlzLmRlYnVnRWwmJih0aGlzLmRlYnVnRWwucmVtb3ZlKCksdGhpcy5kZWJ1Z0VsPW51bGwpLHRoaXMuY3Jvc3NoYWlyRWwmJih0aGlzLmNyb3NzaGFpckVsLmNvbnRhaW5lci5yZW1vdmUoKSx0aGlzLmNyb3NzaGFpckVsPW51bGwpLHRoaXMuX29uTW91c2VNb3ZlJiYoZG9jdW1lbnQucmVtb3ZlRXZlbnRMaXN0ZW5lcigibW91c2Vtb3ZlIix0aGlzLl9vbk1vdXNlTW92ZSksdGhpcy5fb25Nb3VzZU1vdmU9bnVsbCksdGhpcy5kaXNhYmxlZD0hMCx0aGlzLm9wdGlvbnMuZGVidWcmJmNvbnNvbGUubG9nKCJbQW5pbWVDdXJzb3JdIERpc2FibGVkIikpfWVuYWJsZSgpe3RoaXMuZGlzYWJsZWQmJih0aGlzLmRpc2FibGVkPSExLHRoaXMuX2luamVjdFN0eWxlcygpLHRoaXMub3B0aW9ucy5kZWJ1ZyYmdGhpcy5faW5pdERlYnVnKCksdGhpcy5vcHRpb25zLmRlYnVnJiZjb25zb2xlLmxvZygiW0FuaW1lQ3Vyc29yXSBFbmFibGVkIikpfX19KTsK"></script>
+    <style>
+        :root {
+            --bg: #f5f5f7;
+            --panel: rgba(255, 255, 255, 0.88);
+            --panel-solid: #ffffff;
+            --line: rgba(29, 29, 31, 0.1);
+            --line-strong: rgba(29, 29, 31, 0.18);
+            --text: #1d1d1f;
+            --muted: #6e6e73;
+            --blue: #0071e3;
+            --blue-soft: rgba(0, 113, 227, 0.1);
+            --green: #248a3d;
+            --amber: #b06000;
+            --shadow: 0 24px 70px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            letter-spacing: 0;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+            margin: 0;
+        }
+
+        body {
+            min-width: 320px;
+            color: var(--text);
+            background: var(--bg);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            font-size: 13px;
+            line-height: 1.45;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            color: inherit;
+        }
+
+        .shell {
+            width: min(1440px, 100%);
+            min-height: 100vh;
+            margin: 0 auto;
+            padding: 22px;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 16px;
+            padding: 0 2px;
+        }
+
+        .identity {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .brandmark {
+            display: grid;
+            width: 36px;
+            height: 36px;
+            flex: 0 0 36px;
+            place-items: center;
+            color: #fff;
+            background: #1d1d1f;
+            border-radius: 11px;
+            corner-shape: squircle;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .brand-copy {
+            min-width: 0;
+        }
+
+        h1,
+        h2,
+        p {
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 17px;
+            font-weight: 650;
+            line-height: 1.2;
+        }
+
+        .brand-subtitle {
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .live-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            min-height: 30px;
+            padding: 0 11px;
+            color: var(--green);
+            background: rgba(36, 138, 61, 0.08);
+            border: 1px solid rgba(36, 138, 61, 0.16);
+            border-radius: 999px;
+            corner-shape: squircle;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            background: currentColor;
+            border-radius: 50%;
+            corner-shape: squircle;
+            box-shadow: 0 0 0 4px rgba(36, 138, 61, 0.1);
+        }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+            gap: 16px;
+            align-items: start;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            corner-shape: squircle;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(22px) saturate(135%);
+            -webkit-backdrop-filter: blur(22px) saturate(135%);
+        }
+
+        .shell[data-cursor="active"] * {
+            cursor: inherit;
+        }
+
+        .controls {
+            position: sticky;
+            top: 22px;
+            padding: 18px;
+        }
+
+        .panel-header,
+        .group-header,
+        .range-head,
+        .frame-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .panel-header {
+            margin-bottom: 18px;
+        }
+
+        .panel-header h2,
+        .stage-heading h2 {
+            font-size: 15px;
+            font-weight: 650;
+        }
+
+        .panel-kicker {
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 650;
+            text-transform: uppercase;
+        }
+
+        .control-group {
+            padding: 15px 0;
+            border-top: 1px solid var(--line);
+        }
+
+        .control-group:first-of-type {
+            padding-top: 0;
+            border-top: 0;
+        }
+
+        .group-header {
+            margin-bottom: 10px;
+        }
+
+        .group-header > span:first-child,
+        .range-head label {
+            font-size: 11px;
+            font-weight: 650;
+        }
+
+        .muted-value,
+        output {
+            color: var(--muted);
+            font-size: 11px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .set-list,
+        .preset-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 7px;
+        }
+
+        .set-button,
+        .preset-button,
+        .action-button {
+            min-height: 34px;
+            padding: 0 10px;
+            background: rgba(255, 255, 255, 0.76);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            corner-shape: squircle;
+            cursor: pointer;
+            transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+        }
+
+        .set-button,
+        .preset-button {
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .set-button:hover,
+        .preset-button:hover,
+        .action-button:hover {
+            border-color: var(--line-strong);
+            transform: translateY(-1px);
+        }
+
+        .set-button.is-active,
+        .preset-button.is-active {
+            color: #fff;
+            background: #1d1d1f;
+            border-color: #1d1d1f;
+        }
+
+        .preset-list {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .range-control + .range-control {
+            margin-top: 14px;
+        }
+
+        .range-head {
+            margin-bottom: 7px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 20px;
+            margin: 0;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            height: 4px;
+            background: #d2d2d7;
+            border-radius: 999px;
+            corner-shape: squircle;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            width: 18px;
+            height: 18px;
+            margin-top: -7px;
+            appearance: none;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.16);
+            border-radius: 50%;
+            corner-shape: squircle;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+        }
+
+        input[type="range"]::-moz-range-track {
+            height: 4px;
+            background: #d2d2d7;
+            border-radius: 999px;
+            corner-shape: squircle;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.16);
+            border-radius: 50%;
+            corner-shape: squircle;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+        }
+
+        .offset-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .offset-grid .range-control + .range-control {
+            margin-top: 0;
+        }
+
+        .toggle-row {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            min-height: 44px;
+            cursor: pointer;
+        }
+
+        .toggle-row + .toggle-row {
+            border-top: 1px solid var(--line);
+        }
+
+        .toggle-label {
+            font-size: 11px;
+            font-weight: 650;
+        }
+
+        .toggle-row input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .switch {
+            position: relative;
+            width: 42px;
+            height: 25px;
+            flex: 0 0 42px;
+            background: #d2d2d7;
+            border-radius: 999px;
+            corner-shape: squircle;
+            transition: background 160ms ease;
+        }
+
+        .switch::after {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 21px;
+            height: 21px;
+            content: "";
+            background: #fff;
+            border-radius: 50%;
+            corner-shape: squircle;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.22);
+            transition: transform 160ms ease;
+        }
+
+        .toggle-row input:checked + .switch {
+            background: var(--blue);
+        }
+
+        .toggle-row input:checked + .switch::after {
+            transform: translateX(17px);
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            padding-top: 15px;
+            border-top: 1px solid var(--line);
+        }
+
+        .action-button {
+            font-size: 11px;
+            font-weight: 650;
+        }
+
+        .action-button.primary {
+            color: #fff;
+            background: var(--blue);
+            border-color: var(--blue);
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .status-cell {
+            min-width: 0;
+            padding: 10px;
+            background: rgba(245, 245, 247, 0.78);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            corner-shape: squircle;
+        }
+
+        .status-cell span {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .status-cell strong {
+            display: block;
+            overflow: hidden;
+            font-size: 12px;
+            font-weight: 650;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .status-cell strong[data-state="ok"] {
+            color: var(--green);
+        }
+
+        .status-cell strong[data-state="check"] {
+            color: var(--amber);
+        }
+
+        .status-cell.wide {
+            grid-column: 1 / -1;
+        }
+
+        .stage-panel {
+            min-width: 0;
+            padding: 18px;
+        }
+
+        .stage-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 14px;
+        }
+
+        .stage-heading {
+            min-width: 0;
+        }
+
+        .stage-heading h2 {
+            overflow: hidden;
+            margin-top: 3px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .badge {
+            flex: 0 0 auto;
+            padding: 5px 9px;
+            color: var(--blue);
+            background: var(--blue-soft);
+            border-radius: 999px;
+            corner-shape: squircle;
+            font-size: 10px;
+            font-weight: 650;
+        }
+
+        .stage-field {
+            position: relative;
+            display: grid;
+            min-height: 430px;
+            overflow: hidden;
+            place-items: center;
+            background-color: #fbfbfd;
+            background-image:
+                linear-gradient(rgba(29, 29, 31, 0.045) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(29, 29, 31, 0.045) 1px, transparent 1px);
+            background-size: 32px 32px;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            corner-shape: squircle;
+        }
+
+        .target-ring {
+            display: grid;
+            width: 180px;
+            height: 180px;
+            place-items: center;
+            color: var(--muted);
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid var(--line-strong);
+            border-radius: 50%;
+            corner-shape: squircle;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.07);
+            font-size: 11px;
+            font-weight: 650;
+        }
+
+        .target-ring::before {
+            position: absolute;
+            width: 78px;
+            height: 78px;
+            content: "";
+            border: 1px solid rgba(0, 113, 227, 0.25);
+            border-radius: 50%;
+            corner-shape: squircle;
+        }
+
+        .stage-coordinate {
+            position: absolute;
+            right: 12px;
+            bottom: 10px;
+            color: rgba(29, 29, 31, 0.36);
+            font-family: "SFMono-Regular", Consolas, monospace;
+            font-size: 10px;
+        }
+
+        .frame-dock {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid var(--line);
+        }
+
+        .frame-head {
+            margin-bottom: 9px;
+        }
+
+        .frame-head > span:first-child {
+            font-size: 11px;
+            font-weight: 650;
+        }
+
+        .frame-strip {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 1px 1px 5px;
+            scrollbar-width: thin;
+        }
+
+        .frame-chip {
+            position: relative;
+            display: grid;
+            width: 50px;
+            height: 56px;
+            flex: 0 0 50px;
+            place-items: center;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            corner-shape: squircle;
+            transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+        }
+
+        .frame-chip img {
+            width: 32px;
+            max-width: 36px;
+            max-height: 36px;
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+
+        .frame-chip span {
+            position: absolute;
+            right: 4px;
+            bottom: 2px;
+            color: var(--muted);
+            font-family: "SFMono-Regular", Consolas, monospace;
+            font-size: 9px;
+        }
+
+        .frame-chip.is-active {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.12);
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 860px) {
+            .shell {
+                padding: 14px;
+            }
+
+            .workspace {
+                grid-template-columns: 1fr;
+            }
+
+            .controls {
+                position: static;
+            }
+
+            .stage-field {
+                min-height: 360px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .topbar {
+                align-items: flex-start;
+            }
+
+            .live-pill {
+                min-height: 28px;
+            }
+
+            .stage-panel,
+            .controls {
+                padding: 15px;
+            }
+
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .status-cell.wide {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="shell" data-cursor="active">
+        <header class="topbar">
+            <div class="identity">
+                <div class="brandmark">AC</div>
+                <div class="brand-copy">
+                    <h1>AnimeCursor Animation Lab</h1>
+                    <p class="brand-subtitle">v2.2.0 / once and pingpong validation</p>
+                </div>
+            </div>
+            <div class="live-pill" aria-live="polite">
+                <span class="live-dot" aria-hidden="true"></span>
+                <span id="liveText">Live</span>
+            </div>
+        </header>
+
+        <div class="workspace">
+            <aside class="panel controls">
+                <div class="panel-header">
+                    <div>
+                        <p class="panel-kicker">Parameters</p>
+                        <h2>Animation controls</h2>
+                    </div>
+                </div>
+
+                <section class="control-group">
+                    <div class="group-header">
+                        <span>Image set</span>
+                        <span class="muted-value" id="setMeta">3 frames</span>
+                    </div>
+                    <div class="set-list" id="setList" role="radiogroup" aria-label="Image set"></div>
+                </section>
+
+                <section class="control-group">
+                    <div class="group-header">
+                        <span>Playback mode</span>
+                        <span class="muted-value">Presets</span>
+                    </div>
+                    <div class="preset-list" id="presetList"></div>
+                </section>
+
+                <section class="control-group">
+                    <div class="range-control">
+                        <div class="range-head">
+                            <label for="framesRange">Frames</label>
+                            <output id="framesValue">3</output>
+                        </div>
+                        <input id="framesRange" type="range" min="1" max="3" step="1" value="3">
+                    </div>
+
+                    <div class="range-control">
+                        <div class="range-head">
+                            <label for="durationRange">Duration</label>
+                            <output id="durationValue">0.9s</output>
+                        </div>
+                        <input id="durationRange" type="range" min="0.2" max="3" step="0.1" value="0.9">
+                    </div>
+
+                    <div class="offset-grid">
+                        <div class="range-control">
+                            <div class="range-head">
+                                <label for="offsetXRange">Offset X</label>
+                                <output id="offsetXValue">0</output>
+                            </div>
+                            <input id="offsetXRange" type="range" min="-16" max="32" step="1" value="0">
+                        </div>
+                        <div class="range-control">
+                            <div class="range-head">
+                                <label for="offsetYRange">Offset Y</label>
+                                <output id="offsetYValue">0</output>
+                            </div>
+                            <input id="offsetYRange" type="range" min="-16" max="32" step="1" value="0">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="control-group">
+                    <label class="toggle-row" for="pingpongToggle">
+                        <span class="toggle-label">Pingpong</span>
+                        <input id="pingpongToggle" type="checkbox">
+                        <span class="switch" aria-hidden="true"></span>
+                    </label>
+                    <label class="toggle-row" for="onceToggle">
+                        <span class="toggle-label">Once</span>
+                        <input id="onceToggle" type="checkbox" checked>
+                        <span class="switch" aria-hidden="true"></span>
+                    </label>
+                    <label class="toggle-row" for="restartToggle">
+                        <span class="toggle-label">Restart on enter</span>
+                        <input id="restartToggle" type="checkbox" checked>
+                        <span class="switch" aria-hidden="true"></span>
+                    </label>
+                </section>
+
+                <div class="actions">
+                    <button class="action-button primary" id="replayButton" type="button">Replay</button>
+                    <button class="action-button" id="resetButton" type="button">Reset</button>
+                </div>
+
+                <div class="status-grid">
+                    <div class="status-cell">
+                        <span>Playback</span>
+                        <strong id="playbackValue">Forward</strong>
+                    </div>
+                    <div class="status-cell">
+                        <span>Iterations</span>
+                        <strong id="iterationsValue">1x</strong>
+                    </div>
+                    <div class="status-cell">
+                        <span>Endpoint</span>
+                        <strong id="endpointValue" data-state="check">Checking</strong>
+                    </div>
+                    <div class="status-cell">
+                        <span>Duration</span>
+                        <strong id="durationStatus">0.9s</strong>
+                    </div>
+                    <div class="status-cell wide">
+                        <span>Animation shorthand</span>
+                        <strong id="cssValue">steps(1) 1 forwards</strong>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="panel stage-panel">
+                <div class="stage-header">
+                    <div class="stage-heading">
+                        <p class="panel-kicker">Interactive stage</p>
+                        <h2 id="stageTitle">Pointer / 3 frames</h2>
+                    </div>
+                    <div class="badge" id="stageBadge">Once</div>
+                </div>
+
+                <div class="stage-field">
+                    <div class="target-ring">CURSOR AREA</div>
+                    <div class="stage-coordinate" id="stageCoordinate">0, 0</div>
+                </div>
+
+                <div class="frame-dock">
+                    <div class="frame-head">
+                        <span>Frame sequence</span>
+                        <span class="muted-value" id="framePosition">Frame 1 / 3</span>
+                    </div>
+                    <div class="frame-strip" id="frameStrip"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const IMAGE_SETS = {
+            pointer: {
+                label: "Pointer",
+                frames: [
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAkCAYAAADo6zjiAAAAAXNSR0IArs4c6QAAALVJREFUWIXtl8sSgCAIRaHp/3/ZVjaJjkBiYHW3Jo8j3jGArws7a2lgr1ibRZARtbrgOpfEEMudwM59kFIJBNHk6E+5E/gLYGdAoCG/eAUBTpRQQWRdAtQfqDp+kTciRCGg9X6RpA4agoBK3NlrQkEEAkhnwLDDdkIyC+4E/gKqAhDR/NWjKuBpXVttjr/VrVjCCXOJc42A5HMnoPozujMPnRsVl0DWrFmI9SaUWp4VjSqfO4ED6dYiTADQWwsAAAAASUVORK5CYII=",
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAkCAYAAADo6zjiAAAAAXNSR0IArs4c6QAAALZJREFUWIXtl90OgCAIhaH1/q9sV7ZEJ5AY2Dy3Jj+feGYAzsLOWhrYK9ZhEWRErS64ziUxxHIncHIfpFQCQTQ5+lvuBHYB7AwINOQXvyDAiRIqiKxLgPoDVccv8kaEKAS03i+S1EFDEFCJO3tNKIhAAOkMGHbYTkhmwZ3ALqAqABHNXz2qAr7Ws9Xm+FvdiiWcMJc41whIPncCqj+jN/PQuVFxCWTNmoVYb0Kp5VnRqPK5E3DXBTKvIkx2U7y1AAAAAElFTkSuQmCC",
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAkCAYAAADo6zjiAAAAAXNSR0IArs4c6QAAAMRJREFUWIXtlssSwyAIRbmd/v8v25WdFoFAJJF2PMs8FE6uTEAyTbnOgfM5lcfsArPwDrydH63jZrmBp3WzNVkIMP3p39Q2EMDKjqnrbwxYcDtfRkwDUtgyA0iCAURmgXZKyC60vwSqkoFT08/qXrqvGSlhIMRR55GlqIKBIfWJHcobsiwsN7ALGAoAkD5uQwXczWerYvyzTsVPTMJe4rWDgO233ID0YVQDZ/JgnKi6BjpXZcH/T3gH3pGXZWPYb7mBzeYFiw8mS5v0dA0AAAAASUVORK5CYII="
+                ]
+            },
+            newdefault: {
+                label: "New Default",
+                frames: [
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAAXNSR0IArs4c6QAAAAxQTFRFAAAAAAAA/////7zqc3uDGAAAAAR0Uk5TAP///7MtQIgAAAA1SURBVDiNY2AkABjopIAJBxhoBQQdSWMFcEkQGCAFAxkO6IrprQA5oWJ1JI0VIEcOOp8OCgDkxQWB5mUEZQAAAABJRU5ErkJggg==",
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAAXNSR0IArs4c6QAAAAxQTFRFAAAAAAAA/////7zqc3uDGAAAAAR0Uk5TAP///7MtQIgAAAA8SURBVDiNY2AkABjopIAJBxhoBQQdSSMFzMxokiBAkgIM48lWMJDhgK6Y3gqQEypWR9JYAXLkoPPpoAAA7p0FhR7VPK8AAAAASUVORK5CYII=",
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAAXNSR0IArs4c6QAAAAxQTFRFAAAAAAAA/////7zqc3uDGAAAAAR0Uk5TAP///7MtQIgAAABOSURBVDiNxdJBCgAgCARAa///5+iQiWgSku1NGmjJqAWhItCd/AZhSRMAZwAIYQBgCT6cuQD7Cg9wSRfk3yEPNK4G8qOaJR8DuRw9F4ABH+QFme9V/C8AAAAASUVORK5CYII=",
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAAXNSR0IArs4c6QAAAAxQTFRFAAAAAAAA/////7zqc3uDGAAAAAR0Uk5TAP///7MtQIgAAABTSURBVDiNvdJBCgAgCETR6t//zhFEqFgSlLML38LUUoOUJNA2eQ8ADoAZUVQAtLgGYMQRrOLIM6CaDIH7zXBQdtThul1gcTaQh+o2+RnI5dh3Auj4dAXxW6OiFAAAAABJRU5ErkJggg==",
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAAXNSR0IArs4c6QAAAAxQTFRFAAAAAAAA/////7zqc3uDGAAAAAR0Uk5TAP///7MtQIgAAABnSURBVDiNxdJRDsAgCANQ197/zosjQcZqzGZ0/VJ5HwQsxyBlEwAAeuCJgBQiAFKJBkgpHOR6FbcmPwBOAi/W/ATez0GNOq37Uc8A3lxn3SYM6A9zkXaWwB66IH5U1eRqEJeT7xvACYnkBpE/H7Q4AAAAAElFTkSuQmCC",
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAAXNSR0IArs4c6QAAAAxQTFRFAAAAAAAA/////7zqc3uDGAAAAAR0Uk5TAP///7MtQIgAAABWSURBVDiNxdLBCgAhCEXR5vr//zy0SNQRXcTUWxUeKNTxNBmHgGQBaiD7QGrQfvJnoMWZS+BmHzxOpulAtjD2TAP4ALuo630FREAE4AAJoAR2OPF+ALx2JgcGi6tNJwAAAABJRU5ErkJggg==",
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAAXNSR0IArs4c6QAAAAxQTFRFAAAAAAAA/////7zqc3uDGAAAAAR0Uk5TAP///7MtQIgAAAA1SURBVDiNY2AkABjopIAZBxhoBQQdSWMFcEkQGCAFAxkO6IrprQA5oWJ1JI0VIEcOOp8OCgCwwQcx9k2fdAAAAABJRU5ErkJggg==",
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAAXNSR0IArs4c6QAAAAxQTFRFAAAAAAAA/////7zqc3uDGAAAAAR0Uk5TAP///7MtQIgAAAA8SURBVDiNY2AkABjopIAZBxhoBQQdSSMFTExokiBAkgIM48lWMJDhgK6Y3gqQEypWR9JYAXLkoPPpoAAApukHLVuiD/EAAAAASUVORK5CYII=",
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAAXNSR0IArs4c6QAAAAxQTFRFAAAAAAAA/////7zqc3uDGAAAAAR0Uk5TAP///7MtQIgAAABOSURBVDiNxdJBCgAgCARA2/7/5+iQiWgSku1NGmjJqAWhItCd/AZhSRMAZwAIYQBgCT6cuQD7Cg9wSRfk3yEPNK4G8qOaJR8DuRw9F4ABdbEHGZ6GoRcAAAAASUVORK5CYII=",
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAAXNSR0IArs4c6QAAAAxQTFRFAAAAAAAA/////7zqc3uDGAAAAAR0Uk5TAP///7MtQIgAAABTSURBVDiNvdJBCgAgCETR+t3/zhFEqFgSlLML38LUUoOUJNA2eQ8ADoAZUVQAtLgGYMQRrOLIM6CaDIH7zXBQdtThul1gcTaQh+o2+RnI5dh3AuidEgbBmezUhwAAAABJRU5ErkJggg==",
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAAXNSR0IArs4c6QAAAAxQTFRFAAAAAAAA/////7zqc3uDGAAAAAR0Uk5TAP///7MtQIgAAABnSURBVDiNxdJRDsAgCANQ197/zosjQcZqzGZ0/VJ5HwQsxyBlEyBJeOiJABAiAECJBgApHOR6FbcmPwBMAi/W/ATez0GNOq37Uc+A3lxn3SYM6A9zkXaWwB66IH5U1eRqEJeT7xvACQuxBiHlnztbAAAAAElFTkSuQmCC",
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAAXNSR0IArs4c6QAAAAxQTFRFAAAAAAAA/////7zqc3uDGAAAAAR0Uk5TAP///7MtQIgAAABWSURBVDiNxdLBCgAhCEXRxvv//zy0SNQRXcTUWxUeKNTxNBmHgGQBaiD7QGrQfvJnoMWZS+BmHzxOpulAtjD2TAP4ALuo630FREAE4AAJoAR2OPF+ALwfbwWsAO8XvQAAAABJRU5ErkJggg=="
+                ]
+            },
+            basic: {
+                label: "Basic",
+                frames: [
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAALdJREFUSIm9lUsWwCAIA6X3vzPdVB9SPkFtWUtGIiAxMzcRRETtYBAzc9dUrCPACaDjBJC6RUieBcyg9CS6VSDACHCVVQviywBUfAJ4/u6IDwB6uCreqhaJecHKXXmDKmQCWDnOsA1IBpq81PMgc5Fpt97GtUg/aDDFYUVmBVa3oCtFV/SqwGtFtDX1MdOiSCxrHn3B8oZD1ru84NYuysSXAJZ90QrZXtfZflr+b2W/f/LhIOK/xA0K/o4pFUCOQwAAAABJRU5ErkJggg==",
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAKZJREFUSInt1MESgzAIBNDd/v8/46HNTLCQLiS9yclRZ19EEgIw+CIOFgGY2dsgw+wt0AFfDw+AHC3KEAFcwuNm+hUFNARerVQxfAtQwh3wo7+t8BmQ0yvh2P0HfwGmaZPGzgHqf6ggMxBvFDKEVWTZojm4i6TAbVrYRUIgGcUWcn/bFs/cO9HZFS0sa9FqnMIvqW5ApexzCtu4rq5URU5lSchT9boAPiY4PMyt8isAAAAASUVORK5CYII=",
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAMxJREFUWIXVlkESgzAIRfmd3v/KdCO2wUIw4oB/5xARngQAETE5YmZ49qt63ek8IggB5hEE4CeeRaYvAfOFZDJ9CIiiJA6OJmS0hFQ5gbdEAmAt9U0zchahegJ3f0Bnrm9JPwIS8ept0H5EVn/oQyDrNkQzF5UTSA+AmYf6AcAe1XIC+LMHpMyGH3/Dc7s+cCCwGzYSjp08u3Ve1GYaniZgTbVVEuUEwtPQ+odCalYTz60BLau3W/3j+X1AFN33z5LrS+Cy428f6b0PfADUGYMqQG2nQwAAAABJRU5ErkJggg=="
+                ]
+            }
+        };
+
+        const PRESETS = [
+            { id: "loop", label: "Loop", pingpong: false, once: false },
+            { id: "once", label: "Once", pingpong: false, once: true },
+            { id: "pingpong", label: "Pingpong", pingpong: true, once: false },
+            { id: "pingpong-once", label: "Pingpong + once", pingpong: true, once: true }
+        ];
+
+        const BaseAnimeCursor = window.AnimeCursor;
+
+        class TestAnimeCursor extends BaseAnimeCursor {
+            _getFrameUrls(config) {
+                if (Array.isArray(config.previewFrames) && config.previewFrames.length) {
+                    return config.previewFrames;
+                }
+                return super._getFrameUrls(config);
+            }
+        }
+
+        const state = {
+            setKey: "pointer",
+            frameCount: 3,
+            duration: 0.9,
+            pingpong: false,
+            once: true,
+            restartOnEnter: true,
+            offsetX: 0,
+            offsetY: 0,
+            runToken: 0
+        };
+
+        const setList = document.getElementById("setList");
+        const presetList = document.getElementById("presetList");
+        const framesRange = document.getElementById("framesRange");
+        const durationRange = document.getElementById("durationRange");
+        const offsetXRange = document.getElementById("offsetXRange");
+        const offsetYRange = document.getElementById("offsetYRange");
+        const pingpongToggle = document.getElementById("pingpongToggle");
+        const onceToggle = document.getElementById("onceToggle");
+        const restartToggle = document.getElementById("restartToggle");
+        const shell = document.querySelector(".shell");
+        const stageField = document.querySelector(".stage-field");
+        const frameStrip = document.getElementById("frameStrip");
+        const framePosition = document.getElementById("framePosition");
+        const stageTitle = document.getElementById("stageTitle");
+        const stageBadge = document.getElementById("stageBadge");
+        const playbackValue = document.getElementById("playbackValue");
+        const iterationsValue = document.getElementById("iterationsValue");
+        const endpointValue = document.getElementById("endpointValue");
+        const durationStatus = document.getElementById("durationStatus");
+        const cssValue = document.getElementById("cssValue");
+        const liveText = document.getElementById("liveText");
+
+        let rebuildFrame = 0;
+        let activeFrameIndex = 0;
+
+        function currentFrameUrls() {
+            const set = IMAGE_SETS[state.setKey];
+            return set.frames.slice(0, state.frameCount);
+        }
+
+        function setEndpointState(label, status) {
+            endpointValue.textContent = label;
+            endpointValue.dataset.state = status;
+        }
+
+        function renderSetButtons() {
+            setList.textContent = "";
+            Object.entries(IMAGE_SETS).forEach(([key, set]) => {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = `set-button${key === state.setKey ? " is-active" : ""}`;
+                button.textContent = set.label;
+                button.setAttribute("role", "radio");
+                button.setAttribute("aria-checked", String(key === state.setKey));
+                button.addEventListener("click", () => {
+                    state.setKey = key;
+                    state.frameCount = set.frames.length;
+                    renderSetButtons();
+                    syncControls();
+                    rebuild();
+                });
+                setList.appendChild(button);
+            });
+        }
+
+        function renderPresetButtons() {
+            presetList.textContent = "";
+            PRESETS.forEach((preset) => {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "preset-button";
+                button.textContent = preset.label;
+                const isActive = preset.pingpong === state.pingpong && preset.once === state.once;
+                if (isActive) button.classList.add("is-active");
+                button.setAttribute("aria-pressed", String(isActive));
+                button.addEventListener("click", () => {
+                    state.pingpong = preset.pingpong;
+                    state.once = preset.once;
+                    renderPresetButtons();
+                    syncControls();
+                    rebuild();
+                });
+                presetList.appendChild(button);
+            });
+        }
+
+        function renderFrameStrip(index = 0) {
+            const frames = currentFrameUrls();
+            activeFrameIndex = Math.max(0, Math.min(index, frames.length - 1));
+            frameStrip.textContent = "";
+
+            frames.forEach((source, frameIndex) => {
+                const chip = document.createElement("div");
+                chip.className = `frame-chip${frameIndex === activeFrameIndex ? " is-active" : ""}`;
+
+                const image = document.createElement("img");
+                image.src = source;
+                image.alt = `Frame ${frameIndex + 1}`;
+
+                const label = document.createElement("span");
+                label.textContent = String(frameIndex + 1);
+
+                chip.append(image, label);
+                frameStrip.appendChild(chip);
+            });
+
+            framePosition.textContent = `Frame ${activeFrameIndex + 1} / ${frames.length}`;
+        }
+
+        function highlightFrame(index) {
+            const frames = currentFrameUrls();
+            const safeIndex = Math.max(0, Math.min(index, frames.length - 1));
+            if (safeIndex === activeFrameIndex) return;
+
+            activeFrameIndex = safeIndex;
+            const chips = frameStrip.querySelectorAll(".frame-chip");
+            chips.forEach((chip, chipIndex) => {
+                chip.classList.toggle("is-active", chipIndex === safeIndex);
+            });
+            framePosition.textContent = `Frame ${safeIndex + 1} / ${frames.length}`;
+        }
+
+        function syncControls() {
+            const frames = currentFrameUrls();
+            const set = IMAGE_SETS[state.setKey];
+            framesRange.max = String(set.frames.length);
+            framesRange.value = String(Math.min(state.frameCount, set.frames.length));
+            durationRange.value = String(state.duration);
+            offsetXRange.value = String(state.offsetX);
+            offsetYRange.value = String(state.offsetY);
+            pingpongToggle.checked = state.pingpong;
+            onceToggle.checked = state.once;
+            restartToggle.checked = state.restartOnEnter;
+
+            document.getElementById("setMeta").textContent = `${set.frames.length} frames`;
+            document.getElementById("framesValue").textContent = String(frames.length);
+            document.getElementById("durationValue").textContent = `${state.duration.toFixed(1)}s`;
+            document.getElementById("offsetXValue").textContent = String(state.offsetX);
+            document.getElementById("offsetYValue").textContent = String(state.offsetY);
+            durationStatus.textContent = `${state.duration.toFixed(1)}s`;
+
+            playbackValue.textContent = state.pingpong ? "Pingpong" : "Forward";
+            iterationsValue.textContent = state.once ? (state.pingpong ? "2x" : "1x") : "Infinite";
+            cssValue.textContent = `steps(1) ${state.once ? (state.pingpong ? "2 alternate forwards" : "1 forwards") : "infinite"}`;
+            stageTitle.textContent = `${set.label} / ${frames.length} frames`;
+
+            if (state.once) {
+                stageBadge.textContent = state.pingpong ? "Pingpong once" : "Once";
+                setEndpointState("Checking", "check");
+            } else {
+                stageBadge.textContent = state.pingpong ? "Infinite pingpong" : "Infinite";
+                setEndpointState("Continuous", "ok");
+            }
+        }
+
+        function animationMatchesExpected(urls, expectedIndex) {
+            const cursorValue = getComputedStyle(shell).cursor;
+            const expectedUrl = urls[expectedIndex];
+            return cursorValue.includes(expectedUrl);
+        }
+
+        function getShellAnimation() {
+            return shell.getAnimations()
+                .filter((animation) => animation.animationName === "ac_anim_active")
+                .sort((animationA, animationB) => (animationB.startTime || 0) - (animationA.startTime || 0))[0];
+        }
+
+        function monitorAnimation(token, urls) {
+            if (token !== state.runToken) return;
+            const animation = getShellAnimation();
+
+            if (!animation) {
+                requestAnimationFrame(() => monitorAnimation(token, urls));
+                return;
+            }
+
+            const durationMs = state.duration * 1000;
+            const frameCount = urls.length;
+
+            const tick = () => {
+                if (token !== state.runToken) return;
+                const elapsed = Number(animation.currentTime || 0);
+                let frameIndex;
+
+                if (state.once && animation.playState === "finished") {
+                    frameIndex = state.pingpong ? 0 : frameCount - 1;
+                } else {
+                    const iteration = Math.floor(elapsed / durationMs);
+                    const localProgress = (elapsed % durationMs) / durationMs;
+                    const forwardIndex = Math.min(frameCount - 1, Math.floor(localProgress * frameCount));
+                    frameIndex = state.pingpong && iteration % 2 === 1
+                        ? frameCount - 1 - forwardIndex
+                        : forwardIndex;
+                }
+
+                highlightFrame(frameIndex);
+
+                if (animation.playState !== "finished") {
+                    requestAnimationFrame(tick);
+                }
+            };
+
+            tick();
+
+            if (state.once) {
+                animation.finished.then(() => {
+                    if (token !== state.runToken) return;
+                    const expectedIndex = state.pingpong ? 0 : frameCount - 1;
+                    const matches = animationMatchesExpected(urls, expectedIndex);
+                    highlightFrame(expectedIndex);
+                    setEndpointState(
+                        matches ? `Frame ${expectedIndex + 1} verified` : "Endpoint mismatch",
+                        matches ? "ok" : "check"
+                    );
+                }).catch(() => {});
+            }
+        }
+
+        function rebuild() {
+            const token = ++state.runToken;
+            BaseAnimeCursor.destroy();
+            void shell.offsetWidth;
+
+            const urls = currentFrameUrls();
+            new TestAnimeCursor({
+                enableTouch: true,
+                excludeSelectors: "",
+                cursors: {
+                    active: {
+                        image: urls[0],
+                        previewFrames: urls,
+                        frames: urls.length,
+                        duration: state.duration,
+                        pingpong: state.pingpong,
+                        once: state.once,
+                        offset: [state.offsetX, state.offsetY]
+                    }
+                }
+            });
+
+            syncControls();
+            renderFrameStrip(0);
+            requestAnimationFrame(() => monitorAnimation(token, urls));
+        }
+
+        function scheduleRebuild() {
+            cancelAnimationFrame(rebuildFrame);
+            rebuildFrame = requestAnimationFrame(rebuild);
+        }
+
+        framesRange.addEventListener("input", () => {
+            state.frameCount = Number(framesRange.value);
+            scheduleRebuild();
+        });
+
+        durationRange.addEventListener("input", () => {
+            state.duration = Number(durationRange.value);
+            scheduleRebuild();
+        });
+
+        offsetXRange.addEventListener("input", () => {
+            state.offsetX = Number(offsetXRange.value);
+            scheduleRebuild();
+        });
+
+        offsetYRange.addEventListener("input", () => {
+            state.offsetY = Number(offsetYRange.value);
+            scheduleRebuild();
+        });
+
+        pingpongToggle.addEventListener("change", () => {
+            state.pingpong = pingpongToggle.checked;
+            renderPresetButtons();
+            rebuild();
+        });
+
+        onceToggle.addEventListener("change", () => {
+            state.once = onceToggle.checked;
+            renderPresetButtons();
+            rebuild();
+        });
+
+        restartToggle.addEventListener("change", () => {
+            state.restartOnEnter = restartToggle.checked;
+        });
+
+        document.getElementById("replayButton").addEventListener("click", rebuild);
+        document.getElementById("resetButton").addEventListener("click", () => {
+            state.setKey = "pointer";
+            state.frameCount = IMAGE_SETS.pointer.frames.length;
+            state.duration = 0.9;
+            state.pingpong = false;
+            state.once = true;
+            state.restartOnEnter = true;
+            state.offsetX = 0;
+            state.offsetY = 0;
+            renderSetButtons();
+            renderPresetButtons();
+            rebuild();
+        });
+
+        stageField.addEventListener("mousemove", (event) => {
+            const bounds = stageField.getBoundingClientRect();
+            const x = Math.round(event.clientX - bounds.left);
+            const y = Math.round(event.clientY - bounds.top);
+            document.getElementById("stageCoordinate").textContent = `${x}, ${y}`;
+        });
+
+        stageField.addEventListener("mouseleave", () => {
+            document.getElementById("stageCoordinate").textContent = "0, 0";
+        });
+
+        function restartOnPointerEnter() {
+            if (state.restartOnEnter) rebuild();
+        }
+
+        document.querySelector(".controls").addEventListener("mouseenter", restartOnPointerEnter);
+        stageField.addEventListener("mouseenter", restartOnPointerEnter);
+
+        window.addEventListener("load", () => {
+            renderSetButtons();
+            renderPresetButtons();
+            rebuild();
+            liveText.textContent = "Live";
+        });
+    </script>
+</body>
+</html>
