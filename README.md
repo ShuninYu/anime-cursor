@@ -120,6 +120,7 @@ An object that defines all cursor types. Each key is a cursor name (any string).
 | `tags`     | string[]           | No       | HTML tag names (e.g., `['a', 'button']`) that should use this cursor. If omitted, the cursor can only be applied via `data-cursor` attribute. |
 | `offset`   | [number, number]   | No       | Hotspot offset (x, y) in pixels. Default: `[0, 0]`. The offset defines where the actual click point is relative to the top-left of the image. |
 | `pingpong` | boolean            | No       | If `true`, the animation plays forward then backward alternately. Default: `false`. |
+| `once`     | boolean            | No       | If `true`, the animation plays only once. It stops on the last frame normally, or returns to the first frame when `pingpong` is enabled. Default: `false`. |
 | `fallback` | string             | No       | Fallback cursor type (e.g., `auto`, `pointer`). Default: value of `fallbackCursor` in root options. |
 | `default`  | boolean            | No       | Set this cursor as the default cursor (used when no other cursor applies). Only one cursor can be default. |
 
@@ -306,6 +307,7 @@ new AnimeCursor({
 | `tags`     | string[]           | 否     | HTML 标签名数组（如 `['a', 'button']`），应用该光标的标签。若不提供，则只能通过 `data-cursor` 属性应用。 |
 | `offset`   | [number, number]   | 否     | 热点偏移 (x, y)，单位像素。默认为 `[0, 0]`。偏移定义了相对于图片左上角的实际点击位置。 |
 | `pingpong` | boolean            | 否     | 若为 `true`，动画会正向播放再反向播放，循环交替。默认为 `false`。 |
+| `once`     | boolean            | 否     | 若为 `true`，动画只播放一次。普通播放结束后停在最后一帧；启用 `pingpong` 时会回到第一帧。默认为 `false`。 |
 | `fallback` | string             | 否     | 备用光标类型（如 `auto`、`pointer`）。默认使用根选项中的 `fallbackCursor`。 |
 | `default`  | boolean            | 否     | 将此光标设为默认光标（当没有其他光标匹配时使用）。只能有一个光标设为 `true`。 |
 
