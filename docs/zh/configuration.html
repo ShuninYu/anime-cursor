@@ -39,6 +39,7 @@
                  <tr><td>default</td><td>boolean</td><td></td><td>将此光标设为默认光标（无其他匹配时使用）。最多一个。</td><td>无默认光标</td></tr>
                  <tr><td>offset</td><td>[number, number]</td><td></td><td>热点偏移 (x, y) 像素。定义相对于图片左上角的实际点击位置。</td><td>[0,0]</td></tr>
                  <tr><td>pingpong</td><td>boolean</td><td></td><td>若为 true，动画交替正向/反向播放。</td><td>false</td></tr>
+                 <tr><td>once</td><td>boolean</td><td></td><td>若为 true，动画只播放一次。普通播放结束后停在最后一帧；启用 pingpong 时会回到第一帧。</td><td>false</td></tr>
                  <tr><td>fallback</td><td>string</td><td></td><td>备用光标类型（如 'auto', 'pointer'），仅对此光标生效。</td><td>全局 fallbackCursor</td></tr>
             </table>
 
@@ -78,6 +79,10 @@
                 <li>
                     <h3>pingpong</h3>
                     <p>可选。若为 <span>true</span>，动画交替方向播放（正向 → 反向 → 正向…）。默认 <span>false</span>（始终正向）。</p>
+                </li>
+                <li>
+                    <h3>once</h3>
+                    <p>可选。若为 <span>true</span>，动画只播放一次，不会循环。未启用 <span>pingpong</span> 时停在最后一帧；启用 <span>pingpong: true</span> 时会完成一次正向和反向播放，最后停在第一帧。默认 <span>false</span>。</p>
                 </li>
                 <li>
                     <h3>fallback</h3>

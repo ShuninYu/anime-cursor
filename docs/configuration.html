@@ -39,6 +39,7 @@
                  <tr><td>default</td><td>boolean</td><td></td><td>Set this cursor as the default cursor (applies when no other cursor matches). Only one allowed.</td><td>No default cursor</td></tr>
                  <tr><td>offset</td><td>[number, number]</td><td></td><td>Hotspot offset (x, y) in pixels. Defines the actual click point relative to the image's top-left corner.</td><td>[0,0]</td></tr>
                  <tr><td>pingpong</td><td>boolean</td><td></td><td>If true, animation plays forward then backward alternately.</td><td>false</td></tr>
+                 <tr><td>once</td><td>boolean</td><td></td><td>If true, the animation plays only once. It stops on the last frame normally, or returns to the first frame when pingpong is enabled.</td><td>false</td></tr>
                  <tr><td>fallback</td><td>string</td><td></td><td>Fallback cursor type (e.g., 'auto', 'pointer') for this specific cursor.</td><td>Global fallbackCursor</td></tr>
             </table>
 
@@ -78,6 +79,10 @@
                 <li>
                     <h3>pingpong</h3>
                     <p>Optional. If <span>true</span>, the animation alternates direction (forward, backward, forward…). Default: <span>false</span> (always forward).</p>
+                </li>
+                <li>
+                    <h3>once</h3>
+                    <p>Optional. If <span>true</span>, the animation plays only once instead of looping. Without <span>pingpong</span>, it stops on the last frame. With <span>pingpong: true</span>, it plays forward and backward once, then stops on the first frame. Default: <span>false</span>.</p>
                 </li>
                 <li>
                     <h3>fallback</h3>

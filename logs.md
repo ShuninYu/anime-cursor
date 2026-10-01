@@ -2,14 +2,20 @@
 [[简体中文]](#zh-cn)
 ## Current Version
 
+- ### `2.2.0`
+
+    - #### [New Feature] Added the `once` cursor option
+        - Added per-cursor option `once` (default `false`). When enabled, the cursor animation plays only once instead of looping.
+        - With normal playback, the animation stops on the last frame. With `pingpong: true`, it plays forward and backward once, then stops on the first frame.
+
+## History Version
+
 - ### `2.1.3`
 
     - #### [New Feature] Enhanced debug mode: crosshair helper + hover transparent info panel
         - Added a mouse‑following crosshair (horizontal and vertical red lines) in debug mode, helping users visually calibrate cursor hot spot offset.
         - The top‑left debug information panel now becomes semi‑transparent when hovered, allowing users to see the content underneath.
         - The crosshair is properly created or cleaned up during `disable`/`enable`/`refresh`/`destroy`, fully compatible with existing debug behavior.
-
-## History Version
 
 - ### `2.1.2`
 
@@ -99,14 +105,20 @@
 
 ## 当前版本
 
+- ### `2.2.0`
+
+    - #### 【新增功能】新增光标选项 `once`
+        - 新增单光标选项 `once`（默认 `false`）。启用后，光标动画只播放一次，不再无限循环。
+        - 普通播放结束后停在最后一帧；与 `pingpong: true` 配合时，会完成一次正向和反向播放，最后停在第一帧。
+
+## 历史版本
+
 - ### `2.1.3`
 
     - #### 【新增功能】Debug 模式增强：跟随鼠标十字辅助线 + 信息面板 hover 半透明
         - 为 debug 模式添加了跟随鼠标移动的十字辅助线（横竖双色红线），方便用户视觉识别光标热点偏移。
         - 左上角 debug 信息面板现在在鼠标悬停时会变为半透明，便于查看被遮挡的页面内容，移开鼠标后恢复不透明。
         - 十字辅助线在 disable/enable/refresh/destroy 时会被正确创建或清理，与原有 debug 行为完全兼容。
-
-## 历史版本
 
 - ### `2.1.2`
 
